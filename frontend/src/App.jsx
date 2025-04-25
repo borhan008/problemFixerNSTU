@@ -1,0 +1,167 @@
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import { Button } from "@/components/ui/button";
+import {
+  BrowserRouter as Router,
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
+import Home from "./pages/Home/Home";
+import DocumentTable from "./pages/User/DocumentTable";
+import Forms from "./pages/User/Forms";
+import UserLayout from "./pages/User/UserLayout";
+import { Toaster } from "@/components/ui/sonner";
+import PrivateRouter from "./pages/User/Context/PrivateRouter";
+import Profile from "./pages/User/Profile/Profile";
+import Department from "./pages/Admin/Department/Deaprtment";
+import AdminLayout from "./pages/Admin/AdminLayout";
+import MakeComplain from "./pages/User/Complaints/MakeComplaint";
+import ViewComplaints from "./pages/User/Complaints/ViewComplaints";
+import EditComplaint from "./pages/User/Complaints/EditComplaint";
+import AdminHome from "./pages/Admin/Home/AdminHome";
+import ComplainCaegories from "./pages/Admin/Complaint/ComplaintCategories";
+import EmployeeCategories from "./pages/Admin/Employee/EmployeeCategory";
+import Employee from "./pages/Admin/Employee/Employee";
+import { AdminComplaints } from "./pages/Admin/Complaint/AdminComplaints";
+import { Resolve } from "./pages/Admin/Complaint/Resolve";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path="/" element={<Home />}></Route>
+      <Route
+        path="/forms"
+        element={
+          <UserLayout>
+            <Forms />
+          </UserLayout>
+        }
+      ></Route>
+      <Route
+        path="/complaint"
+        element={
+          <PrivateRouter>
+            <UserLayout>
+              <ViewComplaints />
+            </UserLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+
+      <Route
+        path="/complaint/edit/:complaint_id"
+        element={
+          <PrivateRouter>
+            <UserLayout>
+              <EditComplaint />
+            </UserLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+
+      <Route
+        path="/complaint/new"
+        element={
+          <PrivateRouter>
+            <UserLayout>
+              <MakeComplain />
+            </UserLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/profile"
+        element={
+          <UserLayout>
+            <Profile />
+          </UserLayout>
+        }
+      ></Route>
+
+      <Route
+        path="/admin/department"
+        element={
+          <AdminLayout>
+            <Department />
+          </AdminLayout>
+        }
+      ></Route>
+
+      <Route
+        path="/admin/"
+        element={
+          <AdminLayout>
+            <AdminHome />
+          </AdminLayout>
+        }
+      ></Route>
+      <Route
+        path="/admin/complaints/category/"
+        element={
+          <PrivateRouter>
+            <AdminLayout>
+              <ComplainCaegories />
+            </AdminLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/admin/employees/category/"
+        element={
+          <PrivateRouter>
+            <AdminLayout>
+              <EmployeeCategories />
+            </AdminLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/admin/employee/"
+        element={
+          <PrivateRouter>
+            <AdminLayout>
+              <Employee />
+            </AdminLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/admin/complaint/"
+        element={
+          <PrivateRouter>
+            <AdminLayout>
+              <AdminComplaints />
+            </AdminLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/admin/complaint/:complaint_id"
+        element={
+          <PrivateRouter>
+            <AdminLayout>
+              <Resolve />
+            </AdminLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+    </>
+  )
+);
+
+function App() {
+  return (
+    <>
+      <RouterProvider router={router} />
+
+      <Toaster />
+    </>
+  );
+}
+
+export default App;

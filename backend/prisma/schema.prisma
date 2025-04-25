@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  uid       String   @unique
+  email     String   @unique
+  name      String
+  roll      String?  @unique
+  mobile    String
+  session   String?
+  role      UserRole @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  block     Boolean  @default(false)
+
+  Department    Department   @relation(fields: [department_id], references: [department_id])
+  department_id String
+  Profession    Profession   @relation(fields: [profession_id], references: [profession_id])
+  profession_id Int
+  complaint     Complaints[]
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model Profession {
+  profession_id   Int    @id @default(autoincrement())
+  profession_name String
+  user            User[]
+}
+
+model Employee {
+  employee_id        Int                  @id @default(autoincrement())
+  employee_name      String
+  employee_mobile    String
+  ComplaintCataegory ComplaintCataegory   @relation(fields: [complaint_cat_id], references: [complaint_cat_id])
+  complaint_cat_id   Int
+  resolve            ResolvedComplaints[]
+}
+
+model EmployeeCategory {
+  emp_category_id Int    @id @default(autoincrement())
+  category_name   String
+}
+
+model Department {
+  department_id  String @unique
+  dept_full_name String
+  dept_shortform String
+  users          User[]
+}
+
+model Complaints {
+  complaint_id          Int      @id @default(autoincrement())
+  complaint_title       String
+  complaint_description String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @default(now()) @updatedAt
+
+  status             STATUS              @default(DUE)
+  emergancy          Boolean             @default(false)
+  ComplaintCataegory ComplaintCataegory? @relation(fields: [complaint_cat_id], references: [complaint_cat_id])
+  complaint_cat_id   Int?
+  User               User                @relation(fields: [uid], references: [uid])
+  uid                String
+}
+
+enum STATUS {
+  DUE
+  PROCESSING
+  COMPLETED
+}
+
+model ComplaintCataegory {
+  complaint_cat_id   Int          @id @default(autoincrement())
+  complaint_cat_name String
+  complaints         Complaints[]
+  employee           Employee[]
+}
+
+model ResolvedComplaints {
+  resolved_details String
+  resolved_by      String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @default(now())
+  complaint_id     Int       @unique
+  Employee         Employee? @relation(fields: [employee_id], references: [employee_id])
+  employee_id      Int?
+  estimated_date   DateTime?
+}
