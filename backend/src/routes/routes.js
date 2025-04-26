@@ -5,6 +5,7 @@ const {
   editComplaint,
   getSingleComplaint,
   getUserComplaintsForAdmin,
+  resolveComplaintForAdmin,
 } = require("../controller/complain");
 const {
   getComplaintCategories,
@@ -84,5 +85,6 @@ router.delete("/employee/:employee_id", deleteEmployee);
 // Complaints
 router.get("/admin/complaints", getUserComplaintsForAdmin);
 router.get("/admin/complaint/:complaint_id", getUserComplaintsForAdmin);
+router.post("/admin/complaint/resolve", resolveComplaintForAdmin);
 
 module.exports = router;

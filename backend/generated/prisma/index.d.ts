@@ -1473,10 +1473,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     complaint: number
+    resolve: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     complaint?: boolean | UserCountOutputTypeCountComplaintArgs
+    resolve?: boolean | UserCountOutputTypeCountResolveArgs
   }
 
   // Custom InputTypes
@@ -1495,6 +1497,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountComplaintArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ComplaintsWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountResolveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResolvedComplaintsWhereInput
   }
 
 
@@ -1588,6 +1597,37 @@ export namespace Prisma {
    */
   export type DepartmentCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
+  }
+
+
+  /**
+   * Count Type ComplaintsCountOutputType
+   */
+
+  export type ComplaintsCountOutputType = {
+    resolve: number
+  }
+
+  export type ComplaintsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    resolve?: boolean | ComplaintsCountOutputTypeCountResolveArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ComplaintsCountOutputType without action
+   */
+  export type ComplaintsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ComplaintsCountOutputType
+     */
+    select?: ComplaintsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ComplaintsCountOutputType without action
+   */
+  export type ComplaintsCountOutputTypeCountResolveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResolvedComplaintsWhereInput
   }
 
 
@@ -1892,6 +1932,7 @@ export namespace Prisma {
     Department?: boolean | DepartmentDefaultArgs<ExtArgs>
     Profession?: boolean | ProfessionDefaultArgs<ExtArgs>
     complaint?: boolean | User$complaintArgs<ExtArgs>
+    resolve?: boolean | User$resolveArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1917,6 +1958,7 @@ export namespace Prisma {
     Department?: boolean | DepartmentDefaultArgs<ExtArgs>
     Profession?: boolean | ProfessionDefaultArgs<ExtArgs>
     complaint?: boolean | User$complaintArgs<ExtArgs>
+    resolve?: boolean | User$resolveArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1926,6 +1968,7 @@ export namespace Prisma {
       Department: Prisma.$DepartmentPayload<ExtArgs>
       Profession: Prisma.$ProfessionPayload<ExtArgs>
       complaint: Prisma.$ComplaintsPayload<ExtArgs>[]
+      resolve: Prisma.$ResolvedComplaintsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       uid: string
@@ -2283,6 +2326,7 @@ export namespace Prisma {
     Department<T extends DepartmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DepartmentDefaultArgs<ExtArgs>>): Prisma__DepartmentClient<$Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     Profession<T extends ProfessionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProfessionDefaultArgs<ExtArgs>>): Prisma__ProfessionClient<$Result.GetResult<Prisma.$ProfessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     complaint<T extends User$complaintArgs<ExtArgs> = {}>(args?: Subset<T, User$complaintArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComplaintsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resolve<T extends User$resolveArgs<ExtArgs> = {}>(args?: Subset<T, User$resolveArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResolvedComplaintsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2688,6 +2732,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ComplaintsScalarFieldEnum | ComplaintsScalarFieldEnum[]
+  }
+
+  /**
+   * User.resolve
+   */
+  export type User$resolveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResolvedComplaints
+     */
+    select?: ResolvedComplaintsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResolvedComplaints
+     */
+    omit?: ResolvedComplaintsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResolvedComplaintsInclude<ExtArgs> | null
+    where?: ResolvedComplaintsWhereInput
+    orderBy?: ResolvedComplaintsOrderByWithRelationInput | ResolvedComplaintsOrderByWithRelationInput[]
+    cursor?: ResolvedComplaintsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResolvedComplaintsScalarFieldEnum | ResolvedComplaintsScalarFieldEnum[]
   }
 
   /**
@@ -6703,6 +6771,8 @@ export namespace Prisma {
     uid?: boolean
     ComplaintCataegory?: boolean | Complaints$ComplaintCataegoryArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
+    resolve?: boolean | Complaints$resolveArgs<ExtArgs>
+    _count?: boolean | ComplaintsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["complaints"]>
 
 
@@ -6723,6 +6793,8 @@ export namespace Prisma {
   export type ComplaintsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ComplaintCataegory?: boolean | Complaints$ComplaintCataegoryArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
+    resolve?: boolean | Complaints$resolveArgs<ExtArgs>
+    _count?: boolean | ComplaintsCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $ComplaintsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6730,6 +6802,7 @@ export namespace Prisma {
     objects: {
       ComplaintCataegory: Prisma.$ComplaintCataegoryPayload<ExtArgs> | null
       User: Prisma.$UserPayload<ExtArgs>
+      resolve: Prisma.$ResolvedComplaintsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       complaint_id: number
@@ -7083,6 +7156,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     ComplaintCataegory<T extends Complaints$ComplaintCataegoryArgs<ExtArgs> = {}>(args?: Subset<T, Complaints$ComplaintCataegoryArgs<ExtArgs>>): Prisma__ComplaintCataegoryClient<$Result.GetResult<Prisma.$ComplaintCataegoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    resolve<T extends Complaints$resolveArgs<ExtArgs> = {}>(args?: Subset<T, Complaints$resolveArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResolvedComplaintsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7480,6 +7554,30 @@ export namespace Prisma {
      */
     include?: ComplaintCataegoryInclude<ExtArgs> | null
     where?: ComplaintCataegoryWhereInput
+  }
+
+  /**
+   * Complaints.resolve
+   */
+  export type Complaints$resolveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResolvedComplaints
+     */
+    select?: ResolvedComplaintsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResolvedComplaints
+     */
+    omit?: ResolvedComplaintsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResolvedComplaintsInclude<ExtArgs> | null
+    where?: ResolvedComplaintsWhereInput
+    orderBy?: ResolvedComplaintsOrderByWithRelationInput | ResolvedComplaintsOrderByWithRelationInput[]
+    cursor?: ResolvedComplaintsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResolvedComplaintsScalarFieldEnum | ResolvedComplaintsScalarFieldEnum[]
   }
 
   /**
@@ -8498,85 +8596,85 @@ export namespace Prisma {
   }
 
   export type ResolvedComplaintsAvgAggregateOutputType = {
-    complaint_id: number | null
     employee_id: number | null
+    complaint_id: number | null
   }
 
   export type ResolvedComplaintsSumAggregateOutputType = {
-    complaint_id: number | null
     employee_id: number | null
+    complaint_id: number | null
   }
 
   export type ResolvedComplaintsMinAggregateOutputType = {
     resolved_details: string | null
-    resolved_by: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    complaint_id: number | null
     employee_id: number | null
     estimated_date: Date | null
+    complaint_id: number | null
+    resolved_by: string | null
   }
 
   export type ResolvedComplaintsMaxAggregateOutputType = {
     resolved_details: string | null
-    resolved_by: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    complaint_id: number | null
     employee_id: number | null
     estimated_date: Date | null
+    complaint_id: number | null
+    resolved_by: string | null
   }
 
   export type ResolvedComplaintsCountAggregateOutputType = {
     resolved_details: number
-    resolved_by: number
     createdAt: number
     updatedAt: number
-    complaint_id: number
     employee_id: number
     estimated_date: number
+    complaint_id: number
+    resolved_by: number
     _all: number
   }
 
 
   export type ResolvedComplaintsAvgAggregateInputType = {
-    complaint_id?: true
     employee_id?: true
+    complaint_id?: true
   }
 
   export type ResolvedComplaintsSumAggregateInputType = {
-    complaint_id?: true
     employee_id?: true
+    complaint_id?: true
   }
 
   export type ResolvedComplaintsMinAggregateInputType = {
     resolved_details?: true
-    resolved_by?: true
     createdAt?: true
     updatedAt?: true
-    complaint_id?: true
     employee_id?: true
     estimated_date?: true
+    complaint_id?: true
+    resolved_by?: true
   }
 
   export type ResolvedComplaintsMaxAggregateInputType = {
     resolved_details?: true
-    resolved_by?: true
     createdAt?: true
     updatedAt?: true
-    complaint_id?: true
     employee_id?: true
     estimated_date?: true
+    complaint_id?: true
+    resolved_by?: true
   }
 
   export type ResolvedComplaintsCountAggregateInputType = {
     resolved_details?: true
-    resolved_by?: true
     createdAt?: true
     updatedAt?: true
-    complaint_id?: true
     employee_id?: true
     estimated_date?: true
+    complaint_id?: true
+    resolved_by?: true
     _all?: true
   }
 
@@ -8668,12 +8766,12 @@ export namespace Prisma {
 
   export type ResolvedComplaintsGroupByOutputType = {
     resolved_details: string
-    resolved_by: string
     createdAt: Date
     updatedAt: Date
-    complaint_id: number
     employee_id: number | null
     estimated_date: Date | null
+    complaint_id: number
+    resolved_by: string | null
     _count: ResolvedComplaintsCountAggregateOutputType | null
     _avg: ResolvedComplaintsAvgAggregateOutputType | null
     _sum: ResolvedComplaintsSumAggregateOutputType | null
@@ -8697,45 +8795,51 @@ export namespace Prisma {
 
   export type ResolvedComplaintsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     resolved_details?: boolean
-    resolved_by?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    complaint_id?: boolean
     employee_id?: boolean
     estimated_date?: boolean
+    complaint_id?: boolean
+    resolved_by?: boolean
     Employee?: boolean | ResolvedComplaints$EmployeeArgs<ExtArgs>
+    Complaints?: boolean | ResolvedComplaints$ComplaintsArgs<ExtArgs>
+    User?: boolean | ResolvedComplaints$UserArgs<ExtArgs>
   }, ExtArgs["result"]["resolvedComplaints"]>
 
 
 
   export type ResolvedComplaintsSelectScalar = {
     resolved_details?: boolean
-    resolved_by?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    complaint_id?: boolean
     employee_id?: boolean
     estimated_date?: boolean
+    complaint_id?: boolean
+    resolved_by?: boolean
   }
 
-  export type ResolvedComplaintsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"resolved_details" | "resolved_by" | "createdAt" | "updatedAt" | "complaint_id" | "employee_id" | "estimated_date", ExtArgs["result"]["resolvedComplaints"]>
+  export type ResolvedComplaintsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"resolved_details" | "createdAt" | "updatedAt" | "employee_id" | "estimated_date" | "complaint_id" | "resolved_by", ExtArgs["result"]["resolvedComplaints"]>
   export type ResolvedComplaintsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Employee?: boolean | ResolvedComplaints$EmployeeArgs<ExtArgs>
+    Complaints?: boolean | ResolvedComplaints$ComplaintsArgs<ExtArgs>
+    User?: boolean | ResolvedComplaints$UserArgs<ExtArgs>
   }
 
   export type $ResolvedComplaintsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ResolvedComplaints"
     objects: {
       Employee: Prisma.$EmployeePayload<ExtArgs> | null
+      Complaints: Prisma.$ComplaintsPayload<ExtArgs> | null
+      User: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       resolved_details: string
-      resolved_by: string
       createdAt: Date
       updatedAt: Date
-      complaint_id: number
       employee_id: number | null
       estimated_date: Date | null
+      complaint_id: number
+      resolved_by: string | null
     }, ExtArgs["result"]["resolvedComplaints"]>
     composites: {}
   }
@@ -9077,6 +9181,8 @@ export namespace Prisma {
   export interface Prisma__ResolvedComplaintsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     Employee<T extends ResolvedComplaints$EmployeeArgs<ExtArgs> = {}>(args?: Subset<T, ResolvedComplaints$EmployeeArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    Complaints<T extends ResolvedComplaints$ComplaintsArgs<ExtArgs> = {}>(args?: Subset<T, ResolvedComplaints$ComplaintsArgs<ExtArgs>>): Prisma__ComplaintsClient<$Result.GetResult<Prisma.$ComplaintsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    User<T extends ResolvedComplaints$UserArgs<ExtArgs> = {}>(args?: Subset<T, ResolvedComplaints$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9107,12 +9213,12 @@ export namespace Prisma {
    */
   interface ResolvedComplaintsFieldRefs {
     readonly resolved_details: FieldRef<"ResolvedComplaints", 'String'>
-    readonly resolved_by: FieldRef<"ResolvedComplaints", 'String'>
     readonly createdAt: FieldRef<"ResolvedComplaints", 'DateTime'>
     readonly updatedAt: FieldRef<"ResolvedComplaints", 'DateTime'>
-    readonly complaint_id: FieldRef<"ResolvedComplaints", 'Int'>
     readonly employee_id: FieldRef<"ResolvedComplaints", 'Int'>
     readonly estimated_date: FieldRef<"ResolvedComplaints", 'DateTime'>
+    readonly complaint_id: FieldRef<"ResolvedComplaints", 'Int'>
+    readonly resolved_by: FieldRef<"ResolvedComplaints", 'String'>
   }
     
 
@@ -9475,6 +9581,44 @@ export namespace Prisma {
   }
 
   /**
+   * ResolvedComplaints.Complaints
+   */
+  export type ResolvedComplaints$ComplaintsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Complaints
+     */
+    select?: ComplaintsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Complaints
+     */
+    omit?: ComplaintsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplaintsInclude<ExtArgs> | null
+    where?: ComplaintsWhereInput
+  }
+
+  /**
+   * ResolvedComplaints.User
+   */
+  export type ResolvedComplaints$UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * ResolvedComplaints without action
    */
   export type ResolvedComplaintsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9585,12 +9729,12 @@ export namespace Prisma {
 
   export const ResolvedComplaintsScalarFieldEnum: {
     resolved_details: 'resolved_details',
-    resolved_by: 'resolved_by',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    complaint_id: 'complaint_id',
     employee_id: 'employee_id',
-    estimated_date: 'estimated_date'
+    estimated_date: 'estimated_date',
+    complaint_id: 'complaint_id',
+    resolved_by: 'resolved_by'
   };
 
   export type ResolvedComplaintsScalarFieldEnum = (typeof ResolvedComplaintsScalarFieldEnum)[keyof typeof ResolvedComplaintsScalarFieldEnum]
@@ -9756,6 +9900,7 @@ export namespace Prisma {
     Department?: XOR<DepartmentScalarRelationFilter, DepartmentWhereInput>
     Profession?: XOR<ProfessionScalarRelationFilter, ProfessionWhereInput>
     complaint?: ComplaintsListRelationFilter
+    resolve?: ResolvedComplaintsListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -9774,6 +9919,7 @@ export namespace Prisma {
     Department?: DepartmentOrderByWithRelationInput
     Profession?: ProfessionOrderByWithRelationInput
     complaint?: ComplaintsOrderByRelationAggregateInput
+    resolve?: ResolvedComplaintsOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -9796,6 +9942,7 @@ export namespace Prisma {
     Department?: XOR<DepartmentScalarRelationFilter, DepartmentWhereInput>
     Profession?: XOR<ProfessionScalarRelationFilter, ProfessionWhereInput>
     complaint?: ComplaintsListRelationFilter
+    resolve?: ResolvedComplaintsListRelationFilter
   }, "uid" | "email" | "roll">
 
   export type UserOrderByWithAggregationInput = {
@@ -10036,6 +10183,7 @@ export namespace Prisma {
     uid?: StringFilter<"Complaints"> | string
     ComplaintCataegory?: XOR<ComplaintCataegoryNullableScalarRelationFilter, ComplaintCataegoryWhereInput> | null
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
+    resolve?: ResolvedComplaintsListRelationFilter
   }
 
   export type ComplaintsOrderByWithRelationInput = {
@@ -10050,6 +10198,7 @@ export namespace Prisma {
     uid?: SortOrder
     ComplaintCataegory?: ComplaintCataegoryOrderByWithRelationInput
     User?: UserOrderByWithRelationInput
+    resolve?: ResolvedComplaintsOrderByRelationAggregateInput
     _relevance?: ComplaintsOrderByRelevanceInput
   }
 
@@ -10068,6 +10217,7 @@ export namespace Prisma {
     uid?: StringFilter<"Complaints"> | string
     ComplaintCataegory?: XOR<ComplaintCataegoryNullableScalarRelationFilter, ComplaintCataegoryWhereInput> | null
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
+    resolve?: ResolvedComplaintsListRelationFilter
   }, "complaint_id">
 
   export type ComplaintsOrderByWithAggregationInput = {
@@ -10153,24 +10303,28 @@ export namespace Prisma {
     OR?: ResolvedComplaintsWhereInput[]
     NOT?: ResolvedComplaintsWhereInput | ResolvedComplaintsWhereInput[]
     resolved_details?: StringFilter<"ResolvedComplaints"> | string
-    resolved_by?: StringFilter<"ResolvedComplaints"> | string
     createdAt?: DateTimeFilter<"ResolvedComplaints"> | Date | string
     updatedAt?: DateTimeFilter<"ResolvedComplaints"> | Date | string
-    complaint_id?: IntFilter<"ResolvedComplaints"> | number
     employee_id?: IntNullableFilter<"ResolvedComplaints"> | number | null
     estimated_date?: DateTimeNullableFilter<"ResolvedComplaints"> | Date | string | null
+    complaint_id?: IntFilter<"ResolvedComplaints"> | number
+    resolved_by?: StringNullableFilter<"ResolvedComplaints"> | string | null
     Employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
+    Complaints?: XOR<ComplaintsNullableScalarRelationFilter, ComplaintsWhereInput> | null
+    User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type ResolvedComplaintsOrderByWithRelationInput = {
     resolved_details?: SortOrder
-    resolved_by?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    complaint_id?: SortOrder
     employee_id?: SortOrderInput | SortOrder
     estimated_date?: SortOrderInput | SortOrder
+    complaint_id?: SortOrder
+    resolved_by?: SortOrderInput | SortOrder
     Employee?: EmployeeOrderByWithRelationInput
+    Complaints?: ComplaintsOrderByWithRelationInput
+    User?: UserOrderByWithRelationInput
     _relevance?: ResolvedComplaintsOrderByRelevanceInput
   }
 
@@ -10180,22 +10334,24 @@ export namespace Prisma {
     OR?: ResolvedComplaintsWhereInput[]
     NOT?: ResolvedComplaintsWhereInput | ResolvedComplaintsWhereInput[]
     resolved_details?: StringFilter<"ResolvedComplaints"> | string
-    resolved_by?: StringFilter<"ResolvedComplaints"> | string
     createdAt?: DateTimeFilter<"ResolvedComplaints"> | Date | string
     updatedAt?: DateTimeFilter<"ResolvedComplaints"> | Date | string
     employee_id?: IntNullableFilter<"ResolvedComplaints"> | number | null
     estimated_date?: DateTimeNullableFilter<"ResolvedComplaints"> | Date | string | null
+    resolved_by?: StringNullableFilter<"ResolvedComplaints"> | string | null
     Employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
+    Complaints?: XOR<ComplaintsNullableScalarRelationFilter, ComplaintsWhereInput> | null
+    User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "complaint_id">
 
   export type ResolvedComplaintsOrderByWithAggregationInput = {
     resolved_details?: SortOrder
-    resolved_by?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    complaint_id?: SortOrder
     employee_id?: SortOrderInput | SortOrder
     estimated_date?: SortOrderInput | SortOrder
+    complaint_id?: SortOrder
+    resolved_by?: SortOrderInput | SortOrder
     _count?: ResolvedComplaintsCountOrderByAggregateInput
     _avg?: ResolvedComplaintsAvgOrderByAggregateInput
     _max?: ResolvedComplaintsMaxOrderByAggregateInput
@@ -10208,12 +10364,12 @@ export namespace Prisma {
     OR?: ResolvedComplaintsScalarWhereWithAggregatesInput[]
     NOT?: ResolvedComplaintsScalarWhereWithAggregatesInput | ResolvedComplaintsScalarWhereWithAggregatesInput[]
     resolved_details?: StringWithAggregatesFilter<"ResolvedComplaints"> | string
-    resolved_by?: StringWithAggregatesFilter<"ResolvedComplaints"> | string
     createdAt?: DateTimeWithAggregatesFilter<"ResolvedComplaints"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ResolvedComplaints"> | Date | string
-    complaint_id?: IntWithAggregatesFilter<"ResolvedComplaints"> | number
     employee_id?: IntNullableWithAggregatesFilter<"ResolvedComplaints"> | number | null
     estimated_date?: DateTimeNullableWithAggregatesFilter<"ResolvedComplaints"> | Date | string | null
+    complaint_id?: IntWithAggregatesFilter<"ResolvedComplaints"> | number
+    resolved_by?: StringNullableWithAggregatesFilter<"ResolvedComplaints"> | string | null
   }
 
   export type UserCreateInput = {
@@ -10230,6 +10386,7 @@ export namespace Prisma {
     Department: DepartmentCreateNestedOneWithoutUsersInput
     Profession: ProfessionCreateNestedOneWithoutUserInput
     complaint?: ComplaintsCreateNestedManyWithoutUserInput
+    resolve?: ResolvedComplaintsCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -10246,6 +10403,7 @@ export namespace Prisma {
     department_id: string
     profession_id: number
     complaint?: ComplaintsUncheckedCreateNestedManyWithoutUserInput
+    resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -10262,6 +10420,7 @@ export namespace Prisma {
     Department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     Profession?: ProfessionUpdateOneRequiredWithoutUserNestedInput
     complaint?: ComplaintsUpdateManyWithoutUserNestedInput
+    resolve?: ResolvedComplaintsUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -10278,6 +10437,7 @@ export namespace Prisma {
     department_id?: StringFieldUpdateOperationsInput | string
     profession_id?: IntFieldUpdateOperationsInput | number
     complaint?: ComplaintsUncheckedUpdateManyWithoutUserNestedInput
+    resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -10495,6 +10655,7 @@ export namespace Prisma {
     emergancy?: boolean
     ComplaintCataegory?: ComplaintCataegoryCreateNestedOneWithoutComplaintsInput
     User: UserCreateNestedOneWithoutComplaintInput
+    resolve?: ResolvedComplaintsCreateNestedManyWithoutComplaintsInput
   }
 
   export type ComplaintsUncheckedCreateInput = {
@@ -10507,6 +10668,7 @@ export namespace Prisma {
     emergancy?: boolean
     complaint_cat_id?: number | null
     uid: string
+    resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutComplaintsInput
   }
 
   export type ComplaintsUpdateInput = {
@@ -10518,6 +10680,7 @@ export namespace Prisma {
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     ComplaintCataegory?: ComplaintCataegoryUpdateOneWithoutComplaintsNestedInput
     User?: UserUpdateOneRequiredWithoutComplaintNestedInput
+    resolve?: ResolvedComplaintsUpdateManyWithoutComplaintsNestedInput
   }
 
   export type ComplaintsUncheckedUpdateInput = {
@@ -10530,6 +10693,7 @@ export namespace Prisma {
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
     uid?: StringFieldUpdateOperationsInput | string
+    resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsNestedInput
   }
 
   export type ComplaintsCreateManyInput = {
@@ -10607,71 +10771,69 @@ export namespace Prisma {
 
   export type ResolvedComplaintsCreateInput = {
     resolved_details: string
-    resolved_by: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    complaint_id: number
     estimated_date?: Date | string | null
     Employee?: EmployeeCreateNestedOneWithoutResolveInput
+    Complaints?: ComplaintsCreateNestedOneWithoutResolveInput
+    User?: UserCreateNestedOneWithoutResolveInput
   }
 
   export type ResolvedComplaintsUncheckedCreateInput = {
     resolved_details: string
-    resolved_by: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    complaint_id: number
     employee_id?: number | null
     estimated_date?: Date | string | null
+    complaint_id: number
+    resolved_by?: string | null
   }
 
   export type ResolvedComplaintsUpdateInput = {
     resolved_details?: StringFieldUpdateOperationsInput | string
-    resolved_by?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    complaint_id?: IntFieldUpdateOperationsInput | number
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Employee?: EmployeeUpdateOneWithoutResolveNestedInput
+    Complaints?: ComplaintsUpdateOneWithoutResolveNestedInput
+    User?: UserUpdateOneWithoutResolveNestedInput
   }
 
   export type ResolvedComplaintsUncheckedUpdateInput = {
     resolved_details?: StringFieldUpdateOperationsInput | string
-    resolved_by?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    complaint_id?: IntFieldUpdateOperationsInput | number
     employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    complaint_id?: IntFieldUpdateOperationsInput | number
+    resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ResolvedComplaintsCreateManyInput = {
     resolved_details: string
-    resolved_by: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    complaint_id: number
     employee_id?: number | null
     estimated_date?: Date | string | null
+    complaint_id: number
+    resolved_by?: string | null
   }
 
   export type ResolvedComplaintsUpdateManyMutationInput = {
     resolved_details?: StringFieldUpdateOperationsInput | string
-    resolved_by?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    complaint_id?: IntFieldUpdateOperationsInput | number
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ResolvedComplaintsUncheckedUpdateManyInput = {
     resolved_details?: StringFieldUpdateOperationsInput | string
-    resolved_by?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    complaint_id?: IntFieldUpdateOperationsInput | number
     employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    complaint_id?: IntFieldUpdateOperationsInput | number
+    resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -10754,12 +10916,22 @@ export namespace Prisma {
     none?: ComplaintsWhereInput
   }
 
+  export type ResolvedComplaintsListRelationFilter = {
+    every?: ResolvedComplaintsWhereInput
+    some?: ResolvedComplaintsWhereInput
+    none?: ResolvedComplaintsWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type ComplaintsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ResolvedComplaintsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -10948,16 +11120,6 @@ export namespace Prisma {
   export type ComplaintCataegoryScalarRelationFilter = {
     is?: ComplaintCataegoryWhereInput
     isNot?: ComplaintCataegoryWhereInput
-  }
-
-  export type ResolvedComplaintsListRelationFilter = {
-    every?: ResolvedComplaintsWhereInput
-    some?: ResolvedComplaintsWhereInput
-    none?: ResolvedComplaintsWhereInput
-  }
-
-  export type ResolvedComplaintsOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type EmployeeOrderByRelevanceInput = {
@@ -11211,6 +11373,16 @@ export namespace Prisma {
     isNot?: EmployeeWhereInput | null
   }
 
+  export type ComplaintsNullableScalarRelationFilter = {
+    is?: ComplaintsWhereInput | null
+    isNot?: ComplaintsWhereInput | null
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type ResolvedComplaintsOrderByRelevanceInput = {
     fields: ResolvedComplaintsOrderByRelevanceFieldEnum | ResolvedComplaintsOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -11219,42 +11391,42 @@ export namespace Prisma {
 
   export type ResolvedComplaintsCountOrderByAggregateInput = {
     resolved_details?: SortOrder
-    resolved_by?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    complaint_id?: SortOrder
     employee_id?: SortOrder
     estimated_date?: SortOrder
+    complaint_id?: SortOrder
+    resolved_by?: SortOrder
   }
 
   export type ResolvedComplaintsAvgOrderByAggregateInput = {
-    complaint_id?: SortOrder
     employee_id?: SortOrder
+    complaint_id?: SortOrder
   }
 
   export type ResolvedComplaintsMaxOrderByAggregateInput = {
     resolved_details?: SortOrder
-    resolved_by?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    complaint_id?: SortOrder
     employee_id?: SortOrder
     estimated_date?: SortOrder
+    complaint_id?: SortOrder
+    resolved_by?: SortOrder
   }
 
   export type ResolvedComplaintsMinOrderByAggregateInput = {
     resolved_details?: SortOrder
-    resolved_by?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    complaint_id?: SortOrder
     employee_id?: SortOrder
     estimated_date?: SortOrder
+    complaint_id?: SortOrder
+    resolved_by?: SortOrder
   }
 
   export type ResolvedComplaintsSumOrderByAggregateInput = {
-    complaint_id?: SortOrder
     employee_id?: SortOrder
+    complaint_id?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -11290,11 +11462,25 @@ export namespace Prisma {
     connect?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
   }
 
+  export type ResolvedComplaintsCreateNestedManyWithoutUserInput = {
+    create?: XOR<ResolvedComplaintsCreateWithoutUserInput, ResolvedComplaintsUncheckedCreateWithoutUserInput> | ResolvedComplaintsCreateWithoutUserInput[] | ResolvedComplaintsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutUserInput | ResolvedComplaintsCreateOrConnectWithoutUserInput[]
+    createMany?: ResolvedComplaintsCreateManyUserInputEnvelope
+    connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+  }
+
   export type ComplaintsUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ComplaintsCreateWithoutUserInput, ComplaintsUncheckedCreateWithoutUserInput> | ComplaintsCreateWithoutUserInput[] | ComplaintsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ComplaintsCreateOrConnectWithoutUserInput | ComplaintsCreateOrConnectWithoutUserInput[]
     createMany?: ComplaintsCreateManyUserInputEnvelope
     connect?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+  }
+
+  export type ResolvedComplaintsUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ResolvedComplaintsCreateWithoutUserInput, ResolvedComplaintsUncheckedCreateWithoutUserInput> | ResolvedComplaintsCreateWithoutUserInput[] | ResolvedComplaintsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutUserInput | ResolvedComplaintsCreateOrConnectWithoutUserInput[]
+    createMany?: ResolvedComplaintsCreateManyUserInputEnvelope
+    connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -11347,6 +11533,20 @@ export namespace Prisma {
     deleteMany?: ComplaintsScalarWhereInput | ComplaintsScalarWhereInput[]
   }
 
+  export type ResolvedComplaintsUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ResolvedComplaintsCreateWithoutUserInput, ResolvedComplaintsUncheckedCreateWithoutUserInput> | ResolvedComplaintsCreateWithoutUserInput[] | ResolvedComplaintsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutUserInput | ResolvedComplaintsCreateOrConnectWithoutUserInput[]
+    upsert?: ResolvedComplaintsUpsertWithWhereUniqueWithoutUserInput | ResolvedComplaintsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ResolvedComplaintsCreateManyUserInputEnvelope
+    set?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    disconnect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    delete?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    update?: ResolvedComplaintsUpdateWithWhereUniqueWithoutUserInput | ResolvedComplaintsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ResolvedComplaintsUpdateManyWithWhereWithoutUserInput | ResolvedComplaintsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -11367,6 +11567,20 @@ export namespace Prisma {
     update?: ComplaintsUpdateWithWhereUniqueWithoutUserInput | ComplaintsUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ComplaintsUpdateManyWithWhereWithoutUserInput | ComplaintsUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ComplaintsScalarWhereInput | ComplaintsScalarWhereInput[]
+  }
+
+  export type ResolvedComplaintsUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ResolvedComplaintsCreateWithoutUserInput, ResolvedComplaintsUncheckedCreateWithoutUserInput> | ResolvedComplaintsCreateWithoutUserInput[] | ResolvedComplaintsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutUserInput | ResolvedComplaintsCreateOrConnectWithoutUserInput[]
+    upsert?: ResolvedComplaintsUpsertWithWhereUniqueWithoutUserInput | ResolvedComplaintsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ResolvedComplaintsCreateManyUserInputEnvelope
+    set?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    disconnect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    delete?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    update?: ResolvedComplaintsUpdateWithWhereUniqueWithoutUserInput | ResolvedComplaintsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ResolvedComplaintsUpdateManyWithWhereWithoutUserInput | ResolvedComplaintsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
   }
 
   export type UserCreateNestedManyWithoutProfessionInput = {
@@ -11521,6 +11735,20 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type ResolvedComplaintsCreateNestedManyWithoutComplaintsInput = {
+    create?: XOR<ResolvedComplaintsCreateWithoutComplaintsInput, ResolvedComplaintsUncheckedCreateWithoutComplaintsInput> | ResolvedComplaintsCreateWithoutComplaintsInput[] | ResolvedComplaintsUncheckedCreateWithoutComplaintsInput[]
+    connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutComplaintsInput | ResolvedComplaintsCreateOrConnectWithoutComplaintsInput[]
+    createMany?: ResolvedComplaintsCreateManyComplaintsInputEnvelope
+    connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+  }
+
+  export type ResolvedComplaintsUncheckedCreateNestedManyWithoutComplaintsInput = {
+    create?: XOR<ResolvedComplaintsCreateWithoutComplaintsInput, ResolvedComplaintsUncheckedCreateWithoutComplaintsInput> | ResolvedComplaintsCreateWithoutComplaintsInput[] | ResolvedComplaintsUncheckedCreateWithoutComplaintsInput[]
+    connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutComplaintsInput | ResolvedComplaintsCreateOrConnectWithoutComplaintsInput[]
+    createMany?: ResolvedComplaintsCreateManyComplaintsInputEnvelope
+    connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+  }
+
   export type EnumSTATUSFieldUpdateOperationsInput = {
     set?: $Enums.STATUS
   }
@@ -11543,12 +11771,40 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutComplaintInput, UserUpdateWithoutComplaintInput>, UserUncheckedUpdateWithoutComplaintInput>
   }
 
+  export type ResolvedComplaintsUpdateManyWithoutComplaintsNestedInput = {
+    create?: XOR<ResolvedComplaintsCreateWithoutComplaintsInput, ResolvedComplaintsUncheckedCreateWithoutComplaintsInput> | ResolvedComplaintsCreateWithoutComplaintsInput[] | ResolvedComplaintsUncheckedCreateWithoutComplaintsInput[]
+    connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutComplaintsInput | ResolvedComplaintsCreateOrConnectWithoutComplaintsInput[]
+    upsert?: ResolvedComplaintsUpsertWithWhereUniqueWithoutComplaintsInput | ResolvedComplaintsUpsertWithWhereUniqueWithoutComplaintsInput[]
+    createMany?: ResolvedComplaintsCreateManyComplaintsInputEnvelope
+    set?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    disconnect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    delete?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    update?: ResolvedComplaintsUpdateWithWhereUniqueWithoutComplaintsInput | ResolvedComplaintsUpdateWithWhereUniqueWithoutComplaintsInput[]
+    updateMany?: ResolvedComplaintsUpdateManyWithWhereWithoutComplaintsInput | ResolvedComplaintsUpdateManyWithWhereWithoutComplaintsInput[]
+    deleteMany?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsNestedInput = {
+    create?: XOR<ResolvedComplaintsCreateWithoutComplaintsInput, ResolvedComplaintsUncheckedCreateWithoutComplaintsInput> | ResolvedComplaintsCreateWithoutComplaintsInput[] | ResolvedComplaintsUncheckedCreateWithoutComplaintsInput[]
+    connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutComplaintsInput | ResolvedComplaintsCreateOrConnectWithoutComplaintsInput[]
+    upsert?: ResolvedComplaintsUpsertWithWhereUniqueWithoutComplaintsInput | ResolvedComplaintsUpsertWithWhereUniqueWithoutComplaintsInput[]
+    createMany?: ResolvedComplaintsCreateManyComplaintsInputEnvelope
+    set?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    disconnect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    delete?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+    update?: ResolvedComplaintsUpdateWithWhereUniqueWithoutComplaintsInput | ResolvedComplaintsUpdateWithWhereUniqueWithoutComplaintsInput[]
+    updateMany?: ResolvedComplaintsUpdateManyWithWhereWithoutComplaintsInput | ResolvedComplaintsUpdateManyWithWhereWithoutComplaintsInput[]
+    deleteMany?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
   }
 
   export type ComplaintsCreateNestedManyWithoutComplaintCataegoryInput = {
@@ -11641,6 +11897,18 @@ export namespace Prisma {
     connect?: EmployeeWhereUniqueInput
   }
 
+  export type ComplaintsCreateNestedOneWithoutResolveInput = {
+    create?: XOR<ComplaintsCreateWithoutResolveInput, ComplaintsUncheckedCreateWithoutResolveInput>
+    connectOrCreate?: ComplaintsCreateOrConnectWithoutResolveInput
+    connect?: ComplaintsWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutResolveInput = {
+    create?: XOR<UserCreateWithoutResolveInput, UserUncheckedCreateWithoutResolveInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResolveInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -11653,6 +11921,26 @@ export namespace Prisma {
     delete?: EmployeeWhereInput | boolean
     connect?: EmployeeWhereUniqueInput
     update?: XOR<XOR<EmployeeUpdateToOneWithWhereWithoutResolveInput, EmployeeUpdateWithoutResolveInput>, EmployeeUncheckedUpdateWithoutResolveInput>
+  }
+
+  export type ComplaintsUpdateOneWithoutResolveNestedInput = {
+    create?: XOR<ComplaintsCreateWithoutResolveInput, ComplaintsUncheckedCreateWithoutResolveInput>
+    connectOrCreate?: ComplaintsCreateOrConnectWithoutResolveInput
+    upsert?: ComplaintsUpsertWithoutResolveInput
+    disconnect?: ComplaintsWhereInput | boolean
+    delete?: ComplaintsWhereInput | boolean
+    connect?: ComplaintsWhereUniqueInput
+    update?: XOR<XOR<ComplaintsUpdateToOneWithWhereWithoutResolveInput, ComplaintsUpdateWithoutResolveInput>, ComplaintsUncheckedUpdateWithoutResolveInput>
+  }
+
+  export type UserUpdateOneWithoutResolveNestedInput = {
+    create?: XOR<UserCreateWithoutResolveInput, UserUncheckedCreateWithoutResolveInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResolveInput
+    upsert?: UserUpsertWithoutResolveInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResolveInput, UserUpdateWithoutResolveInput>, UserUncheckedUpdateWithoutResolveInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -11933,6 +12221,7 @@ export namespace Prisma {
     status?: $Enums.STATUS
     emergancy?: boolean
     ComplaintCataegory?: ComplaintCataegoryCreateNestedOneWithoutComplaintsInput
+    resolve?: ResolvedComplaintsCreateNestedManyWithoutComplaintsInput
   }
 
   export type ComplaintsUncheckedCreateWithoutUserInput = {
@@ -11944,6 +12233,7 @@ export namespace Prisma {
     status?: $Enums.STATUS
     emergancy?: boolean
     complaint_cat_id?: number | null
+    resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutComplaintsInput
   }
 
   export type ComplaintsCreateOrConnectWithoutUserInput = {
@@ -11953,6 +12243,34 @@ export namespace Prisma {
 
   export type ComplaintsCreateManyUserInputEnvelope = {
     data: ComplaintsCreateManyUserInput | ComplaintsCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ResolvedComplaintsCreateWithoutUserInput = {
+    resolved_details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    estimated_date?: Date | string | null
+    Employee?: EmployeeCreateNestedOneWithoutResolveInput
+    Complaints?: ComplaintsCreateNestedOneWithoutResolveInput
+  }
+
+  export type ResolvedComplaintsUncheckedCreateWithoutUserInput = {
+    resolved_details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    employee_id?: number | null
+    estimated_date?: Date | string | null
+    complaint_id: number
+  }
+
+  export type ResolvedComplaintsCreateOrConnectWithoutUserInput = {
+    where: ResolvedComplaintsWhereUniqueInput
+    create: XOR<ResolvedComplaintsCreateWithoutUserInput, ResolvedComplaintsUncheckedCreateWithoutUserInput>
+  }
+
+  export type ResolvedComplaintsCreateManyUserInputEnvelope = {
+    data: ResolvedComplaintsCreateManyUserInput | ResolvedComplaintsCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -12030,6 +12348,35 @@ export namespace Prisma {
     uid?: StringFilter<"Complaints"> | string
   }
 
+  export type ResolvedComplaintsUpsertWithWhereUniqueWithoutUserInput = {
+    where: ResolvedComplaintsWhereUniqueInput
+    update: XOR<ResolvedComplaintsUpdateWithoutUserInput, ResolvedComplaintsUncheckedUpdateWithoutUserInput>
+    create: XOR<ResolvedComplaintsCreateWithoutUserInput, ResolvedComplaintsUncheckedCreateWithoutUserInput>
+  }
+
+  export type ResolvedComplaintsUpdateWithWhereUniqueWithoutUserInput = {
+    where: ResolvedComplaintsWhereUniqueInput
+    data: XOR<ResolvedComplaintsUpdateWithoutUserInput, ResolvedComplaintsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ResolvedComplaintsUpdateManyWithWhereWithoutUserInput = {
+    where: ResolvedComplaintsScalarWhereInput
+    data: XOR<ResolvedComplaintsUpdateManyMutationInput, ResolvedComplaintsUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ResolvedComplaintsScalarWhereInput = {
+    AND?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
+    OR?: ResolvedComplaintsScalarWhereInput[]
+    NOT?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
+    resolved_details?: StringFilter<"ResolvedComplaints"> | string
+    createdAt?: DateTimeFilter<"ResolvedComplaints"> | Date | string
+    updatedAt?: DateTimeFilter<"ResolvedComplaints"> | Date | string
+    employee_id?: IntNullableFilter<"ResolvedComplaints"> | number | null
+    estimated_date?: DateTimeNullableFilter<"ResolvedComplaints"> | Date | string | null
+    complaint_id?: IntFilter<"ResolvedComplaints"> | number
+    resolved_by?: StringNullableFilter<"ResolvedComplaints"> | string | null
+  }
+
   export type UserCreateWithoutProfessionInput = {
     uid: string
     email: string
@@ -12043,6 +12390,7 @@ export namespace Prisma {
     block?: boolean
     Department: DepartmentCreateNestedOneWithoutUsersInput
     complaint?: ComplaintsCreateNestedManyWithoutUserInput
+    resolve?: ResolvedComplaintsCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProfessionInput = {
@@ -12058,6 +12406,7 @@ export namespace Prisma {
     block?: boolean
     department_id: string
     complaint?: ComplaintsUncheckedCreateNestedManyWithoutUserInput
+    resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProfessionInput = {
@@ -12122,20 +12471,20 @@ export namespace Prisma {
 
   export type ResolvedComplaintsCreateWithoutEmployeeInput = {
     resolved_details: string
-    resolved_by: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    complaint_id: number
     estimated_date?: Date | string | null
+    Complaints?: ComplaintsCreateNestedOneWithoutResolveInput
+    User?: UserCreateNestedOneWithoutResolveInput
   }
 
   export type ResolvedComplaintsUncheckedCreateWithoutEmployeeInput = {
     resolved_details: string
-    resolved_by: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    complaint_id: number
     estimated_date?: Date | string | null
+    complaint_id: number
+    resolved_by?: string | null
   }
 
   export type ResolvedComplaintsCreateOrConnectWithoutEmployeeInput = {
@@ -12186,19 +12535,6 @@ export namespace Prisma {
     data: XOR<ResolvedComplaintsUpdateManyMutationInput, ResolvedComplaintsUncheckedUpdateManyWithoutEmployeeInput>
   }
 
-  export type ResolvedComplaintsScalarWhereInput = {
-    AND?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
-    OR?: ResolvedComplaintsScalarWhereInput[]
-    NOT?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
-    resolved_details?: StringFilter<"ResolvedComplaints"> | string
-    resolved_by?: StringFilter<"ResolvedComplaints"> | string
-    createdAt?: DateTimeFilter<"ResolvedComplaints"> | Date | string
-    updatedAt?: DateTimeFilter<"ResolvedComplaints"> | Date | string
-    complaint_id?: IntFilter<"ResolvedComplaints"> | number
-    employee_id?: IntNullableFilter<"ResolvedComplaints"> | number | null
-    estimated_date?: DateTimeNullableFilter<"ResolvedComplaints"> | Date | string | null
-  }
-
   export type UserCreateWithoutDepartmentInput = {
     uid: string
     email: string
@@ -12212,6 +12548,7 @@ export namespace Prisma {
     block?: boolean
     Profession: ProfessionCreateNestedOneWithoutUserInput
     complaint?: ComplaintsCreateNestedManyWithoutUserInput
+    resolve?: ResolvedComplaintsCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDepartmentInput = {
@@ -12227,6 +12564,7 @@ export namespace Prisma {
     block?: boolean
     profession_id: number
     complaint?: ComplaintsUncheckedCreateNestedManyWithoutUserInput
+    resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDepartmentInput = {
@@ -12284,6 +12622,7 @@ export namespace Prisma {
     block?: boolean
     Department: DepartmentCreateNestedOneWithoutUsersInput
     Profession: ProfessionCreateNestedOneWithoutUserInput
+    resolve?: ResolvedComplaintsCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutComplaintInput = {
@@ -12299,11 +12638,40 @@ export namespace Prisma {
     block?: boolean
     department_id: string
     profession_id: number
+    resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutComplaintInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutComplaintInput, UserUncheckedCreateWithoutComplaintInput>
+  }
+
+  export type ResolvedComplaintsCreateWithoutComplaintsInput = {
+    resolved_details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    estimated_date?: Date | string | null
+    Employee?: EmployeeCreateNestedOneWithoutResolveInput
+    User?: UserCreateNestedOneWithoutResolveInput
+  }
+
+  export type ResolvedComplaintsUncheckedCreateWithoutComplaintsInput = {
+    resolved_details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    employee_id?: number | null
+    estimated_date?: Date | string | null
+    resolved_by?: string | null
+  }
+
+  export type ResolvedComplaintsCreateOrConnectWithoutComplaintsInput = {
+    where: ResolvedComplaintsWhereUniqueInput
+    create: XOR<ResolvedComplaintsCreateWithoutComplaintsInput, ResolvedComplaintsUncheckedCreateWithoutComplaintsInput>
+  }
+
+  export type ResolvedComplaintsCreateManyComplaintsInputEnvelope = {
+    data: ResolvedComplaintsCreateManyComplaintsInput | ResolvedComplaintsCreateManyComplaintsInput[]
+    skipDuplicates?: boolean
   }
 
   export type ComplaintCataegoryUpsertWithoutComplaintsInput = {
@@ -12352,6 +12720,7 @@ export namespace Prisma {
     block?: BoolFieldUpdateOperationsInput | boolean
     Department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     Profession?: ProfessionUpdateOneRequiredWithoutUserNestedInput
+    resolve?: ResolvedComplaintsUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutComplaintInput = {
@@ -12367,6 +12736,23 @@ export namespace Prisma {
     block?: BoolFieldUpdateOperationsInput | boolean
     department_id?: StringFieldUpdateOperationsInput | string
     profession_id?: IntFieldUpdateOperationsInput | number
+    resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ResolvedComplaintsUpsertWithWhereUniqueWithoutComplaintsInput = {
+    where: ResolvedComplaintsWhereUniqueInput
+    update: XOR<ResolvedComplaintsUpdateWithoutComplaintsInput, ResolvedComplaintsUncheckedUpdateWithoutComplaintsInput>
+    create: XOR<ResolvedComplaintsCreateWithoutComplaintsInput, ResolvedComplaintsUncheckedCreateWithoutComplaintsInput>
+  }
+
+  export type ResolvedComplaintsUpdateWithWhereUniqueWithoutComplaintsInput = {
+    where: ResolvedComplaintsWhereUniqueInput
+    data: XOR<ResolvedComplaintsUpdateWithoutComplaintsInput, ResolvedComplaintsUncheckedUpdateWithoutComplaintsInput>
+  }
+
+  export type ResolvedComplaintsUpdateManyWithWhereWithoutComplaintsInput = {
+    where: ResolvedComplaintsScalarWhereInput
+    data: XOR<ResolvedComplaintsUpdateManyMutationInput, ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsInput>
   }
 
   export type ComplaintsCreateWithoutComplaintCataegoryInput = {
@@ -12377,6 +12763,7 @@ export namespace Prisma {
     status?: $Enums.STATUS
     emergancy?: boolean
     User: UserCreateNestedOneWithoutComplaintInput
+    resolve?: ResolvedComplaintsCreateNestedManyWithoutComplaintsInput
   }
 
   export type ComplaintsUncheckedCreateWithoutComplaintCataegoryInput = {
@@ -12388,6 +12775,7 @@ export namespace Prisma {
     status?: $Enums.STATUS
     emergancy?: boolean
     uid: string
+    resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutComplaintsInput
   }
 
   export type ComplaintsCreateOrConnectWithoutComplaintCataegoryInput = {
@@ -12483,6 +12871,71 @@ export namespace Prisma {
     create: XOR<EmployeeCreateWithoutResolveInput, EmployeeUncheckedCreateWithoutResolveInput>
   }
 
+  export type ComplaintsCreateWithoutResolveInput = {
+    complaint_title: string
+    complaint_description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.STATUS
+    emergancy?: boolean
+    ComplaintCataegory?: ComplaintCataegoryCreateNestedOneWithoutComplaintsInput
+    User: UserCreateNestedOneWithoutComplaintInput
+  }
+
+  export type ComplaintsUncheckedCreateWithoutResolveInput = {
+    complaint_id?: number
+    complaint_title: string
+    complaint_description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.STATUS
+    emergancy?: boolean
+    complaint_cat_id?: number | null
+    uid: string
+  }
+
+  export type ComplaintsCreateOrConnectWithoutResolveInput = {
+    where: ComplaintsWhereUniqueInput
+    create: XOR<ComplaintsCreateWithoutResolveInput, ComplaintsUncheckedCreateWithoutResolveInput>
+  }
+
+  export type UserCreateWithoutResolveInput = {
+    uid: string
+    email: string
+    name: string
+    roll?: string | null
+    mobile: string
+    session?: string | null
+    role?: $Enums.UserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    block?: boolean
+    Department: DepartmentCreateNestedOneWithoutUsersInput
+    Profession: ProfessionCreateNestedOneWithoutUserInput
+    complaint?: ComplaintsCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutResolveInput = {
+    uid: string
+    email: string
+    name: string
+    roll?: string | null
+    mobile: string
+    session?: string | null
+    role?: $Enums.UserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    block?: boolean
+    department_id: string
+    profession_id: number
+    complaint?: ComplaintsUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutResolveInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutResolveInput, UserUncheckedCreateWithoutResolveInput>
+  }
+
   export type EmployeeUpsertWithoutResolveInput = {
     update: XOR<EmployeeUpdateWithoutResolveInput, EmployeeUncheckedUpdateWithoutResolveInput>
     create: XOR<EmployeeCreateWithoutResolveInput, EmployeeUncheckedCreateWithoutResolveInput>
@@ -12507,6 +12960,83 @@ export namespace Prisma {
     complaint_cat_id?: IntFieldUpdateOperationsInput | number
   }
 
+  export type ComplaintsUpsertWithoutResolveInput = {
+    update: XOR<ComplaintsUpdateWithoutResolveInput, ComplaintsUncheckedUpdateWithoutResolveInput>
+    create: XOR<ComplaintsCreateWithoutResolveInput, ComplaintsUncheckedCreateWithoutResolveInput>
+    where?: ComplaintsWhereInput
+  }
+
+  export type ComplaintsUpdateToOneWithWhereWithoutResolveInput = {
+    where?: ComplaintsWhereInput
+    data: XOR<ComplaintsUpdateWithoutResolveInput, ComplaintsUncheckedUpdateWithoutResolveInput>
+  }
+
+  export type ComplaintsUpdateWithoutResolveInput = {
+    complaint_title?: StringFieldUpdateOperationsInput | string
+    complaint_description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    emergancy?: BoolFieldUpdateOperationsInput | boolean
+    ComplaintCataegory?: ComplaintCataegoryUpdateOneWithoutComplaintsNestedInput
+    User?: UserUpdateOneRequiredWithoutComplaintNestedInput
+  }
+
+  export type ComplaintsUncheckedUpdateWithoutResolveInput = {
+    complaint_id?: IntFieldUpdateOperationsInput | number
+    complaint_title?: StringFieldUpdateOperationsInput | string
+    complaint_description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    emergancy?: BoolFieldUpdateOperationsInput | boolean
+    complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
+    uid?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUpsertWithoutResolveInput = {
+    update: XOR<UserUpdateWithoutResolveInput, UserUncheckedUpdateWithoutResolveInput>
+    create: XOR<UserCreateWithoutResolveInput, UserUncheckedCreateWithoutResolveInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutResolveInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutResolveInput, UserUncheckedUpdateWithoutResolveInput>
+  }
+
+  export type UserUpdateWithoutResolveInput = {
+    uid?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    roll?: NullableStringFieldUpdateOperationsInput | string | null
+    mobile?: StringFieldUpdateOperationsInput | string
+    session?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    block?: BoolFieldUpdateOperationsInput | boolean
+    Department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
+    Profession?: ProfessionUpdateOneRequiredWithoutUserNestedInput
+    complaint?: ComplaintsUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutResolveInput = {
+    uid?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    roll?: NullableStringFieldUpdateOperationsInput | string | null
+    mobile?: StringFieldUpdateOperationsInput | string
+    session?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    block?: BoolFieldUpdateOperationsInput | boolean
+    department_id?: StringFieldUpdateOperationsInput | string
+    profession_id?: IntFieldUpdateOperationsInput | number
+    complaint?: ComplaintsUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type ComplaintsCreateManyUserInput = {
     complaint_id?: number
     complaint_title: string
@@ -12518,6 +13048,15 @@ export namespace Prisma {
     complaint_cat_id?: number | null
   }
 
+  export type ResolvedComplaintsCreateManyUserInput = {
+    resolved_details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    employee_id?: number | null
+    estimated_date?: Date | string | null
+    complaint_id: number
+  }
+
   export type ComplaintsUpdateWithoutUserInput = {
     complaint_title?: StringFieldUpdateOperationsInput | string
     complaint_description?: StringFieldUpdateOperationsInput | string
@@ -12526,6 +13065,7 @@ export namespace Prisma {
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     ComplaintCataegory?: ComplaintCataegoryUpdateOneWithoutComplaintsNestedInput
+    resolve?: ResolvedComplaintsUpdateManyWithoutComplaintsNestedInput
   }
 
   export type ComplaintsUncheckedUpdateWithoutUserInput = {
@@ -12537,6 +13077,7 @@ export namespace Prisma {
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
+    resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsNestedInput
   }
 
   export type ComplaintsUncheckedUpdateManyWithoutUserInput = {
@@ -12548,6 +13089,33 @@ export namespace Prisma {
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ResolvedComplaintsUpdateWithoutUserInput = {
+    resolved_details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Employee?: EmployeeUpdateOneWithoutResolveNestedInput
+    Complaints?: ComplaintsUpdateOneWithoutResolveNestedInput
+  }
+
+  export type ResolvedComplaintsUncheckedUpdateWithoutUserInput = {
+    resolved_details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    complaint_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ResolvedComplaintsUncheckedUpdateManyWithoutUserInput = {
+    resolved_details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    complaint_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserCreateManyProfessionInput = {
@@ -12577,6 +13145,7 @@ export namespace Prisma {
     block?: BoolFieldUpdateOperationsInput | boolean
     Department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     complaint?: ComplaintsUpdateManyWithoutUserNestedInput
+    resolve?: ResolvedComplaintsUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfessionInput = {
@@ -12592,6 +13161,7 @@ export namespace Prisma {
     block?: BoolFieldUpdateOperationsInput | boolean
     department_id?: StringFieldUpdateOperationsInput | string
     complaint?: ComplaintsUncheckedUpdateManyWithoutUserNestedInput
+    resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutProfessionInput = {
@@ -12610,38 +13180,38 @@ export namespace Prisma {
 
   export type ResolvedComplaintsCreateManyEmployeeInput = {
     resolved_details: string
-    resolved_by: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    complaint_id: number
     estimated_date?: Date | string | null
+    complaint_id: number
+    resolved_by?: string | null
   }
 
   export type ResolvedComplaintsUpdateWithoutEmployeeInput = {
     resolved_details?: StringFieldUpdateOperationsInput | string
-    resolved_by?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    complaint_id?: IntFieldUpdateOperationsInput | number
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Complaints?: ComplaintsUpdateOneWithoutResolveNestedInput
+    User?: UserUpdateOneWithoutResolveNestedInput
   }
 
   export type ResolvedComplaintsUncheckedUpdateWithoutEmployeeInput = {
     resolved_details?: StringFieldUpdateOperationsInput | string
-    resolved_by?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    complaint_id?: IntFieldUpdateOperationsInput | number
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    complaint_id?: IntFieldUpdateOperationsInput | number
+    resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ResolvedComplaintsUncheckedUpdateManyWithoutEmployeeInput = {
     resolved_details?: StringFieldUpdateOperationsInput | string
-    resolved_by?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    complaint_id?: IntFieldUpdateOperationsInput | number
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    complaint_id?: IntFieldUpdateOperationsInput | number
+    resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserCreateManyDepartmentInput = {
@@ -12671,6 +13241,7 @@ export namespace Prisma {
     block?: BoolFieldUpdateOperationsInput | boolean
     Profession?: ProfessionUpdateOneRequiredWithoutUserNestedInput
     complaint?: ComplaintsUpdateManyWithoutUserNestedInput
+    resolve?: ResolvedComplaintsUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDepartmentInput = {
@@ -12686,6 +13257,7 @@ export namespace Prisma {
     block?: BoolFieldUpdateOperationsInput | boolean
     profession_id?: IntFieldUpdateOperationsInput | number
     complaint?: ComplaintsUncheckedUpdateManyWithoutUserNestedInput
+    resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutDepartmentInput = {
@@ -12700,6 +13272,42 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     block?: BoolFieldUpdateOperationsInput | boolean
     profession_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ResolvedComplaintsCreateManyComplaintsInput = {
+    resolved_details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    employee_id?: number | null
+    estimated_date?: Date | string | null
+    resolved_by?: string | null
+  }
+
+  export type ResolvedComplaintsUpdateWithoutComplaintsInput = {
+    resolved_details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Employee?: EmployeeUpdateOneWithoutResolveNestedInput
+    User?: UserUpdateOneWithoutResolveNestedInput
+  }
+
+  export type ResolvedComplaintsUncheckedUpdateWithoutComplaintsInput = {
+    resolved_details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsInput = {
+    resolved_details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ComplaintsCreateManyComplaintCataegoryInput = {
@@ -12727,6 +13335,7 @@ export namespace Prisma {
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     User?: UserUpdateOneRequiredWithoutComplaintNestedInput
+    resolve?: ResolvedComplaintsUpdateManyWithoutComplaintsNestedInput
   }
 
   export type ComplaintsUncheckedUpdateWithoutComplaintCataegoryInput = {
@@ -12738,6 +13347,7 @@ export namespace Prisma {
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     uid?: StringFieldUpdateOperationsInput | string
+    resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsNestedInput
   }
 
   export type ComplaintsUncheckedUpdateManyWithoutComplaintCataegoryInput = {

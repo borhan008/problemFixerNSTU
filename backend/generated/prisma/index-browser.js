@@ -174,12 +174,12 @@ exports.Prisma.ComplaintCataegoryScalarFieldEnum = {
 
 exports.Prisma.ResolvedComplaintsScalarFieldEnum = {
   resolved_details: 'resolved_details',
-  resolved_by: 'resolved_by',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  complaint_id: 'complaint_id',
   employee_id: 'employee_id',
-  estimated_date: 'estimated_date'
+  estimated_date: 'estimated_date',
+  complaint_id: 'complaint_id',
+  resolved_by: 'resolved_by'
 };
 
 exports.Prisma.SortOrder = {

@@ -20,7 +20,8 @@ exports.getAllEmployees = async (req, res) => {
       });
     }
 
-    const { take, skip } = req.query;
+    const take = parseInt(req?.query?.take) || 100;
+    const skip = parseInt(req?.query?.skip) || 0;
     const search = req?.query?.search || "";
     const complaint_cat_id = parseInt(req?.query?.cat_id) || 0;
     console.log(complaint_cat_id);

@@ -1,6 +1,7 @@
 const { PrismaClient } = require("../../generated/prisma");
 const prisma = new PrismaClient();
 
+const { askGPT } = require("../utilities/openai");
 // User
 exports.makeComplain = async (req, res) => {
   try {
@@ -211,12 +212,7 @@ exports.getSingleComplaint = async (req, res) => {
 exports.getUserComplaintsForAdmin = async (req, res) => {
   try {
     const { role } = req.user;
-    if (role != "ADMIN") {
-      return res.status(401).json({
-        message: "Unauthorised",
-        error: "Unauthorised",
-      });
-    }
+
     const search = req?.query?.search || "";
     const take = parseInt(req?.query?.take) || 10;
     const skip = parseInt(req?.query?.skip) || 0;
@@ -309,25 +305,126 @@ exports.getUserComplaintsForAdmin = async (req, res) => {
             },
           },
         },
-
         ComplaintCataegory: true,
       },
       orderBy: {
         createdAt: "desc",
       },
     });
+    if (role != "ADMIN" && complaints.uid != req.user.uid) {
+      return res.status(401).json({
+        message: "Unauthorised",
+        error: "Unauthorised",
+      });
+    }
+    const resolved = await prisma.resolvedComplaints.findUnique({
+      where: {
+        complaint_id: parseInt(complaint_id),
+      },
+      include: {
+        User: {
+          select: {
+            name: true,
+            email: true,
+            Profession: true,
+          },
+        },
+        Employee: true,
+      },
+    });
+
     const count = await prisma.complaints.count({
       where: whereClause,
     });
+    let summary = "";
+    if (count === 1) {
+      try {
+        const complaintText =
+          complaints[0]?.complaint_description || "No complaint text provided";
+        const user =
+          "You are a good summarizer who writes in English and Bengali. Your task is to convert user-written complaints into a short, admin-friendly summary but in short.. give me an online answer only, no need for extra texts. the user writtern complaint: " +
+          complaintText;
+        summary = await askGPT(user);
+      } catch (gptError) {
+        console.error("GPT Error:", gptError);
+        summary = "Summary couldn't be generated.";
+      } finally {
+        complaints[0].summary = summary;
+      }
+    }
+
     return res.status(200).json({
       message: "Complaints data found",
       complaints,
       count,
+      resolved,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
       message: "Something went wrong while getting the complaints for admin",
+      error,
+    });
+  }
+};
+
+exports.resolveComplaintForAdmin = async (req, res) => {
+  try {
+    const { role } = req.user;
+    if (role != "ADMIN") {
+      return res.status(401).json({
+        message: "Unauthorised",
+        error: "Unauthorised",
+      });
+    }
+
+    const { resolved_details, complaint_id, employee_id, estimated_date } =
+      req.body;
+
+    if (isNaN(parseInt(complaint_id))) {
+      return res.status(401).json({
+        message: "Complaint ID is not correct",
+      });
+    }
+
+    const details = await prisma.resolvedComplaints.upsert({
+      where: {
+        complaint_id: parseInt(complaint_id),
+      },
+      update: {
+        resolved_details,
+        complaint_id: parseInt(complaint_id),
+        employee_id: parseInt(employee_id) === 0 ? null : parseInt(employee_id),
+        estimated_date:
+          estimated_date != null ? new Date(estimated_date) : null,
+        resolved_by: req.user.user_id,
+      },
+      create: {
+        resolved_details,
+        complaint_id: parseInt(complaint_id),
+        employee_id: parseInt(employee_id) === 0 ? null : parseInt(employee_id),
+        estimated_date:
+          estimated_date != null ? new Date(estimated_date) : null,
+        resolved_by: req.user.user_id,
+      },
+    });
+
+    await prisma.complaints.update({
+      data: {
+        status: "PROCESSING",
+      },
+      where: {
+        complaint_id: parseInt(complaint_id),
+      },
+    });
+    console.log(details);
+    return res.status(200).json({
+      message: "Complaint Resolve Submitted",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Something went wrong",
       error,
     });
   }

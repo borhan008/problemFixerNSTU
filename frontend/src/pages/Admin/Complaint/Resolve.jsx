@@ -26,6 +26,8 @@ import {
 import { auth } from "../../../../firebase";
 import axios from "axios";
 import { toast } from "sonner";
+import { Search } from "lucide-react";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 export const Resolve = () => {
   const { complaint_id } = useParams();
@@ -35,11 +37,21 @@ export const Resolve = () => {
     return <Navigate to="/admin/complaint"></Navigate>;
 
   const [complaints, setComplaints] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [search, setSearch] = useState("");
+  const [searchCategory, setSearchCategory] = useState("0");
+  const [employees, setEmployees] = useState([]);
+  const [selectEmployee, setSelectEmployee] = useState(0);
+  const [filteredEmployee, setFiltererEmployee] = useState([]);
+  const [estimitaedDate, setEstimatedDate] = useState("");
 
+  const [description, setDescription] = useState();
   const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     fetchComplaints();
+    fetchCategories();
+    fetchEmployees();
   }, []);
 
   const fetchComplaints = async () => {
@@ -54,11 +66,96 @@ export const Resolve = () => {
         }
       );
       setComplaints(...complaints.data.complaints);
+      if (complaints.data.resolved) {
+        setDescription(complaints.data.resolved.resolved_details);
+        if (complaints.data.resolved.estimated_date)
+          setEstimatedDate(
+            complaints.data.resolved.estimated_date.split("T")[0]
+          );
+        if (complaints.data.resolved.employee_id)
+          setSelectEmployee(complaints.data.resolved.employee_id.toString());
+      }
       setCount(complaints.data.count);
-      console.log(complaints.data.complaints);
+      console.log(complaints.data);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong while fetchig complaints");
+    }
+  };
+  const fetchCategories = async () => {
+    try {
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await axios.get(`${backendURL}/complaint/category`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response.data.categories);
+      setCategories(response.data.categories);
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to reloading categories.");
+    }
+  };
+
+  const fetchEmployees = async () => {
+    try {
+      const token = await auth?.currentUser?.getIdToken();
+      const employee = await axios.get(`${backendURL}/employee?take=1000`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(employee.data);
+      setEmployees(employee.data.employees);
+      setFiltererEmployee(employee.data.employees);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong while fetching the data.");
+    }
+  };
+  useEffect(() => {
+    const filtered = employees.filter((emp) => {
+      const name = emp.employee_name.toLowerCase();
+      const mobile = emp.employee_mobile.toLowerCase();
+      const searchText = search.toLowerCase();
+      if (searchCategory === "0") {
+        return name.includes(searchText) || mobile.includes(searchText);
+      } else {
+        return (
+          emp.ComplaintCataegory.complaint_cat_id === Number(searchCategory) &&
+          (name.includes(searchText) || mobile.includes(searchText))
+        );
+      }
+    });
+
+    setFiltererEmployee(filtered);
+  }, [searchCategory, search]);
+
+  const handleResolve = async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = await auth?.currentUser?.getIdToken();
+
+      await axios.post(
+        `${backendURL}/admin/complaint/resolve`,
+        {
+          complaint_id,
+          resolved_details: description,
+          employee_id: selectEmployee === "0" ? null : selectEmployee,
+          estimated_date: estimitaedDate == "" ? null : estimitaedDate,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Your resolvation submitted");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong while resolving an complaint");
     }
   };
 
@@ -70,15 +167,19 @@ export const Resolve = () => {
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               Resolve a Complaint
             </h2>
-            <form action="">
+            <form action="" onSubmit={handleResolve}>
               <div className="mb-4 space-y-1">
-                <Label htmlFor="description">Details</Label>
+                <Label htmlFor="description">
+                  Describe about the soluton of the problem
+                </Label>
                 <Textarea
                   id="description"
-                  placeholder="Describe the issue in detail"
+                  placeholder="Describe about the soluton of the problem"
                   rows={20}
                   required
                   className="min-h-64"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
               <div className="flex gap-2 items-end">
@@ -91,16 +192,18 @@ export const Resolve = () => {
                     placeholder="Describe the issue in detail"
                     type="date"
                     className="max-w-34 mb-0 pb-0"
+                    value={estimitaedDate}
+                    onChange={(e) => setEstimatedDate(e.target.value)}
                   />
                 </div>
                 <div>
-                  <Dialog>
+                  <Dialog className="max-h-md">
                     <DialogTrigger asChild>
                       <Button variant="outline">
                         Assign Specific Employee
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-lg">
+                    <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
                       <DialogHeader>
                         <DialogTitle>Search Employee</DialogTitle>
                         <DialogDescription>
@@ -109,37 +212,105 @@ export const Resolve = () => {
                         </DialogDescription>
                       </DialogHeader>
                       <div className="flex gap-2">
-                        <div className="w-full">
-                          <Input id="name" className="col-span-3" />
+                        <div className="w-full relative">
+                          <Input
+                            placeholder="Search..."
+                            className="w-full pr-[50px]"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                          />
+                          <Button
+                            variant="secondary"
+                            className="gap-1  border-0 absolute right-[0] top-[0]"
+                            onClick={fetchEmployees}
+                          >
+                            <Search className="h-2 w-2" />
+                          </Button>
                         </div>
                         <div>
-                          <Select>
-                            <SelectTrigger className="w-[180px]">
-                              <SelectValue placeholder="Select a fruit" />
+                          <Select
+                            value={searchCategory}
+                            onValueChange={(val) => setSearchCategory(val)}
+                            required
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select a Category" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Fruits</SelectLabel>
-                                <SelectItem value="apple">Apple</SelectItem>
-                                <SelectItem value="banana">Banana</SelectItem>
-                                <SelectItem value="blueberry">
-                                  Blueberry
-                                </SelectItem>
-                                <SelectItem value="grapes">Grapes</SelectItem>
-                                <SelectItem value="pineapple">
-                                  Pineapple
-                                </SelectItem>
-                              </SelectGroup>
+                              <SelectItem value="0">All Categories</SelectItem>
+                              {categories &&
+                                categories?.map((cat) => (
+                                  <SelectItem
+                                    key={cat.complaint_cat_id}
+                                    value={cat.complaint_cat_id.toString()}
+                                  >
+                                    {cat.complaint_cat_name}
+                                  </SelectItem>
+                                ))}
                             </SelectContent>
                           </Select>
                         </div>
                       </div>
+
+                      <div className="grid grid-cols-1 gap-2">
+                        {filteredEmployee.map((emp) => (
+                          <DialogClose asChild>
+                            <div
+                              key={emp.employee_id}
+                              className={` rounded-2xl py-2 px-3 border cursor-pointer transition-all duration-200 ${
+                                emp.employee_id === Number(selectEmployee)
+                                  ? "bg-gray-100 text-white"
+                                  : "bg-white"
+                              }`}
+                              onClick={() => setSelectEmployee(emp.employee_id)}
+                            >
+                              <h2 className="text-xl font-semibold text-gray-800 mb-1">
+                                {emp.employee_name}{" "}
+                                <span className="	text-sm text-grey-100">
+                                  {emp.ComplaintCataegory.complaint_cat_name}
+                                </span>
+                              </h2>
+                              <p className="text-gray-600">
+                                {emp.employee_mobile}
+                              </p>
+                            </div>
+                          </DialogClose>
+                        ))}
+                      </div>
                       <DialogFooter>
-                        <Button type="submit">Save changes</Button>
+                        <DialogClose asChild>
+                          <Button type="button">Save changes</Button>
+                        </DialogClose>
                       </DialogFooter>
                     </DialogContent>
                   </Dialog>
                 </div>
+              </div>
+
+              <div>
+                {Number(selectEmployee) != 0 &&
+                  employees.map(
+                    (emp) =>
+                      emp.employee_id === Number(selectEmployee) && (
+                        <div
+                          key={emp.employee_id}
+                          className={`my-2 rounded-2xl py-2 px-3 border cursor-pointer transition-all duration-200 ${
+                            emp.employee_id === Number(selectEmployee)
+                              ? "bg-gray-100 text-white"
+                              : "bg-white"
+                          }`}
+                          onClick={() => setSelectEmployee(emp.employee_id)}
+                        >
+                          <h2 className="text-xl font-semibold text-gray-800 mb-1">
+                            {emp.employee_name}{" "}
+                            <span className="	text-sm text-grey-100">
+                              {emp.ComplaintCataegory.complaint_cat_name}
+                            </span>
+                          </h2>
+                          <p className="text-gray-600">{emp.employee_mobile}</p>
+                        </div>
+                      )
+                  )}
               </div>
               <Button variant="default" className="mt-4" type="submit">
                 Submit
@@ -166,11 +337,7 @@ export const Resolve = () => {
             </div>
             <div className="prose prose-sm max-w-none text-gray-700">
               <strong>Summary:</strong>{" "}
-              <p className="italic">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-                sed? Incidunt iusto totam sint atque. Voluptatibus aspernatur
-                aperiam eum ipsum!
-              </p>
+              <p className="italic">{complaints.summary}</p>
             </div>
             <div className="mt-2 border-t border-gray-200 pt-4">
               <h3 className="text-lg font-medium text-gray-900">
