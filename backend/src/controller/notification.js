@@ -16,6 +16,11 @@ exports.getUserNotification = async (req, res) => {
         updatedAt: "desc",
       },
     });
+    const count = await prisma.notifications.count({
+      where: {
+        uid,
+      },
+    });
     await prisma.notifications.updateMany({
       data: {
         seen: true,
@@ -27,6 +32,7 @@ exports.getUserNotification = async (req, res) => {
     return res.status(200).json({
       message: "Data found",
       notifications,
+      count,
     });
   } catch (error) {
     console.log(error);

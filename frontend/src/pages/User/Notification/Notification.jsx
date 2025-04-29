@@ -5,10 +5,17 @@ import { toast } from "sonner";
 import { auth } from "../../../../firebase";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+} from "@/components/ui/pagination";
 export default function Notification() {
   const [take, setTake] = useState(10);
   const [skip, setSkip] = useState(0);
+  const [total, setTotal] = useState(0);
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const [notifications, setNotifications] = useState([]);
 
@@ -28,6 +35,7 @@ export default function Notification() {
         }
       );
       setNotifications(ntfc.data.notifications);
+      setTotal(ntfc.data.count);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
@@ -61,6 +69,35 @@ export default function Notification() {
             </Card>
           </Link>
         ))}
+      </div>
+      <div>
+        <Pagination className="mt-6">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                className={skip == 0 && "pointer-events-none opacity-50"}
+                href="#"
+                onClick={(e) => setSkip(skip - 1)}
+              />
+            </PaginationItem>
+
+            <PaginationItem>
+              <span className="text-sm text-gray-600">
+                Page {skip + 1} of {Math.ceil(total / take)}
+              </span>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                onClick={(e) => setSkip(skip + 1)}
+                className={
+                  skip + 1 > Math.ceil(total / take) - 1 &&
+                  "pointer-events-none opacity-50"
+                }
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );
