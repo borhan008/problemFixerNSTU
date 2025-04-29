@@ -243,15 +243,15 @@ export const AdminComplaints = () => {
             {complaints.map((row, idx) => (
               <React.Fragment key={row.complaint_id}>
                 <TableRow onClick={(e) => setExpandedRow(row.complaint_id)}>
-                  <TableCell className="font-medium text-gray-800">
+                  <TableCell className="font-medium text-gray-800  whitespace-normal break-words">
                     {row.complaint_title}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-normal break-words">
                     <Badge variant="outline" className="text-gray-700">
                       {row.ComplaintCataegory.complaint_cat_name}
                     </Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-normal break-words">
                     {row.status === "COMPLETED" ? (
                       <Badge
                         variant="secondary"
@@ -275,7 +275,7 @@ export const AdminComplaints = () => {
                       </Badge>
                     )}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-normal break-words">
                     {row.User.name} <br />
                     <span className="capitalize">
                       {row.User.Profession.profession_name},{" "}
@@ -283,10 +283,10 @@ export const AdminComplaints = () => {
                     </span>
                   </TableCell>
 
-                  <TableCell className="text-gray-700">
+                  <TableCell className="text-gray-700 whitespace-normal break-words">
                     {new Date(row.createdAt).toLocaleString()}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right whitespace-normal break-words">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <button className="p-1 rounded-md hover:bg-gray-100">
@@ -311,7 +311,10 @@ export const AdminComplaints = () => {
 
                 {expandedRow == row.complaint_id && (
                   <TableRow>
-                    <TableCell colSpan={6} className="bg-gray-50 p-4">
+                    <TableCell
+                      colSpan={6}
+                      className="bg-gray-50 p-4  whitespace-normal break-words"
+                    >
                       <div className="text-sm text-gray-700">
                         <p>
                           <strong>Your Complaint:</strong>{" "}

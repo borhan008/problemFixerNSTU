@@ -36,7 +36,7 @@ export default function Notification() {
 
   return (
     <div className="min-h-screen  py-8 px-4">
-      <div className="max-w-2xl mx-auto space-y-4">
+      <div className="max-w-2xl mx-auto space-y-4 flex flex-col gap-1">
         {notifications.map((notification) => (
           <Link to={`/resolve/${notification.complaint_id}`}>
             <Card

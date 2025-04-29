@@ -208,15 +208,18 @@ export default function ViewComplaints() {
             {complaints.map((row, idx) => (
               <React.Fragment key={row.complaint_id}>
                 <TableRow onClick={(e) => setExpandedRow(row.complaint_id)}>
-                  <TableCell className="font-medium text-gray-800">
+                  <TableCell className="font-medium text-gray-800 whitespace-normal break-words">
                     {row.complaint_title}
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline" className="text-gray-700">
+                    <Badge
+                      variant="outline"
+                      className="text-gray-700 whitespace-normal break-words"
+                    >
                       {row.ComplaintCataegory.complaint_cat_name}
                     </Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-normal break-words">
                     {row.status === "COMPLETED" ? (
                       <Badge
                         variant="secondary"
@@ -240,10 +243,10 @@ export default function ViewComplaints() {
                       </Badge>
                     )}
                   </TableCell>
-                  <TableCell className="text-gray-700">
+                  <TableCell className="text-gray-700 whitespace-normal break-words">
                     {new Date(row.updatedAt).toLocaleString()}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right whitespace-normal break-words">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <button className="p-1 rounded-md hover:bg-gray-100">
@@ -278,7 +281,10 @@ export default function ViewComplaints() {
 
                 {expandedRow == row.complaint_id && (
                   <TableRow>
-                    <TableCell colSpan={5} className="bg-gray-50 p-4">
+                    <TableCell
+                      colSpan={5}
+                      className="bg-gray-50 p-4 whitespace-normal break-words"
+                    >
                       <div className="text-sm text-gray-700">
                         <p>
                           {" "}

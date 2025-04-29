@@ -19,7 +19,7 @@ function Loading() {
   }, []);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-white bg-[url(images/full-overlay-bg.png)]">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-white bg-[url(/images/full-overlay-bg.png)]">
       <div className="flex flex-col items-center  w-full max-w-2xl">
         <div className="w-20 h-20 border-4 border-gray-900 border-t-transparent rounded-full animate-spin"></div>
         <div className="mt-8 text-center text-gray-900 text-sm italic">
