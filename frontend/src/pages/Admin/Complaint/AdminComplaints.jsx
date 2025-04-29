@@ -48,7 +48,7 @@ export const AdminComplaints = () => {
   const [searchCategoryId, setSearchCategoryId] = useState(0);
   const [searchProfessionId, setSearchProfessionId] = useState(0);
   const [searchStatus, setSearchStatus] = useState(" ");
-  const [take, setTake] = useState(2);
+  const [take, setTake] = useState(20);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [expandedRow, setExpandedRow] = useState(-1);
@@ -71,11 +71,15 @@ export const AdminComplaints = () => {
           },
         });
         setProfessions(profs.data.professions);
-        const complaints = await axios.get(`${backendURL}/admin/complaints`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const complaints = await axios.get(
+          `${backendURL}/admin/complaints?take=${take}&skip=${skip}&searchCategoryId=${searchCategoryId}&searchProfessionId=${searchProfessionId}&searchStatus=${searchStatus}&search=${search}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
         setComplaints(complaints.data.complaints);
         setTotal(complaints.data.count);
       } catch (error) {
@@ -103,6 +107,7 @@ export const AdminComplaints = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         }
       );
@@ -289,20 +294,15 @@ export const AdminComplaints = () => {
                         </button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-32">
-                        <DropdownMenuItem
-                          onClick={() => alert(`Edit ${row.header}`)}
-                        >
-                          Edit
+                        <DropdownMenuItem asChild>
+                          <Link to={`/admin/resolve/${row.complaint_id}`}>
+                            View
+                          </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => alert(`Delete ${row.header}`)}
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => handleMarkAsDone(row.complaint_id)}
-                        >
-                          Mark As Done
+                        <DropdownMenuItem asChild>
+                          <Link to={`/admin/complaint/${row.complaint_id}`}>
+                            Resolve this
+                          </Link>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

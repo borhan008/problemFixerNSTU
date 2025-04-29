@@ -57,8 +57,14 @@ exports.getUserComplaints = async (req, res) => {
       include: {
         ComplaintCataegory: true,
       },
+      orderBy: [
+        {
+          updatedAt: "desc",
+        },
+      ],
       where: {
         uid: user_id,
+
         OR: [
           {
             complaint_title: {
@@ -214,7 +220,7 @@ exports.getUserComplaintsForAdmin = async (req, res) => {
     const { role } = req.user;
 
     const search = req?.query?.search || "";
-    const take = parseInt(req?.query?.take) || 10;
+    const take = parseInt(req?.query?.take) || 1;
     const skip = parseInt(req?.query?.skip) || 0;
     const complaint_id = parseInt(req?.params?.complaint_id) || 0;
 
@@ -289,6 +295,11 @@ exports.getUserComplaintsForAdmin = async (req, res) => {
       take,
       skip,
       where: whereClause,
+      orderBy: [
+        {
+          createdAt: "desc",
+        },
+      ],
       include: {
         User: {
           include: {
@@ -329,7 +340,11 @@ exports.getUserComplaintsForAdmin = async (req, res) => {
             Profession: true,
           },
         },
-        Employee: true,
+        Employee: {
+          include: {
+            ComplaintCataegory: true,
+          },
+        },
       },
     });
 
@@ -409,7 +424,7 @@ exports.resolveComplaintForAdmin = async (req, res) => {
       },
     });
 
-    await prisma.complaints.update({
+    const prevComplaint = await prisma.complaints.update({
       data: {
         status: "PROCESSING",
       },
@@ -417,6 +432,22 @@ exports.resolveComplaintForAdmin = async (req, res) => {
         complaint_id: parseInt(complaint_id),
       },
     });
+
+    await prisma.notifications.upsert({
+      where: {
+        complaint_id: prevComplaint.complaint_id,
+        uid: prevComplaint.uid,
+      },
+      update: {
+        seen: false,
+      },
+      create: {
+        complaint_id: prevComplaint.complaint_id,
+        uid: prevComplaint.uid,
+        seen: false,
+      },
+    });
+
     console.log(details);
     return res.status(200).json({
       message: "Complaint Resolve Submitted",

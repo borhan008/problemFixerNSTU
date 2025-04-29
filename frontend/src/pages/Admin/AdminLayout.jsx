@@ -1,25 +1,46 @@
 import { useEffect, useState } from "react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, Home, Settings, LogOut, Folder, Bell } from "lucide-react";
+import {
+  Menu,
+  Home,
+  Folder,
+  Users,
+  Tags,
+  Briefcase,
+  LogOut,
+  Bell,
+} from "lucide-react";
 import clsx from "clsx";
-import { useAuth } from "../User/Context/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useAuth } from "../User/Context/AuthProvider";
 
-export default function AdminLayout({children}) {
+export default function AdminLayout({ children }) {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("Home");
-  const {user} = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const routeTitle = {
+    "/admin": "Home",
+    "/admin/complaint": "Complaints",
+    "/admin/users": "Users",
+    "/admin/category": "Category",
+    "/admin/employee": "Employee",
+    "/admin/department": "Department",
+    "/admin/professions": "Profession",
+  };
+
+  const active = routeTitle[location.pathname] || "Dashboard";
 
   useEffect(() => {
-    if(user.role != "ADMIN"){
+    if (user?.role !== "ADMIN") {
       toast.error("Unauthorized.");
       navigate("/");
-      console.log(user.role);
     }
   }, [user]);
+
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-white">
       {/* Mobile Header */}
@@ -35,25 +56,26 @@ export default function AdminLayout({children}) {
             className="w-64 bg-white/80 backdrop-blur-xl border-none shadow-xl"
           >
             <div className="pt-8 px-4">
-              <h2 className="text-lg font-semibold mb-6 text-gray-800">My Dashboard</h2>
-              <Sidebar active={active} setActive={setActive} />
+              <img
+                src="/images/logo-colour.png"
+                alt="logo"
+                className="mx-auto"
+              />
+              <h2 className="text-lg font-semibold mb-6 mt-2 text-center text-gray-800">
+                My Dashboard
+              </h2>
+              <Sidebar active={active} />
             </div>
           </SheetContent>
         </Sheet>
 
         <span className="text-sm font-medium text-gray-600">Dashboard</span>
-
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="w-6 h-6 text-gray-700" />
-          <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full animate-ping" />
-          <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
-        </Button>
       </header>
 
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex md:w-64 flex-col p-6 bg-white/80 backdrop-blur-lg shadow-lg border-r border-gray-200">
-        <h2 className="text-xl font-bold mb-6 text-gray-800">My Dashboard</h2>
-        <Sidebar active={active} setActive={setActive} />
+        <img src="/images/logo-colour.png" alt="logo" className="mb-4" />
+        <Sidebar active={active} />
       </aside>
 
       {/* Main Content Area */}
@@ -61,47 +83,68 @@ export default function AdminLayout({children}) {
         {/* Desktop Header */}
         <div className="hidden md:flex items-center justify-between px-8 py-4 border-b shadow-sm bg-white/80 backdrop-blur-lg z-40">
           <h1 className="text-2xl font-bold text-gray-800">{active}</h1>
-          <Button variant="ghost" size="icon" className="relative">
-            <Bell className="w-6 h-6 text-gray-700" />
-            <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full animate-ping" />
-            <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
-          </Button>
         </div>
 
         <main className="flex-1 p-6 md:p-8">
-          <div className="text-gray-600">
-            {children}
-          </div>
+          <div className="text-gray-600">{children}</div>
         </main>
       </div>
     </div>
   );
 }
 
-function Sidebar({ active, setActive }) {
+function Sidebar({ active }) {
   const links = [
-    { label: "Home", icon: <Home className="w-5 h-5" /> },
-    { label: "Projects", icon: <Folder className="w-5 h-5" /> },
-    { label: "Settings", icon: <Settings className="w-5 h-5" /> },
-    { label: "Logout", icon: <LogOut className="w-5 h-5" /> },
+    { label: "Home", href: "/admin", icon: <Home className="w-5 h-5" /> },
+    {
+      label: "Complaints",
+      href: "/admin/complaint",
+      icon: <Folder className="w-5 h-5" />,
+    },
+    {
+      label: "Users",
+      href: "/admin/users",
+      icon: <Users className="w-5 h-5" />,
+    },
+    {
+      label: "Category",
+      href: "/admin/category",
+      icon: <Tags className="w-5 h-5" />,
+    },
+    {
+      label: "Employee",
+      href: "/admin/employee",
+      icon: <Briefcase className="w-5 h-5" />,
+    },
+    {
+      label: "Department",
+      href: "/admin/department",
+      icon: <Briefcase className="w-5 h-5" />,
+    },
+    {
+      label: "Profession",
+      href: "/admin/professions",
+      icon: <Briefcase className="w-5 h-5" />,
+    },
+    { label: "Logout", href: "/logout", icon: <LogOut className="w-5 h-5" /> },
   ];
 
   return (
     <nav className="flex flex-col gap-3">
       {links.map((link) => (
-        <button
+        <Link
           key={link.label}
-          onClick={() => setActive(link.label)}
+          to={link.href}
           className={clsx(
             "flex items-center gap-3 px-4 py-2 rounded-lg transition-all font-medium text-sm",
-            active === link.label
-              ? "bg-gray-900 text-white shadow"
+            link.label === active
+              ? "bg-black text-white"
               : "text-gray-700 hover:bg-gray-100"
           )}
         >
           {link.icon}
           {link.label}
-        </button>
+        </Link>
       ))}
     </nav>
   );

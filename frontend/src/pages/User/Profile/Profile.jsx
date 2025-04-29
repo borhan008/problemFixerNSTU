@@ -24,8 +24,8 @@ export default function Profile() {
   const email = user.email;
   const isStudent = email.split("@")[1] === "student.nstu.edu.bd";
 
-  const [userProfession, setUserProfession] = useState("");
-  const [userDepartment, setUserDepartment] = useState("");
+  const [userProfession, setUserProfession] = useState(0);
+  const [userDepartment, setUserDepartment] = useState(" ");
   const [mobile, setMobile] = useState("");
   const [roll, setRoll] = useState("");
   const domain = "@student.nstu.edu.bd";
@@ -34,15 +34,7 @@ export default function Profile() {
 
   useEffect(() => {
     fetchAllNeeded();
-    if (isStudent) {
-      const localPart = email.slice(0, -domain.length);
-
-      const lastFour = localPart.slice(-4);
-      const dept_id = lastFour.slice(0, 2);
-
-      setUserDepartment(dept_id);
-    }
-  }, [email, isStudent]);
+  }, []);
 
   const fetchAllNeeded = async () => {
     try {
@@ -62,8 +54,9 @@ export default function Profile() {
       setProfessions(profs.data.professions);
       if (isStudent) {
         setUserProfession(
-          profs.data.professions.find((ft) => ft.profession_name === "student")
-            .profession_id
+          profs.data.professions.find(
+            (ft) => ft.profession_name.toLowerCase() == "student"
+          ).profession_id
         );
       }
 
@@ -75,13 +68,21 @@ export default function Profile() {
       if (userData.status === 200) {
         setMobile(userData.data.user.mobile);
         setUserProfession(userData.data.user.profession_id);
-        setUserDepartment(userData.data.user.department_id);
+        //setUserDepartment(userData.data.user.department_id);
         setRoll(userData.data.user.roll);
       }
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
+      if (isStudent) {
+        const localPart = email.slice(0, -domain.length);
+
+        const lastFour = localPart.slice(-4);
+        const dept_id = lastFour.slice(0, 2);
+
+        setUserDepartment(dept_id);
+      }
     }
   };
 
@@ -109,7 +110,7 @@ export default function Profile() {
       await axios.post(
         `${backendURL}/user/create`,
         {
-          profession_id: userProfession,
+          profession_id: parseInt(userProfession),
           department_id: userDepartment,
           mobile: mobile,
           roll: roll,
@@ -120,7 +121,7 @@ export default function Profile() {
           },
         }
       );
-      toast("Profile Updated Succesfully.");
+      toast.success("Profile Updated Succesfully.");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message, {
@@ -138,7 +139,7 @@ export default function Profile() {
       </p>
 
       <form onSubmit={handleSubmit}>
-        <div className="flex w-full gap-4">
+        <div className="md:flex w-full gap-4">
           <div className="mb-4 space-y-1 w-full">
             <Label htmlFor="name">Name</Label>
             <Input
@@ -161,20 +162,20 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div className="lg:flex gap-4">
           <div className="mb-4 space-y-1 w-full">
             <Label>Profession</Label>
 
             <Select
               value={userProfession}
-              onChange={(e) => setUserProfession(e.target.value)}
+              onValueChange={(val) => setUserProfession(String(val))}
             >
               <SelectTrigger className="w-full capitalize" disabled={isStudent}>
                 <SelectValue placeholder="Profession" />
               </SelectTrigger>
               <SelectContent>
                 {professions.map((prof) => (
-                  <SelectItem value={prof.profession_id}>
+                  <SelectItem value={String(prof.profession_id)}>
                     {prof.profession_name}
                   </SelectItem>
                 ))}
@@ -197,16 +198,18 @@ export default function Profile() {
 
           <div className="mb-4 space-y-1  w-full">
             <Label>Deaprtment</Label>
+
             <Select
               value={userDepartment}
-              onChange={(e) => setDepartments(e.target.value)}
+              onValueChange={(val) => setUserDepartment(String(val))}
+              disabled={isStudent}
             >
-              <SelectTrigger className="w-full" disabled={isStudent}>
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select a Department" />
               </SelectTrigger>
               <SelectContent>
-                {departments.map((dept) => (
-                  <SelectItem value={dept.department_id}>
+                {departments?.map((dept) => (
+                  <SelectItem value={String(dept.department_id)}>
                     {dept.dept_full_name}
                   </SelectItem>
                 ))}

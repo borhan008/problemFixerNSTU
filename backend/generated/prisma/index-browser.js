@@ -182,6 +182,14 @@ exports.Prisma.ResolvedComplaintsScalarFieldEnum = {
   resolved_by: 'resolved_by'
 };
 
+exports.Prisma.NotificationsScalarFieldEnum = {
+  complaint_id: 'complaint_id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  uid: 'uid',
+  seen: 'seen'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -235,6 +243,10 @@ exports.Prisma.ResolvedComplaintsOrderByRelevanceFieldEnum = {
   resolved_details: 'resolved_details',
   resolved_by: 'resolved_by'
 };
+
+exports.Prisma.NotificationsOrderByRelevanceFieldEnum = {
+  uid: 'uid'
+};
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',
   ADMIN: 'ADMIN'
@@ -254,7 +266,8 @@ exports.Prisma.ModelName = {
   Department: 'Department',
   Complaints: 'Complaints',
   ComplaintCataegory: 'ComplaintCataegory',
-  ResolvedComplaints: 'ResolvedComplaints'
+  ResolvedComplaints: 'ResolvedComplaints',
+  Notifications: 'Notifications'
 };
 
 /**

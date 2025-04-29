@@ -54,7 +54,7 @@ export default function Employee() {
   });
   const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-  const [take, setTake] = useState(10);
+  const [take, setTake] = useState(20);
   const [skip, setSkip] = useState(0);
 
   const phoneRegex = /^\+8801\d{9}$/;

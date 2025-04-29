@@ -60,7 +60,7 @@ export default function MakeComplaint() {
           },
         }
       );
-      toast("A complaint has been made successfully.");
+      toast.success("A complaint has been made successfully.");
       setCategory("");
       setTitle("");
       setDescription("");

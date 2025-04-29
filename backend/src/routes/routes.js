@@ -13,6 +13,7 @@ const {
   editComplaintCategory,
   deleteComplaintCategory,
 } = require("../controller/complainCategories");
+const { getDashboardStats } = require("../controller/dashboard");
 const {
   getAllDepartment,
   createDepartment,
@@ -31,8 +32,23 @@ const {
   createEmployeeCategory,
   deleteEmployeeCategory,
 } = require("../controller/employeeCategory");
-const { getAllProfessions } = require("../controller/profession");
-const { createUser, getUserData } = require("../controller/user");
+const {
+  getUserNotification,
+  countNotification,
+} = require("../controller/notification");
+const {
+  getAllProfessions,
+  createProfession,
+  editProfession,
+  deleteProfession,
+} = require("../controller/profession");
+const {
+  createUser,
+  getUserData,
+  getUsersDataAdmin,
+  makeUserBlockUnblock,
+  makeUserRoleChange,
+} = require("../controller/user");
 
 const router = require("express").Router();
 
@@ -48,6 +64,9 @@ router.delete("/department/:department_id", deleteDepartment);
 
 // profession
 router.get("/profession", getAllProfessions);
+router.post("/admin/profession", createProfession);
+router.put("/admin/profession/:profession_id", editProfession);
+router.delete("/admin/profession/:profession_id", deleteProfession);
 
 // Complaint Categories
 router.get("/complaint/category", getComplaintCategories);
@@ -80,11 +99,23 @@ router.post("/employee", createEmployee);
 router.put("/employee/:employee_id", editEmployee);
 router.delete("/employee/:employee_id", deleteEmployee);
 
+// Notification
+router.get("/notifications", getUserNotification);
+router.get("/notifications/count", countNotification);
+
 // Admin
 
 // Complaints
 router.get("/admin/complaints", getUserComplaintsForAdmin);
+router.get("/complaint/view/:complaint_id", getUserComplaintsForAdmin);
 router.get("/admin/complaint/:complaint_id", getUserComplaintsForAdmin);
 router.post("/admin/complaint/resolve", resolveComplaintForAdmin);
+
+// Users
+router.get("/admin/users", getUsersDataAdmin);
+router.put("/admin/user/block/:uid", makeUserBlockUnblock);
+router.put("/admin/user/role/:uid", makeUserRoleChange);
+
+router.get("/admin/stats", getDashboardStats);
 
 module.exports = router;

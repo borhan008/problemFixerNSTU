@@ -96,7 +96,7 @@ export default function ViewComplaints() {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const { user } = useAuth();
   const [complaints, setComplaints] = useState([]);
-  const [take, setTake] = useState(2);
+  const [take, setTake] = useState(20);
   const [skip, setSkip] = useState(0);
   const [search, setSearch] = useState("");
   const [total, setTotal] = useState(0);
@@ -149,7 +149,7 @@ export default function ViewComplaints() {
     try {
       const token = await auth?.currentUser?.getIdToken();
       await axios.put(
-        `${backendURL}/complaint/${complaint_id}`,
+        `${backendURL}/complaint/done/${complaint_id}`,
         {},
         {
           headers: {
@@ -197,7 +197,7 @@ export default function ViewComplaints() {
                 Status
               </TableHead>
               <TableHead className="text-gray-600 font-semibold">
-                Date
+                Last Updated
               </TableHead>
               <TableHead className="text-gray-600 font-semibold text-right">
                 Actions
@@ -241,7 +241,7 @@ export default function ViewComplaints() {
                     )}
                   </TableCell>
                   <TableCell className="text-gray-700">
-                    {new Date(row.createdAt).toLocaleString()}
+                    {new Date(row.updatedAt).toLocaleString()}
                   </TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
@@ -251,21 +251,26 @@ export default function ViewComplaints() {
                         </button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-32">
-                        <DropdownMenuItem
-                          onClick={() => alert(`Edit ${row.header}`)}
-                        >
-                          Edit
+                        <DropdownMenuItem asChild>
+                          <Link to={`/resolve/${row.complaint_id}`}>
+                            View Resolve
+                          </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => alert(`Delete ${row.header}`)}
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => handleMarkAsDone(row.complaint_id)}
-                        >
-                          Mark As Done
-                        </DropdownMenuItem>
+                        {row.status === "DUE" && (
+                          <DropdownMenuItem asChild>
+                            <Link to={`/complaint/edit/${row.complaint_id}`}>
+                              Edit
+                            </Link>
+                          </DropdownMenuItem>
+                        )}
+
+                        {row.status !== "COMPLETED" && (
+                          <DropdownMenuItem
+                            onClick={() => handleMarkAsDone(row.complaint_id)}
+                          >
+                            Mark As Done
+                          </DropdownMenuItem>
+                        )}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

@@ -108,3 +108,12 @@ model ResolvedComplaints {
   User           User?       @relation(fields: [resolved_by], references: [uid])
   resolved_by    String?
 }
+
+model Notifications {
+  complaint_id Int      @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+
+  uid  String
+  seen Boolean @default(false)
+}

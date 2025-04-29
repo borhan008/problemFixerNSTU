@@ -1,5 +1,5 @@
 const admin = require("../config/firebaseAdmin");
-const { getUserRole } = require("../Quries/user");
+const { getUserDetails } = require("../Quries/user");
 
 const authMiddleware = async (req, res, next) => {
   const token = req.headers.authorization?.split("Bearer ")[1];
@@ -13,14 +13,20 @@ const authMiddleware = async (req, res, next) => {
   try {
     const decodeToken = await admin.auth().verifyIdToken(token);
     req.user = decodeToken;
-    const userRole = await getUserRole({ uid: decodeToken.uid });
-    req.user.role = userRole;
-    //console.log(req.user);
+    const userDetails = await getUserDetails({ uid: decodeToken.uid });
+    if (userDetails?.block) {
+      return res.status(401).json({
+        message: "You are blocked",
+        error: "You are blocked",
+        logout: true,
+      });
+    }
+    req.user.role = userDetails?.role || "USER";
 
     next();
   } catch (error) {
     console.log(error);
-    return res.status({
+    return res.status(401).json({
       message: "Unauthorized from authentication",
       error,
     });

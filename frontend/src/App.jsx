@@ -29,6 +29,13 @@ import EmployeeCategories from "./pages/Admin/Employee/EmployeeCategory";
 import Employee from "./pages/Admin/Employee/Employee";
 import { AdminComplaints } from "./pages/Admin/Complaint/AdminComplaints";
 import { Resolve } from "./pages/Admin/Complaint/Resolve";
+import { ViewResolveUser } from "./pages/User/Complaints/ViewResolveUser";
+import { Users } from "./pages/Admin/Complaint/Users";
+import Notification from "./pages/User/Notification/Notification";
+import UserHome from "./pages/User/Home/UserHome";
+import NotFound from "./pages/Common/NotFound";
+import { Logout } from "./pages/Common/Logout";
+import Professions from "./pages/Admin/Profession/Profession";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -52,6 +59,16 @@ const router = createBrowserRouter(
           </PrivateRouter>
         }
       ></Route>
+      <Route
+        path="/Home"
+        element={
+          <PrivateRouter>
+            <UserLayout>
+              <UserHome />
+            </UserLayout>
+          </PrivateRouter>
+        }
+      ></Route>
 
       <Route
         path="/complaint/edit/:complaint_id"
@@ -65,11 +82,32 @@ const router = createBrowserRouter(
       ></Route>
 
       <Route
+        path="/resolve/:complaint_id"
+        element={
+          <PrivateRouter>
+            <UserLayout>
+              <ViewResolveUser />
+            </UserLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+
+      <Route
         path="/complaint/new"
         element={
           <PrivateRouter>
             <UserLayout>
               <MakeComplain />
+            </UserLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/notifications"
+        element={
+          <PrivateRouter>
+            <UserLayout>
+              <Notification />
             </UserLayout>
           </PrivateRouter>
         }
@@ -100,8 +138,9 @@ const router = createBrowserRouter(
           </AdminLayout>
         }
       ></Route>
+
       <Route
-        path="/admin/complaints/category/"
+        path="/admin/category/"
         element={
           <PrivateRouter>
             <AdminLayout>
@@ -150,6 +189,46 @@ const router = createBrowserRouter(
           </PrivateRouter>
         }
       ></Route>
+
+      <Route
+        path="admin/resolve/:complaint_id"
+        element={
+          <PrivateRouter>
+            <AdminLayout>
+              <ViewResolveUser />
+            </AdminLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/admin/users"
+        element={
+          <PrivateRouter>
+            <AdminLayout>
+              <Users />
+            </AdminLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/admin/professions"
+        element={
+          <PrivateRouter>
+            <AdminLayout>
+              <Professions />
+            </AdminLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/logout"
+        element={
+          <PrivateRouter>
+            <Logout />
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route path="*" element={<NotFound />}></Route>
     </>
   )
 );
@@ -158,8 +237,6 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-
-      <Toaster />
     </>
   );
 }

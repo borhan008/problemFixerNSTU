@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -26,8 +26,9 @@ import {
 import { auth } from "../../../../firebase";
 import axios from "axios";
 import { toast } from "sonner";
-import { Search } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
 import { DialogClose } from "@radix-ui/react-dialog";
+import Loading from "../../Common/Loading";
 
 export const Resolve = () => {
   const { complaint_id } = useParams();
@@ -162,7 +163,7 @@ export const Resolve = () => {
   return (
     <>
       {count === 1 ? (
-        <div className="grid grid-cols-2 gap-2 w-full mx-auto">
+        <div className="grid  md:grid-cols-2 gap-2 w-full mx-auto">
           <div className="">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               Resolve a Complaint
@@ -317,7 +318,7 @@ export const Resolve = () => {
               </Button>
             </form>
           </div>
-          <div className="sticky top-16 h-[calc(100vh-150px)] overflow-y-auto p-4 bg-white scrollbar-thin rounded-2xl shadow-md space-y-4">
+          <div className="sticky top-16 md:h-[calc(100vh-150px)] overflow-y-auto p-4 bg-white scrollbar-thin rounded-2xl shadow-md space-y-4">
             <h2 className="text-2xl font-semibold text-gray-800">
               {complaints.complaint_title}
             </h2>
@@ -371,9 +372,25 @@ export const Resolve = () => {
           </div>
         </div>
       ) : count === -1 ? (
-        <div>Loading..</div>
+        <div>
+          <Loading />
+        </div>
       ) : (
-        <div>Not found</div>
+        <div className="flex flex-col items-center justify-center p-6 text-center space-y-4">
+          <ArrowLeft className="w-12 h-12 text-gray-400" />
+          <h2 className="text-2xl font-bold text-gray-800">Not Found</h2>
+          <p className="text-gray-600 text-sm">
+            The content you are looking for does not exist.
+          </p>
+          <Link
+            asChild
+            className="mt-4 inline-flex items-center px-4 py-2 bg-black text-white text-sm font-medium rounded-md hover:bg-gray-900 transition"
+            to="/admin/complaint"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Go Back
+          </Link>
+        </div>
       )}
     </>
   );

@@ -15,78 +15,83 @@ import { auth } from "../../../../firebase";
 import { toast } from "sonner";
 import { useNavigate, useParams } from "react-router-dom";
 
-
 export default function EditComplaint() {
-    const [title, setTitle] = useState("");
-    const [category, setCategory] = useState("");
-    const [description, setDescription] = useState();
-    const [categories, setCategories] = useState([]);
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
-    const [disable, setDisable] = useState(false);
-    const {complaint_id} = useParams();
-    const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState();
+  const [categories, setCategories] = useState([]);
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const [disable, setDisable] = useState(false);
+  const { complaint_id } = useParams();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchComplaintData = async() => {
-            try {
-                const token = await auth?.currentUser?.getIdToken();
-                const response = await axios.get(`${backendURL}/complaint/category`, {
-                    headers : {
-                        'authorization' : `Bearer ${token}`
-                    }
-                });
-                setCategories(response.data.categories);
-                
-                const complaint = await axios.get(`${backendURL}/complaint/${complaint_id}`, {
-                  headers : {
-                      'authorization' : `Bearer ${token}`
-                  }
-                });
-                setTitle(complaint.data.complaint.complaint_title);
-                setCategory(complaint.data.complaint.complaint_cat_id);
-                setDescription(complaint.data.complaint.complaint_description);
+  useEffect(() => {
+    const fetchComplaintData = async () => {
+      try {
+        const token = await auth?.currentUser?.getIdToken();
+        const response = await axios.get(`${backendURL}/complaint/category`, {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        });
+        setCategories(response.data.categories);
 
-            } catch (error) {
-                console.log(error);
-                toast.error("Failed to reloading categories or complaints.");
-                navigate("/complaint/");
-            }
-        }
-
-        fetchComplaintData();
-
-    }, [])
-
-
-    const handleSubmit = async(e) => {
-         e.preventDefault();
-         setDisable(true);
-         try {
-            const token = await auth?.currentUser?.getIdToken();
-
-            const res = await axios.put(`${backendURL}/complaint/edit`, {
-             complaint_cat_id : category,
-             complaint_id : complaint_id,
-             complaint_title : title,
-             complaint_description : description
-            }, {
-              headers : {
-                'authorization' : `Bearer ${token}`
-            }
-            })
-            toast("Edited Successfully.");
-            setCategory(""); setTitle(""); setDescription("");
-         } catch (error) {
-            console.log(error);
-            toast.error("Something went wrong while editiing complaints.", {
-              description : error?.response?.data?.message || "Server internal problem.",
-              className: "bg-white text-black",
-            });
-         } finally{
-          setDisable(false);
-         }
-        
+        const complaint = await axios.get(
+          `${backendURL}/complaint/${complaint_id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setTitle(complaint.data.complaint.complaint_title);
+        setCategory(complaint.data.complaint.complaint_cat_id);
+        setDescription(complaint.data.complaint.complaint_description);
+      } catch (error) {
+        console.log(error);
+        toast.error("Failed to reloading categories or complaints.");
+        navigate("/complaint/");
+      }
     };
+
+    fetchComplaintData();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setDisable(true);
+    try {
+      const token = await auth?.currentUser?.getIdToken();
+
+      const res = await axios.put(
+        `${backendURL}/complaint/edit`,
+        {
+          complaint_cat_id: category,
+          complaint_id: complaint_id,
+          complaint_title: title,
+          complaint_description: description,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("Edited Successfully.");
+      setCategory("");
+      setTitle("");
+      setDescription("");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong while editiing complaints.", {
+        description:
+          error?.response?.data?.message || "Server internal problem.",
+        class: "bg-white text-black",
+      });
+    } finally {
+      setDisable(false);
+    }
+  };
 
   return (
     <div className="mx-auto p-6 md:p-8 bg-white/80 rounded-2xl shadow-lg backdrop-blur-xl border">
@@ -107,16 +112,24 @@ export default function EditComplaint() {
 
         <div className="mb-4 space-y-1">
           <Label htmlFor="category">Category</Label>
-          <Select value={category} onValueChange={(val) => setCategory(val)} required>
+          <Select
+            value={category}
+            onValueChange={(val) => setCategory(val)}
+            required
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select a Category" />
             </SelectTrigger>
             <SelectContent>
-              {categories && categories?.map((cat) => (
-                <SelectItem key={cat.complaint_cat_id} value={cat.complaint_cat_id.toString()}>
-                  {cat.complaint_cat_name}
-                </SelectItem>
-              ))}
+              {categories &&
+                categories?.map((cat) => (
+                  <SelectItem
+                    key={cat.complaint_cat_id}
+                    value={cat.complaint_cat_id.toString()}
+                  >
+                    {cat.complaint_cat_name}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
         </div>

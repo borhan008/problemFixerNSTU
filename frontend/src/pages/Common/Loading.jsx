@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton"; // Assuming ShadCN Skeleton component
 
 const quotes = [
@@ -7,7 +7,7 @@ const quotes = [
   "It does not matter how slowly you go as long as you do not stop. - Confucius",
   "Hardships often prepare ordinary people for an extraordinary destiny. - C.S. Lewis",
   "Believe you can and you're halfway there. - Theodore Roosevelt",
-  "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt"
+  "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt",
 ];
 
 function Loading() {
@@ -15,7 +15,7 @@ function Loading() {
 
   // Change quote every 5 seconds
   useEffect(() => {
-   setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   }, []);
 
   return (
