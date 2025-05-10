@@ -36,6 +36,8 @@ import UserHome from "./pages/User/Home/UserHome";
 import NotFound from "./pages/Common/NotFound";
 import { Logout } from "./pages/Common/Logout";
 import Professions from "./pages/Admin/Profession/Profession";
+import BanglaGuideline from "./pages/User/BanglaGuideline/BanglaGuideline";
+import Buildings from "./pages/Admin/Buildings/Buildings";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -64,7 +66,7 @@ const router = createBrowserRouter(
         element={
           <PrivateRouter>
             <UserLayout>
-              <UserHome />
+              <BanglaGuideline />
             </UserLayout>
           </PrivateRouter>
         }
@@ -108,6 +110,16 @@ const router = createBrowserRouter(
           <PrivateRouter>
             <UserLayout>
               <Notification />
+            </UserLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/bangla-guideline"
+        element={
+          <PrivateRouter>
+            <UserLayout>
+              <BanglaGuideline />
             </UserLayout>
           </PrivateRouter>
         }
@@ -216,6 +228,16 @@ const router = createBrowserRouter(
           <PrivateRouter>
             <AdminLayout>
               <Professions />
+            </AdminLayout>
+          </PrivateRouter>
+        }
+      ></Route>
+      <Route
+        path="/admin/buildings"
+        element={
+          <PrivateRouter>
+            <AdminLayout>
+              <Buildings />
             </AdminLayout>
           </PrivateRouter>
         }

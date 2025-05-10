@@ -164,7 +164,14 @@ exports.Prisma.ComplaintsScalarFieldEnum = {
   status: 'status',
   emergancy: 'emergancy',
   complaint_cat_id: 'complaint_cat_id',
-  uid: 'uid'
+  uid: 'uid',
+  building_id: 'building_id',
+  room_no: 'room_no'
+};
+
+exports.Prisma.BuildingsScalarFieldEnum = {
+  building_id: 'building_id',
+  building_name: 'building_name'
 };
 
 exports.Prisma.ComplaintCataegoryScalarFieldEnum = {
@@ -232,7 +239,12 @@ exports.Prisma.DepartmentOrderByRelevanceFieldEnum = {
 exports.Prisma.ComplaintsOrderByRelevanceFieldEnum = {
   complaint_title: 'complaint_title',
   complaint_description: 'complaint_description',
-  uid: 'uid'
+  uid: 'uid',
+  room_no: 'room_no'
+};
+
+exports.Prisma.BuildingsOrderByRelevanceFieldEnum = {
+  building_name: 'building_name'
 };
 
 exports.Prisma.ComplaintCataegoryOrderByRelevanceFieldEnum = {
@@ -265,6 +277,7 @@ exports.Prisma.ModelName = {
   EmployeeCategory: 'EmployeeCategory',
   Department: 'Department',
   Complaints: 'Complaints',
+  Buildings: 'Buildings',
   ComplaintCataegory: 'ComplaintCataegory',
   ResolvedComplaints: 'ResolvedComplaints',
   Notifications: 'Notifications'

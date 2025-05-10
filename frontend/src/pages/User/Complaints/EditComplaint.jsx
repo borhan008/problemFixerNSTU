@@ -24,6 +24,9 @@ export default function EditComplaint() {
   const [disable, setDisable] = useState(false);
   const { complaint_id } = useParams();
   const navigate = useNavigate();
+  const [buildingId, setBuildingId] = useState("");
+  const [room, setRoom] = useState("");
+  const [buildings, setBuildings] = useState([]);
 
   useEffect(() => {
     const fetchComplaintData = async () => {
@@ -47,16 +50,35 @@ export default function EditComplaint() {
         setTitle(complaint.data.complaint.complaint_title);
         setCategory(complaint.data.complaint.complaint_cat_id);
         setDescription(complaint.data.complaint.complaint_description);
+        if (complaint.data.complaint?.Buildings?.building_name) {
+          setBuildingId(
+            String(complaint.data.complaint?.Buildings?.building_id)
+          );
+        }
+        setRoom(complaint.data.complaint?.room_no);
       } catch (error) {
         console.log(error);
         toast.error("Failed to reloading categories or complaints.");
         navigate("/complaint/");
       }
     };
+    fetchBuildings();
 
     fetchComplaintData();
   }, []);
-
+  const fetchBuildings = async () => {
+    try {
+      const token = await auth?.currentUser?.getIdToken();
+      const res = await axios.get(`${backendURL}/building`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setBuildings(res.data.buildings);
+    } catch (error) {
+      toast.error("Error fetching buildings");
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setDisable(true);
@@ -70,6 +92,8 @@ export default function EditComplaint() {
           complaint_id: complaint_id,
           complaint_title: title,
           complaint_description: description,
+          building_id: buildingId,
+          room: room,
         },
         {
           headers: {
@@ -133,7 +157,40 @@ export default function EditComplaint() {
             </SelectContent>
           </Select>
         </div>
-
+        <div className="flex justify-between">
+          <div className="mb-4 space-y-1 w-full mr-2">
+            <Label htmlFor="category">Building</Label>
+            <Select
+              value={buildingId}
+              onValueChange={(val) => setBuildingId(val)}
+              required
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a Building" />
+              </SelectTrigger>
+              <SelectContent>
+                {buildings &&
+                  buildings?.map((cat) => (
+                    <SelectItem
+                      key={cat.building_id}
+                      value={cat.building_id.toString()}
+                    >
+                      {cat.building_name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="mb-4 space-y-1">
+            <Label htmlFor="title">Room No.</Label>
+            <Input
+              id="title"
+              placeholder="Enter a short title"
+              value={room}
+              onChange={(e) => setRoom(e.target.value)}
+            />
+          </div>
+        </div>
         <div className="mb-4 space-y-1">
           <Label htmlFor="description">Details</Label>
           <Textarea

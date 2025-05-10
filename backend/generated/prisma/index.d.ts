@@ -44,6 +44,11 @@ export type Department = $Result.DefaultSelection<Prisma.$DepartmentPayload>
  */
 export type Complaints = $Result.DefaultSelection<Prisma.$ComplaintsPayload>
 /**
+ * Model Buildings
+ * 
+ */
+export type Buildings = $Result.DefaultSelection<Prisma.$BuildingsPayload>
+/**
  * Model ComplaintCataegory
  * 
  */
@@ -273,6 +278,16 @@ export class PrismaClient<
     * ```
     */
   get complaints(): Prisma.ComplaintsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.buildings`: Exposes CRUD operations for the **Buildings** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Buildings
+    * const buildings = await prisma.buildings.findMany()
+    * ```
+    */
+  get buildings(): Prisma.BuildingsDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.complaintCataegory`: Exposes CRUD operations for the **ComplaintCataegory** model.
@@ -749,6 +764,7 @@ export namespace Prisma {
     EmployeeCategory: 'EmployeeCategory',
     Department: 'Department',
     Complaints: 'Complaints',
+    Buildings: 'Buildings',
     ComplaintCataegory: 'ComplaintCataegory',
     ResolvedComplaints: 'ResolvedComplaints',
     Notifications: 'Notifications'
@@ -770,7 +786,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "profession" | "employee" | "employeeCategory" | "department" | "complaints" | "complaintCataegory" | "resolvedComplaints" | "notifications"
+      modelProps: "user" | "profession" | "employee" | "employeeCategory" | "department" | "complaints" | "buildings" | "complaintCataegory" | "resolvedComplaints" | "notifications"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1170,6 +1186,72 @@ export namespace Prisma {
           }
         }
       }
+      Buildings: {
+        payload: Prisma.$BuildingsPayload<ExtArgs>
+        fields: Prisma.BuildingsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BuildingsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildingsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BuildingsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildingsPayload>
+          }
+          findFirst: {
+            args: Prisma.BuildingsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildingsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BuildingsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildingsPayload>
+          }
+          findMany: {
+            args: Prisma.BuildingsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildingsPayload>[]
+          }
+          create: {
+            args: Prisma.BuildingsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildingsPayload>
+          }
+          createMany: {
+            args: Prisma.BuildingsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.BuildingsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildingsPayload>
+          }
+          update: {
+            args: Prisma.BuildingsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildingsPayload>
+          }
+          deleteMany: {
+            args: Prisma.BuildingsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BuildingsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.BuildingsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuildingsPayload>
+          }
+          aggregate: {
+            args: Prisma.BuildingsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBuildings>
+          }
+          groupBy: {
+            args: Prisma.BuildingsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BuildingsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BuildingsCountArgs<ExtArgs>
+            result: $Utils.Optional<BuildingsCountAggregateOutputType> | number
+          }
+        }
+      }
       ComplaintCataegory: {
         payload: Prisma.$ComplaintCataegoryPayload<ExtArgs>
         fields: Prisma.ComplaintCataegoryFieldRefs
@@ -1458,6 +1540,7 @@ export namespace Prisma {
     employeeCategory?: EmployeeCategoryOmit
     department?: DepartmentOmit
     complaints?: ComplaintsOmit
+    buildings?: BuildingsOmit
     complaintCataegory?: ComplaintCataegoryOmit
     resolvedComplaints?: ResolvedComplaintsOmit
     notifications?: NotificationsOmit
@@ -1711,6 +1794,37 @@ export namespace Prisma {
    */
   export type ComplaintsCountOutputTypeCountResolveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResolvedComplaintsWhereInput
+  }
+
+
+  /**
+   * Count Type BuildingsCountOutputType
+   */
+
+  export type BuildingsCountOutputType = {
+    complaints: number
+  }
+
+  export type BuildingsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    complaints?: boolean | BuildingsCountOutputTypeCountComplaintsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * BuildingsCountOutputType without action
+   */
+  export type BuildingsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuildingsCountOutputType
+     */
+    select?: BuildingsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * BuildingsCountOutputType without action
+   */
+  export type BuildingsCountOutputTypeCountComplaintsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ComplaintsWhereInput
   }
 
 
@@ -6633,11 +6747,13 @@ export namespace Prisma {
   export type ComplaintsAvgAggregateOutputType = {
     complaint_id: number | null
     complaint_cat_id: number | null
+    building_id: number | null
   }
 
   export type ComplaintsSumAggregateOutputType = {
     complaint_id: number | null
     complaint_cat_id: number | null
+    building_id: number | null
   }
 
   export type ComplaintsMinAggregateOutputType = {
@@ -6650,6 +6766,8 @@ export namespace Prisma {
     emergancy: boolean | null
     complaint_cat_id: number | null
     uid: string | null
+    building_id: number | null
+    room_no: string | null
   }
 
   export type ComplaintsMaxAggregateOutputType = {
@@ -6662,6 +6780,8 @@ export namespace Prisma {
     emergancy: boolean | null
     complaint_cat_id: number | null
     uid: string | null
+    building_id: number | null
+    room_no: string | null
   }
 
   export type ComplaintsCountAggregateOutputType = {
@@ -6674,6 +6794,8 @@ export namespace Prisma {
     emergancy: number
     complaint_cat_id: number
     uid: number
+    building_id: number
+    room_no: number
     _all: number
   }
 
@@ -6681,11 +6803,13 @@ export namespace Prisma {
   export type ComplaintsAvgAggregateInputType = {
     complaint_id?: true
     complaint_cat_id?: true
+    building_id?: true
   }
 
   export type ComplaintsSumAggregateInputType = {
     complaint_id?: true
     complaint_cat_id?: true
+    building_id?: true
   }
 
   export type ComplaintsMinAggregateInputType = {
@@ -6698,6 +6822,8 @@ export namespace Prisma {
     emergancy?: true
     complaint_cat_id?: true
     uid?: true
+    building_id?: true
+    room_no?: true
   }
 
   export type ComplaintsMaxAggregateInputType = {
@@ -6710,6 +6836,8 @@ export namespace Prisma {
     emergancy?: true
     complaint_cat_id?: true
     uid?: true
+    building_id?: true
+    room_no?: true
   }
 
   export type ComplaintsCountAggregateInputType = {
@@ -6722,6 +6850,8 @@ export namespace Prisma {
     emergancy?: true
     complaint_cat_id?: true
     uid?: true
+    building_id?: true
+    room_no?: true
     _all?: true
   }
 
@@ -6821,6 +6951,8 @@ export namespace Prisma {
     emergancy: boolean
     complaint_cat_id: number | null
     uid: string
+    building_id: number | null
+    room_no: string | null
     _count: ComplaintsCountAggregateOutputType | null
     _avg: ComplaintsAvgAggregateOutputType | null
     _sum: ComplaintsSumAggregateOutputType | null
@@ -6852,9 +6984,12 @@ export namespace Prisma {
     emergancy?: boolean
     complaint_cat_id?: boolean
     uid?: boolean
+    building_id?: boolean
+    room_no?: boolean
     ComplaintCataegory?: boolean | Complaints$ComplaintCataegoryArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
     resolve?: boolean | Complaints$resolveArgs<ExtArgs>
+    Buildings?: boolean | Complaints$BuildingsArgs<ExtArgs>
     _count?: boolean | ComplaintsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["complaints"]>
 
@@ -6870,13 +7005,16 @@ export namespace Prisma {
     emergancy?: boolean
     complaint_cat_id?: boolean
     uid?: boolean
+    building_id?: boolean
+    room_no?: boolean
   }
 
-  export type ComplaintsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"complaint_id" | "complaint_title" | "complaint_description" | "createdAt" | "updatedAt" | "status" | "emergancy" | "complaint_cat_id" | "uid", ExtArgs["result"]["complaints"]>
+  export type ComplaintsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"complaint_id" | "complaint_title" | "complaint_description" | "createdAt" | "updatedAt" | "status" | "emergancy" | "complaint_cat_id" | "uid" | "building_id" | "room_no", ExtArgs["result"]["complaints"]>
   export type ComplaintsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ComplaintCataegory?: boolean | Complaints$ComplaintCataegoryArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
     resolve?: boolean | Complaints$resolveArgs<ExtArgs>
+    Buildings?: boolean | Complaints$BuildingsArgs<ExtArgs>
     _count?: boolean | ComplaintsCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -6886,6 +7024,7 @@ export namespace Prisma {
       ComplaintCataegory: Prisma.$ComplaintCataegoryPayload<ExtArgs> | null
       User: Prisma.$UserPayload<ExtArgs>
       resolve: Prisma.$ResolvedComplaintsPayload<ExtArgs>[]
+      Buildings: Prisma.$BuildingsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       complaint_id: number
@@ -6897,6 +7036,8 @@ export namespace Prisma {
       emergancy: boolean
       complaint_cat_id: number | null
       uid: string
+      building_id: number | null
+      room_no: string | null
     }, ExtArgs["result"]["complaints"]>
     composites: {}
   }
@@ -7240,6 +7381,7 @@ export namespace Prisma {
     ComplaintCataegory<T extends Complaints$ComplaintCataegoryArgs<ExtArgs> = {}>(args?: Subset<T, Complaints$ComplaintCataegoryArgs<ExtArgs>>): Prisma__ComplaintCataegoryClient<$Result.GetResult<Prisma.$ComplaintCataegoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     resolve<T extends Complaints$resolveArgs<ExtArgs> = {}>(args?: Subset<T, Complaints$resolveArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResolvedComplaintsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Buildings<T extends Complaints$BuildingsArgs<ExtArgs> = {}>(args?: Subset<T, Complaints$BuildingsArgs<ExtArgs>>): Prisma__BuildingsClient<$Result.GetResult<Prisma.$BuildingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7278,6 +7420,8 @@ export namespace Prisma {
     readonly emergancy: FieldRef<"Complaints", 'Boolean'>
     readonly complaint_cat_id: FieldRef<"Complaints", 'Int'>
     readonly uid: FieldRef<"Complaints", 'String'>
+    readonly building_id: FieldRef<"Complaints", 'Int'>
+    readonly room_no: FieldRef<"Complaints", 'String'>
   }
     
 
@@ -7664,6 +7808,25 @@ export namespace Prisma {
   }
 
   /**
+   * Complaints.Buildings
+   */
+  export type Complaints$BuildingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
+    where?: BuildingsWhereInput
+  }
+
+  /**
    * Complaints without action
    */
   export type ComplaintsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7679,6 +7842,962 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ComplaintsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Buildings
+   */
+
+  export type AggregateBuildings = {
+    _count: BuildingsCountAggregateOutputType | null
+    _avg: BuildingsAvgAggregateOutputType | null
+    _sum: BuildingsSumAggregateOutputType | null
+    _min: BuildingsMinAggregateOutputType | null
+    _max: BuildingsMaxAggregateOutputType | null
+  }
+
+  export type BuildingsAvgAggregateOutputType = {
+    building_id: number | null
+  }
+
+  export type BuildingsSumAggregateOutputType = {
+    building_id: number | null
+  }
+
+  export type BuildingsMinAggregateOutputType = {
+    building_id: number | null
+    building_name: string | null
+  }
+
+  export type BuildingsMaxAggregateOutputType = {
+    building_id: number | null
+    building_name: string | null
+  }
+
+  export type BuildingsCountAggregateOutputType = {
+    building_id: number
+    building_name: number
+    _all: number
+  }
+
+
+  export type BuildingsAvgAggregateInputType = {
+    building_id?: true
+  }
+
+  export type BuildingsSumAggregateInputType = {
+    building_id?: true
+  }
+
+  export type BuildingsMinAggregateInputType = {
+    building_id?: true
+    building_name?: true
+  }
+
+  export type BuildingsMaxAggregateInputType = {
+    building_id?: true
+    building_name?: true
+  }
+
+  export type BuildingsCountAggregateInputType = {
+    building_id?: true
+    building_name?: true
+    _all?: true
+  }
+
+  export type BuildingsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Buildings to aggregate.
+     */
+    where?: BuildingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Buildings to fetch.
+     */
+    orderBy?: BuildingsOrderByWithRelationInput | BuildingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BuildingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Buildings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Buildings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Buildings
+    **/
+    _count?: true | BuildingsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BuildingsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BuildingsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BuildingsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BuildingsMaxAggregateInputType
+  }
+
+  export type GetBuildingsAggregateType<T extends BuildingsAggregateArgs> = {
+        [P in keyof T & keyof AggregateBuildings]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBuildings[P]>
+      : GetScalarType<T[P], AggregateBuildings[P]>
+  }
+
+
+
+
+  export type BuildingsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuildingsWhereInput
+    orderBy?: BuildingsOrderByWithAggregationInput | BuildingsOrderByWithAggregationInput[]
+    by: BuildingsScalarFieldEnum[] | BuildingsScalarFieldEnum
+    having?: BuildingsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BuildingsCountAggregateInputType | true
+    _avg?: BuildingsAvgAggregateInputType
+    _sum?: BuildingsSumAggregateInputType
+    _min?: BuildingsMinAggregateInputType
+    _max?: BuildingsMaxAggregateInputType
+  }
+
+  export type BuildingsGroupByOutputType = {
+    building_id: number
+    building_name: string
+    _count: BuildingsCountAggregateOutputType | null
+    _avg: BuildingsAvgAggregateOutputType | null
+    _sum: BuildingsSumAggregateOutputType | null
+    _min: BuildingsMinAggregateOutputType | null
+    _max: BuildingsMaxAggregateOutputType | null
+  }
+
+  type GetBuildingsGroupByPayload<T extends BuildingsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BuildingsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BuildingsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BuildingsGroupByOutputType[P]>
+            : GetScalarType<T[P], BuildingsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BuildingsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    building_id?: boolean
+    building_name?: boolean
+    complaints?: boolean | Buildings$complaintsArgs<ExtArgs>
+    _count?: boolean | BuildingsCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buildings"]>
+
+
+
+  export type BuildingsSelectScalar = {
+    building_id?: boolean
+    building_name?: boolean
+  }
+
+  export type BuildingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"building_id" | "building_name", ExtArgs["result"]["buildings"]>
+  export type BuildingsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    complaints?: boolean | Buildings$complaintsArgs<ExtArgs>
+    _count?: boolean | BuildingsCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $BuildingsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Buildings"
+    objects: {
+      complaints: Prisma.$ComplaintsPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      building_id: number
+      building_name: string
+    }, ExtArgs["result"]["buildings"]>
+    composites: {}
+  }
+
+  type BuildingsGetPayload<S extends boolean | null | undefined | BuildingsDefaultArgs> = $Result.GetResult<Prisma.$BuildingsPayload, S>
+
+  type BuildingsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BuildingsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BuildingsCountAggregateInputType | true
+    }
+
+  export interface BuildingsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Buildings'], meta: { name: 'Buildings' } }
+    /**
+     * Find zero or one Buildings that matches the filter.
+     * @param {BuildingsFindUniqueArgs} args - Arguments to find a Buildings
+     * @example
+     * // Get one Buildings
+     * const buildings = await prisma.buildings.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BuildingsFindUniqueArgs>(args: SelectSubset<T, BuildingsFindUniqueArgs<ExtArgs>>): Prisma__BuildingsClient<$Result.GetResult<Prisma.$BuildingsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Buildings that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BuildingsFindUniqueOrThrowArgs} args - Arguments to find a Buildings
+     * @example
+     * // Get one Buildings
+     * const buildings = await prisma.buildings.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BuildingsFindUniqueOrThrowArgs>(args: SelectSubset<T, BuildingsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BuildingsClient<$Result.GetResult<Prisma.$BuildingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Buildings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildingsFindFirstArgs} args - Arguments to find a Buildings
+     * @example
+     * // Get one Buildings
+     * const buildings = await prisma.buildings.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BuildingsFindFirstArgs>(args?: SelectSubset<T, BuildingsFindFirstArgs<ExtArgs>>): Prisma__BuildingsClient<$Result.GetResult<Prisma.$BuildingsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Buildings that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildingsFindFirstOrThrowArgs} args - Arguments to find a Buildings
+     * @example
+     * // Get one Buildings
+     * const buildings = await prisma.buildings.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BuildingsFindFirstOrThrowArgs>(args?: SelectSubset<T, BuildingsFindFirstOrThrowArgs<ExtArgs>>): Prisma__BuildingsClient<$Result.GetResult<Prisma.$BuildingsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Buildings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildingsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Buildings
+     * const buildings = await prisma.buildings.findMany()
+     * 
+     * // Get first 10 Buildings
+     * const buildings = await prisma.buildings.findMany({ take: 10 })
+     * 
+     * // Only select the `building_id`
+     * const buildingsWithBuilding_idOnly = await prisma.buildings.findMany({ select: { building_id: true } })
+     * 
+     */
+    findMany<T extends BuildingsFindManyArgs>(args?: SelectSubset<T, BuildingsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuildingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Buildings.
+     * @param {BuildingsCreateArgs} args - Arguments to create a Buildings.
+     * @example
+     * // Create one Buildings
+     * const Buildings = await prisma.buildings.create({
+     *   data: {
+     *     // ... data to create a Buildings
+     *   }
+     * })
+     * 
+     */
+    create<T extends BuildingsCreateArgs>(args: SelectSubset<T, BuildingsCreateArgs<ExtArgs>>): Prisma__BuildingsClient<$Result.GetResult<Prisma.$BuildingsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Buildings.
+     * @param {BuildingsCreateManyArgs} args - Arguments to create many Buildings.
+     * @example
+     * // Create many Buildings
+     * const buildings = await prisma.buildings.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BuildingsCreateManyArgs>(args?: SelectSubset<T, BuildingsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Buildings.
+     * @param {BuildingsDeleteArgs} args - Arguments to delete one Buildings.
+     * @example
+     * // Delete one Buildings
+     * const Buildings = await prisma.buildings.delete({
+     *   where: {
+     *     // ... filter to delete one Buildings
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BuildingsDeleteArgs>(args: SelectSubset<T, BuildingsDeleteArgs<ExtArgs>>): Prisma__BuildingsClient<$Result.GetResult<Prisma.$BuildingsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Buildings.
+     * @param {BuildingsUpdateArgs} args - Arguments to update one Buildings.
+     * @example
+     * // Update one Buildings
+     * const buildings = await prisma.buildings.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BuildingsUpdateArgs>(args: SelectSubset<T, BuildingsUpdateArgs<ExtArgs>>): Prisma__BuildingsClient<$Result.GetResult<Prisma.$BuildingsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Buildings.
+     * @param {BuildingsDeleteManyArgs} args - Arguments to filter Buildings to delete.
+     * @example
+     * // Delete a few Buildings
+     * const { count } = await prisma.buildings.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BuildingsDeleteManyArgs>(args?: SelectSubset<T, BuildingsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Buildings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildingsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Buildings
+     * const buildings = await prisma.buildings.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BuildingsUpdateManyArgs>(args: SelectSubset<T, BuildingsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Buildings.
+     * @param {BuildingsUpsertArgs} args - Arguments to update or create a Buildings.
+     * @example
+     * // Update or create a Buildings
+     * const buildings = await prisma.buildings.upsert({
+     *   create: {
+     *     // ... data to create a Buildings
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Buildings we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BuildingsUpsertArgs>(args: SelectSubset<T, BuildingsUpsertArgs<ExtArgs>>): Prisma__BuildingsClient<$Result.GetResult<Prisma.$BuildingsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Buildings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildingsCountArgs} args - Arguments to filter Buildings to count.
+     * @example
+     * // Count the number of Buildings
+     * const count = await prisma.buildings.count({
+     *   where: {
+     *     // ... the filter for the Buildings we want to count
+     *   }
+     * })
+    **/
+    count<T extends BuildingsCountArgs>(
+      args?: Subset<T, BuildingsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BuildingsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Buildings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildingsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BuildingsAggregateArgs>(args: Subset<T, BuildingsAggregateArgs>): Prisma.PrismaPromise<GetBuildingsAggregateType<T>>
+
+    /**
+     * Group by Buildings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuildingsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BuildingsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BuildingsGroupByArgs['orderBy'] }
+        : { orderBy?: BuildingsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BuildingsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBuildingsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Buildings model
+   */
+  readonly fields: BuildingsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Buildings.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BuildingsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    complaints<T extends Buildings$complaintsArgs<ExtArgs> = {}>(args?: Subset<T, Buildings$complaintsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComplaintsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Buildings model
+   */
+  interface BuildingsFieldRefs {
+    readonly building_id: FieldRef<"Buildings", 'Int'>
+    readonly building_name: FieldRef<"Buildings", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Buildings findUnique
+   */
+  export type BuildingsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
+    /**
+     * Filter, which Buildings to fetch.
+     */
+    where: BuildingsWhereUniqueInput
+  }
+
+  /**
+   * Buildings findUniqueOrThrow
+   */
+  export type BuildingsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
+    /**
+     * Filter, which Buildings to fetch.
+     */
+    where: BuildingsWhereUniqueInput
+  }
+
+  /**
+   * Buildings findFirst
+   */
+  export type BuildingsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
+    /**
+     * Filter, which Buildings to fetch.
+     */
+    where?: BuildingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Buildings to fetch.
+     */
+    orderBy?: BuildingsOrderByWithRelationInput | BuildingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Buildings.
+     */
+    cursor?: BuildingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Buildings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Buildings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Buildings.
+     */
+    distinct?: BuildingsScalarFieldEnum | BuildingsScalarFieldEnum[]
+  }
+
+  /**
+   * Buildings findFirstOrThrow
+   */
+  export type BuildingsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
+    /**
+     * Filter, which Buildings to fetch.
+     */
+    where?: BuildingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Buildings to fetch.
+     */
+    orderBy?: BuildingsOrderByWithRelationInput | BuildingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Buildings.
+     */
+    cursor?: BuildingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Buildings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Buildings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Buildings.
+     */
+    distinct?: BuildingsScalarFieldEnum | BuildingsScalarFieldEnum[]
+  }
+
+  /**
+   * Buildings findMany
+   */
+  export type BuildingsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
+    /**
+     * Filter, which Buildings to fetch.
+     */
+    where?: BuildingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Buildings to fetch.
+     */
+    orderBy?: BuildingsOrderByWithRelationInput | BuildingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Buildings.
+     */
+    cursor?: BuildingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Buildings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Buildings.
+     */
+    skip?: number
+    distinct?: BuildingsScalarFieldEnum | BuildingsScalarFieldEnum[]
+  }
+
+  /**
+   * Buildings create
+   */
+  export type BuildingsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Buildings.
+     */
+    data: XOR<BuildingsCreateInput, BuildingsUncheckedCreateInput>
+  }
+
+  /**
+   * Buildings createMany
+   */
+  export type BuildingsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Buildings.
+     */
+    data: BuildingsCreateManyInput | BuildingsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Buildings update
+   */
+  export type BuildingsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Buildings.
+     */
+    data: XOR<BuildingsUpdateInput, BuildingsUncheckedUpdateInput>
+    /**
+     * Choose, which Buildings to update.
+     */
+    where: BuildingsWhereUniqueInput
+  }
+
+  /**
+   * Buildings updateMany
+   */
+  export type BuildingsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Buildings.
+     */
+    data: XOR<BuildingsUpdateManyMutationInput, BuildingsUncheckedUpdateManyInput>
+    /**
+     * Filter which Buildings to update
+     */
+    where?: BuildingsWhereInput
+    /**
+     * Limit how many Buildings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Buildings upsert
+   */
+  export type BuildingsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Buildings to update in case it exists.
+     */
+    where: BuildingsWhereUniqueInput
+    /**
+     * In case the Buildings found by the `where` argument doesn't exist, create a new Buildings with this data.
+     */
+    create: XOR<BuildingsCreateInput, BuildingsUncheckedCreateInput>
+    /**
+     * In case the Buildings was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BuildingsUpdateInput, BuildingsUncheckedUpdateInput>
+  }
+
+  /**
+   * Buildings delete
+   */
+  export type BuildingsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
+    /**
+     * Filter which Buildings to delete.
+     */
+    where: BuildingsWhereUniqueInput
+  }
+
+  /**
+   * Buildings deleteMany
+   */
+  export type BuildingsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Buildings to delete
+     */
+    where?: BuildingsWhereInput
+    /**
+     * Limit how many Buildings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Buildings.complaints
+   */
+  export type Buildings$complaintsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Complaints
+     */
+    select?: ComplaintsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Complaints
+     */
+    omit?: ComplaintsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ComplaintsInclude<ExtArgs> | null
+    where?: ComplaintsWhereInput
+    orderBy?: ComplaintsOrderByWithRelationInput | ComplaintsOrderByWithRelationInput[]
+    cursor?: ComplaintsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ComplaintsScalarFieldEnum | ComplaintsScalarFieldEnum[]
+  }
+
+  /**
+   * Buildings without action
+   */
+  export type BuildingsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Buildings
+     */
+    select?: BuildingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Buildings
+     */
+    omit?: BuildingsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuildingsInclude<ExtArgs> | null
   }
 
 
@@ -10712,10 +11831,20 @@ export namespace Prisma {
     status: 'status',
     emergancy: 'emergancy',
     complaint_cat_id: 'complaint_cat_id',
-    uid: 'uid'
+    uid: 'uid',
+    building_id: 'building_id',
+    room_no: 'room_no'
   };
 
   export type ComplaintsScalarFieldEnum = (typeof ComplaintsScalarFieldEnum)[keyof typeof ComplaintsScalarFieldEnum]
+
+
+  export const BuildingsScalarFieldEnum: {
+    building_id: 'building_id',
+    building_name: 'building_name'
+  };
+
+  export type BuildingsScalarFieldEnum = (typeof BuildingsScalarFieldEnum)[keyof typeof BuildingsScalarFieldEnum]
 
 
   export const ComplaintCataegoryScalarFieldEnum: {
@@ -10813,10 +11942,18 @@ export namespace Prisma {
   export const ComplaintsOrderByRelevanceFieldEnum: {
     complaint_title: 'complaint_title',
     complaint_description: 'complaint_description',
-    uid: 'uid'
+    uid: 'uid',
+    room_no: 'room_no'
   };
 
   export type ComplaintsOrderByRelevanceFieldEnum = (typeof ComplaintsOrderByRelevanceFieldEnum)[keyof typeof ComplaintsOrderByRelevanceFieldEnum]
+
+
+  export const BuildingsOrderByRelevanceFieldEnum: {
+    building_name: 'building_name'
+  };
+
+  export type BuildingsOrderByRelevanceFieldEnum = (typeof BuildingsOrderByRelevanceFieldEnum)[keyof typeof BuildingsOrderByRelevanceFieldEnum]
 
 
   export const ComplaintCataegoryOrderByRelevanceFieldEnum: {
@@ -11198,9 +12335,12 @@ export namespace Prisma {
     emergancy?: BoolFilter<"Complaints"> | boolean
     complaint_cat_id?: IntNullableFilter<"Complaints"> | number | null
     uid?: StringFilter<"Complaints"> | string
+    building_id?: IntNullableFilter<"Complaints"> | number | null
+    room_no?: StringNullableFilter<"Complaints"> | string | null
     ComplaintCataegory?: XOR<ComplaintCataegoryNullableScalarRelationFilter, ComplaintCataegoryWhereInput> | null
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
     resolve?: ResolvedComplaintsListRelationFilter
+    Buildings?: XOR<BuildingsNullableScalarRelationFilter, BuildingsWhereInput> | null
   }
 
   export type ComplaintsOrderByWithRelationInput = {
@@ -11213,9 +12353,12 @@ export namespace Prisma {
     emergancy?: SortOrder
     complaint_cat_id?: SortOrderInput | SortOrder
     uid?: SortOrder
+    building_id?: SortOrderInput | SortOrder
+    room_no?: SortOrderInput | SortOrder
     ComplaintCataegory?: ComplaintCataegoryOrderByWithRelationInput
     User?: UserOrderByWithRelationInput
     resolve?: ResolvedComplaintsOrderByRelationAggregateInput
+    Buildings?: BuildingsOrderByWithRelationInput
     _relevance?: ComplaintsOrderByRelevanceInput
   }
 
@@ -11232,9 +12375,12 @@ export namespace Prisma {
     emergancy?: BoolFilter<"Complaints"> | boolean
     complaint_cat_id?: IntNullableFilter<"Complaints"> | number | null
     uid?: StringFilter<"Complaints"> | string
+    building_id?: IntNullableFilter<"Complaints"> | number | null
+    room_no?: StringNullableFilter<"Complaints"> | string | null
     ComplaintCataegory?: XOR<ComplaintCataegoryNullableScalarRelationFilter, ComplaintCataegoryWhereInput> | null
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
     resolve?: ResolvedComplaintsListRelationFilter
+    Buildings?: XOR<BuildingsNullableScalarRelationFilter, BuildingsWhereInput> | null
   }, "complaint_id">
 
   export type ComplaintsOrderByWithAggregationInput = {
@@ -11247,6 +12393,8 @@ export namespace Prisma {
     emergancy?: SortOrder
     complaint_cat_id?: SortOrderInput | SortOrder
     uid?: SortOrder
+    building_id?: SortOrderInput | SortOrder
+    room_no?: SortOrderInput | SortOrder
     _count?: ComplaintsCountOrderByAggregateInput
     _avg?: ComplaintsAvgOrderByAggregateInput
     _max?: ComplaintsMaxOrderByAggregateInput
@@ -11267,6 +12415,51 @@ export namespace Prisma {
     emergancy?: BoolWithAggregatesFilter<"Complaints"> | boolean
     complaint_cat_id?: IntNullableWithAggregatesFilter<"Complaints"> | number | null
     uid?: StringWithAggregatesFilter<"Complaints"> | string
+    building_id?: IntNullableWithAggregatesFilter<"Complaints"> | number | null
+    room_no?: StringNullableWithAggregatesFilter<"Complaints"> | string | null
+  }
+
+  export type BuildingsWhereInput = {
+    AND?: BuildingsWhereInput | BuildingsWhereInput[]
+    OR?: BuildingsWhereInput[]
+    NOT?: BuildingsWhereInput | BuildingsWhereInput[]
+    building_id?: IntFilter<"Buildings"> | number
+    building_name?: StringFilter<"Buildings"> | string
+    complaints?: ComplaintsListRelationFilter
+  }
+
+  export type BuildingsOrderByWithRelationInput = {
+    building_id?: SortOrder
+    building_name?: SortOrder
+    complaints?: ComplaintsOrderByRelationAggregateInput
+    _relevance?: BuildingsOrderByRelevanceInput
+  }
+
+  export type BuildingsWhereUniqueInput = Prisma.AtLeast<{
+    building_id?: number
+    AND?: BuildingsWhereInput | BuildingsWhereInput[]
+    OR?: BuildingsWhereInput[]
+    NOT?: BuildingsWhereInput | BuildingsWhereInput[]
+    building_name?: StringFilter<"Buildings"> | string
+    complaints?: ComplaintsListRelationFilter
+  }, "building_id">
+
+  export type BuildingsOrderByWithAggregationInput = {
+    building_id?: SortOrder
+    building_name?: SortOrder
+    _count?: BuildingsCountOrderByAggregateInput
+    _avg?: BuildingsAvgOrderByAggregateInput
+    _max?: BuildingsMaxOrderByAggregateInput
+    _min?: BuildingsMinOrderByAggregateInput
+    _sum?: BuildingsSumOrderByAggregateInput
+  }
+
+  export type BuildingsScalarWhereWithAggregatesInput = {
+    AND?: BuildingsScalarWhereWithAggregatesInput | BuildingsScalarWhereWithAggregatesInput[]
+    OR?: BuildingsScalarWhereWithAggregatesInput[]
+    NOT?: BuildingsScalarWhereWithAggregatesInput | BuildingsScalarWhereWithAggregatesInput[]
+    building_id?: IntWithAggregatesFilter<"Buildings"> | number
+    building_name?: StringWithAggregatesFilter<"Buildings"> | string
   }
 
   export type ComplaintCataegoryWhereInput = {
@@ -11725,9 +12918,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     status?: $Enums.STATUS
     emergancy?: boolean
+    room_no?: string | null
     ComplaintCataegory?: ComplaintCataegoryCreateNestedOneWithoutComplaintsInput
     User: UserCreateNestedOneWithoutComplaintInput
     resolve?: ResolvedComplaintsCreateNestedManyWithoutComplaintsInput
+    Buildings?: BuildingsCreateNestedOneWithoutComplaintsInput
   }
 
   export type ComplaintsUncheckedCreateInput = {
@@ -11740,6 +12935,8 @@ export namespace Prisma {
     emergancy?: boolean
     complaint_cat_id?: number | null
     uid: string
+    building_id?: number | null
+    room_no?: string | null
     resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutComplaintsInput
   }
 
@@ -11750,9 +12947,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
     ComplaintCataegory?: ComplaintCataegoryUpdateOneWithoutComplaintsNestedInput
     User?: UserUpdateOneRequiredWithoutComplaintNestedInput
     resolve?: ResolvedComplaintsUpdateManyWithoutComplaintsNestedInput
+    Buildings?: BuildingsUpdateOneWithoutComplaintsNestedInput
   }
 
   export type ComplaintsUncheckedUpdateInput = {
@@ -11765,6 +12964,8 @@ export namespace Prisma {
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
     uid?: StringFieldUpdateOperationsInput | string
+    building_id?: NullableIntFieldUpdateOperationsInput | number | null
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
     resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsNestedInput
   }
 
@@ -11778,6 +12979,8 @@ export namespace Prisma {
     emergancy?: boolean
     complaint_cat_id?: number | null
     uid: string
+    building_id?: number | null
+    room_no?: string | null
   }
 
   export type ComplaintsUpdateManyMutationInput = {
@@ -11787,6 +12990,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ComplaintsUncheckedUpdateManyInput = {
@@ -11799,6 +13003,44 @@ export namespace Prisma {
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
     uid?: StringFieldUpdateOperationsInput | string
+    building_id?: NullableIntFieldUpdateOperationsInput | number | null
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BuildingsCreateInput = {
+    building_name: string
+    complaints?: ComplaintsCreateNestedManyWithoutBuildingsInput
+  }
+
+  export type BuildingsUncheckedCreateInput = {
+    building_id?: number
+    building_name: string
+    complaints?: ComplaintsUncheckedCreateNestedManyWithoutBuildingsInput
+  }
+
+  export type BuildingsUpdateInput = {
+    building_name?: StringFieldUpdateOperationsInput | string
+    complaints?: ComplaintsUpdateManyWithoutBuildingsNestedInput
+  }
+
+  export type BuildingsUncheckedUpdateInput = {
+    building_id?: IntFieldUpdateOperationsInput | number
+    building_name?: StringFieldUpdateOperationsInput | string
+    complaints?: ComplaintsUncheckedUpdateManyWithoutBuildingsNestedInput
+  }
+
+  export type BuildingsCreateManyInput = {
+    building_id?: number
+    building_name: string
+  }
+
+  export type BuildingsUpdateManyMutationInput = {
+    building_name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BuildingsUncheckedUpdateManyInput = {
+    building_id?: IntFieldUpdateOperationsInput | number
+    building_name?: StringFieldUpdateOperationsInput | string
   }
 
   export type ComplaintCataegoryCreateInput = {
@@ -12368,6 +13610,11 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
+  export type BuildingsNullableScalarRelationFilter = {
+    is?: BuildingsWhereInput | null
+    isNot?: BuildingsWhereInput | null
+  }
+
   export type ComplaintsOrderByRelevanceInput = {
     fields: ComplaintsOrderByRelevanceFieldEnum | ComplaintsOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -12384,11 +13631,14 @@ export namespace Prisma {
     emergancy?: SortOrder
     complaint_cat_id?: SortOrder
     uid?: SortOrder
+    building_id?: SortOrder
+    room_no?: SortOrder
   }
 
   export type ComplaintsAvgOrderByAggregateInput = {
     complaint_id?: SortOrder
     complaint_cat_id?: SortOrder
+    building_id?: SortOrder
   }
 
   export type ComplaintsMaxOrderByAggregateInput = {
@@ -12401,6 +13651,8 @@ export namespace Prisma {
     emergancy?: SortOrder
     complaint_cat_id?: SortOrder
     uid?: SortOrder
+    building_id?: SortOrder
+    room_no?: SortOrder
   }
 
   export type ComplaintsMinOrderByAggregateInput = {
@@ -12413,11 +13665,14 @@ export namespace Prisma {
     emergancy?: SortOrder
     complaint_cat_id?: SortOrder
     uid?: SortOrder
+    building_id?: SortOrder
+    room_no?: SortOrder
   }
 
   export type ComplaintsSumOrderByAggregateInput = {
     complaint_id?: SortOrder
     complaint_cat_id?: SortOrder
+    building_id?: SortOrder
   }
 
   export type EnumSTATUSWithAggregatesFilter<$PrismaModel = never> = {
@@ -12444,6 +13699,35 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type BuildingsOrderByRelevanceInput = {
+    fields: BuildingsOrderByRelevanceFieldEnum | BuildingsOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type BuildingsCountOrderByAggregateInput = {
+    building_id?: SortOrder
+    building_name?: SortOrder
+  }
+
+  export type BuildingsAvgOrderByAggregateInput = {
+    building_id?: SortOrder
+  }
+
+  export type BuildingsMaxOrderByAggregateInput = {
+    building_id?: SortOrder
+    building_name?: SortOrder
+  }
+
+  export type BuildingsMinOrderByAggregateInput = {
+    building_id?: SortOrder
+    building_name?: SortOrder
+  }
+
+  export type BuildingsSumOrderByAggregateInput = {
+    building_id?: SortOrder
   }
 
   export type EmployeeListRelationFilter = {
@@ -12908,6 +14192,12 @@ export namespace Prisma {
     connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
   }
 
+  export type BuildingsCreateNestedOneWithoutComplaintsInput = {
+    create?: XOR<BuildingsCreateWithoutComplaintsInput, BuildingsUncheckedCreateWithoutComplaintsInput>
+    connectOrCreate?: BuildingsCreateOrConnectWithoutComplaintsInput
+    connect?: BuildingsWhereUniqueInput
+  }
+
   export type ResolvedComplaintsUncheckedCreateNestedManyWithoutComplaintsInput = {
     create?: XOR<ResolvedComplaintsCreateWithoutComplaintsInput, ResolvedComplaintsUncheckedCreateWithoutComplaintsInput> | ResolvedComplaintsCreateWithoutComplaintsInput[] | ResolvedComplaintsUncheckedCreateWithoutComplaintsInput[]
     connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutComplaintsInput | ResolvedComplaintsCreateOrConnectWithoutComplaintsInput[]
@@ -12951,6 +14241,16 @@ export namespace Prisma {
     deleteMany?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
   }
 
+  export type BuildingsUpdateOneWithoutComplaintsNestedInput = {
+    create?: XOR<BuildingsCreateWithoutComplaintsInput, BuildingsUncheckedCreateWithoutComplaintsInput>
+    connectOrCreate?: BuildingsCreateOrConnectWithoutComplaintsInput
+    upsert?: BuildingsUpsertWithoutComplaintsInput
+    disconnect?: BuildingsWhereInput | boolean
+    delete?: BuildingsWhereInput | boolean
+    connect?: BuildingsWhereUniqueInput
+    update?: XOR<XOR<BuildingsUpdateToOneWithWhereWithoutComplaintsInput, BuildingsUpdateWithoutComplaintsInput>, BuildingsUncheckedUpdateWithoutComplaintsInput>
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -12971,6 +14271,48 @@ export namespace Prisma {
     update?: ResolvedComplaintsUpdateWithWhereUniqueWithoutComplaintsInput | ResolvedComplaintsUpdateWithWhereUniqueWithoutComplaintsInput[]
     updateMany?: ResolvedComplaintsUpdateManyWithWhereWithoutComplaintsInput | ResolvedComplaintsUpdateManyWithWhereWithoutComplaintsInput[]
     deleteMany?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
+  }
+
+  export type ComplaintsCreateNestedManyWithoutBuildingsInput = {
+    create?: XOR<ComplaintsCreateWithoutBuildingsInput, ComplaintsUncheckedCreateWithoutBuildingsInput> | ComplaintsCreateWithoutBuildingsInput[] | ComplaintsUncheckedCreateWithoutBuildingsInput[]
+    connectOrCreate?: ComplaintsCreateOrConnectWithoutBuildingsInput | ComplaintsCreateOrConnectWithoutBuildingsInput[]
+    createMany?: ComplaintsCreateManyBuildingsInputEnvelope
+    connect?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+  }
+
+  export type ComplaintsUncheckedCreateNestedManyWithoutBuildingsInput = {
+    create?: XOR<ComplaintsCreateWithoutBuildingsInput, ComplaintsUncheckedCreateWithoutBuildingsInput> | ComplaintsCreateWithoutBuildingsInput[] | ComplaintsUncheckedCreateWithoutBuildingsInput[]
+    connectOrCreate?: ComplaintsCreateOrConnectWithoutBuildingsInput | ComplaintsCreateOrConnectWithoutBuildingsInput[]
+    createMany?: ComplaintsCreateManyBuildingsInputEnvelope
+    connect?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+  }
+
+  export type ComplaintsUpdateManyWithoutBuildingsNestedInput = {
+    create?: XOR<ComplaintsCreateWithoutBuildingsInput, ComplaintsUncheckedCreateWithoutBuildingsInput> | ComplaintsCreateWithoutBuildingsInput[] | ComplaintsUncheckedCreateWithoutBuildingsInput[]
+    connectOrCreate?: ComplaintsCreateOrConnectWithoutBuildingsInput | ComplaintsCreateOrConnectWithoutBuildingsInput[]
+    upsert?: ComplaintsUpsertWithWhereUniqueWithoutBuildingsInput | ComplaintsUpsertWithWhereUniqueWithoutBuildingsInput[]
+    createMany?: ComplaintsCreateManyBuildingsInputEnvelope
+    set?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+    disconnect?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+    delete?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+    connect?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+    update?: ComplaintsUpdateWithWhereUniqueWithoutBuildingsInput | ComplaintsUpdateWithWhereUniqueWithoutBuildingsInput[]
+    updateMany?: ComplaintsUpdateManyWithWhereWithoutBuildingsInput | ComplaintsUpdateManyWithWhereWithoutBuildingsInput[]
+    deleteMany?: ComplaintsScalarWhereInput | ComplaintsScalarWhereInput[]
+  }
+
+  export type ComplaintsUncheckedUpdateManyWithoutBuildingsNestedInput = {
+    create?: XOR<ComplaintsCreateWithoutBuildingsInput, ComplaintsUncheckedCreateWithoutBuildingsInput> | ComplaintsCreateWithoutBuildingsInput[] | ComplaintsUncheckedCreateWithoutBuildingsInput[]
+    connectOrCreate?: ComplaintsCreateOrConnectWithoutBuildingsInput | ComplaintsCreateOrConnectWithoutBuildingsInput[]
+    upsert?: ComplaintsUpsertWithWhereUniqueWithoutBuildingsInput | ComplaintsUpsertWithWhereUniqueWithoutBuildingsInput[]
+    createMany?: ComplaintsCreateManyBuildingsInputEnvelope
+    set?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+    disconnect?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+    delete?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+    connect?: ComplaintsWhereUniqueInput | ComplaintsWhereUniqueInput[]
+    update?: ComplaintsUpdateWithWhereUniqueWithoutBuildingsInput | ComplaintsUpdateWithWhereUniqueWithoutBuildingsInput[]
+    updateMany?: ComplaintsUpdateManyWithWhereWithoutBuildingsInput | ComplaintsUpdateManyWithWhereWithoutBuildingsInput[]
+    deleteMany?: ComplaintsScalarWhereInput | ComplaintsScalarWhereInput[]
   }
 
   export type ComplaintsCreateNestedManyWithoutComplaintCataegoryInput = {
@@ -13386,8 +14728,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     status?: $Enums.STATUS
     emergancy?: boolean
+    room_no?: string | null
     ComplaintCataegory?: ComplaintCataegoryCreateNestedOneWithoutComplaintsInput
     resolve?: ResolvedComplaintsCreateNestedManyWithoutComplaintsInput
+    Buildings?: BuildingsCreateNestedOneWithoutComplaintsInput
   }
 
   export type ComplaintsUncheckedCreateWithoutUserInput = {
@@ -13399,6 +14743,8 @@ export namespace Prisma {
     status?: $Enums.STATUS
     emergancy?: boolean
     complaint_cat_id?: number | null
+    building_id?: number | null
+    room_no?: string | null
     resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutComplaintsInput
   }
 
@@ -13512,6 +14858,8 @@ export namespace Prisma {
     emergancy?: BoolFilter<"Complaints"> | boolean
     complaint_cat_id?: IntNullableFilter<"Complaints"> | number | null
     uid?: StringFilter<"Complaints"> | string
+    building_id?: IntNullableFilter<"Complaints"> | number | null
+    room_no?: StringNullableFilter<"Complaints"> | string | null
   }
 
   export type ResolvedComplaintsUpsertWithWhereUniqueWithoutUserInput = {
@@ -13840,6 +15188,20 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type BuildingsCreateWithoutComplaintsInput = {
+    building_name: string
+  }
+
+  export type BuildingsUncheckedCreateWithoutComplaintsInput = {
+    building_id?: number
+    building_name: string
+  }
+
+  export type BuildingsCreateOrConnectWithoutComplaintsInput = {
+    where: BuildingsWhereUniqueInput
+    create: XOR<BuildingsCreateWithoutComplaintsInput, BuildingsUncheckedCreateWithoutComplaintsInput>
+  }
+
   export type ComplaintCataegoryUpsertWithoutComplaintsInput = {
     update: XOR<ComplaintCataegoryUpdateWithoutComplaintsInput, ComplaintCataegoryUncheckedUpdateWithoutComplaintsInput>
     create: XOR<ComplaintCataegoryCreateWithoutComplaintsInput, ComplaintCataegoryUncheckedCreateWithoutComplaintsInput>
@@ -13921,6 +15283,79 @@ export namespace Prisma {
     data: XOR<ResolvedComplaintsUpdateManyMutationInput, ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsInput>
   }
 
+  export type BuildingsUpsertWithoutComplaintsInput = {
+    update: XOR<BuildingsUpdateWithoutComplaintsInput, BuildingsUncheckedUpdateWithoutComplaintsInput>
+    create: XOR<BuildingsCreateWithoutComplaintsInput, BuildingsUncheckedCreateWithoutComplaintsInput>
+    where?: BuildingsWhereInput
+  }
+
+  export type BuildingsUpdateToOneWithWhereWithoutComplaintsInput = {
+    where?: BuildingsWhereInput
+    data: XOR<BuildingsUpdateWithoutComplaintsInput, BuildingsUncheckedUpdateWithoutComplaintsInput>
+  }
+
+  export type BuildingsUpdateWithoutComplaintsInput = {
+    building_name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BuildingsUncheckedUpdateWithoutComplaintsInput = {
+    building_id?: IntFieldUpdateOperationsInput | number
+    building_name?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ComplaintsCreateWithoutBuildingsInput = {
+    complaint_title: string
+    complaint_description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.STATUS
+    emergancy?: boolean
+    room_no?: string | null
+    ComplaintCataegory?: ComplaintCataegoryCreateNestedOneWithoutComplaintsInput
+    User: UserCreateNestedOneWithoutComplaintInput
+    resolve?: ResolvedComplaintsCreateNestedManyWithoutComplaintsInput
+  }
+
+  export type ComplaintsUncheckedCreateWithoutBuildingsInput = {
+    complaint_id?: number
+    complaint_title: string
+    complaint_description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.STATUS
+    emergancy?: boolean
+    complaint_cat_id?: number | null
+    uid: string
+    room_no?: string | null
+    resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutComplaintsInput
+  }
+
+  export type ComplaintsCreateOrConnectWithoutBuildingsInput = {
+    where: ComplaintsWhereUniqueInput
+    create: XOR<ComplaintsCreateWithoutBuildingsInput, ComplaintsUncheckedCreateWithoutBuildingsInput>
+  }
+
+  export type ComplaintsCreateManyBuildingsInputEnvelope = {
+    data: ComplaintsCreateManyBuildingsInput | ComplaintsCreateManyBuildingsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ComplaintsUpsertWithWhereUniqueWithoutBuildingsInput = {
+    where: ComplaintsWhereUniqueInput
+    update: XOR<ComplaintsUpdateWithoutBuildingsInput, ComplaintsUncheckedUpdateWithoutBuildingsInput>
+    create: XOR<ComplaintsCreateWithoutBuildingsInput, ComplaintsUncheckedCreateWithoutBuildingsInput>
+  }
+
+  export type ComplaintsUpdateWithWhereUniqueWithoutBuildingsInput = {
+    where: ComplaintsWhereUniqueInput
+    data: XOR<ComplaintsUpdateWithoutBuildingsInput, ComplaintsUncheckedUpdateWithoutBuildingsInput>
+  }
+
+  export type ComplaintsUpdateManyWithWhereWithoutBuildingsInput = {
+    where: ComplaintsScalarWhereInput
+    data: XOR<ComplaintsUpdateManyMutationInput, ComplaintsUncheckedUpdateManyWithoutBuildingsInput>
+  }
+
   export type ComplaintsCreateWithoutComplaintCataegoryInput = {
     complaint_title: string
     complaint_description: string
@@ -13928,8 +15363,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     status?: $Enums.STATUS
     emergancy?: boolean
+    room_no?: string | null
     User: UserCreateNestedOneWithoutComplaintInput
     resolve?: ResolvedComplaintsCreateNestedManyWithoutComplaintsInput
+    Buildings?: BuildingsCreateNestedOneWithoutComplaintsInput
   }
 
   export type ComplaintsUncheckedCreateWithoutComplaintCataegoryInput = {
@@ -13941,6 +15378,8 @@ export namespace Prisma {
     status?: $Enums.STATUS
     emergancy?: boolean
     uid: string
+    building_id?: number | null
+    room_no?: string | null
     resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutComplaintsInput
   }
 
@@ -14044,8 +15483,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     status?: $Enums.STATUS
     emergancy?: boolean
+    room_no?: string | null
     ComplaintCataegory?: ComplaintCataegoryCreateNestedOneWithoutComplaintsInput
     User: UserCreateNestedOneWithoutComplaintInput
+    Buildings?: BuildingsCreateNestedOneWithoutComplaintsInput
   }
 
   export type ComplaintsUncheckedCreateWithoutResolveInput = {
@@ -14058,6 +15499,8 @@ export namespace Prisma {
     emergancy?: boolean
     complaint_cat_id?: number | null
     uid: string
+    building_id?: number | null
+    room_no?: string | null
   }
 
   export type ComplaintsCreateOrConnectWithoutResolveInput = {
@@ -14144,8 +15587,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
     ComplaintCataegory?: ComplaintCataegoryUpdateOneWithoutComplaintsNestedInput
     User?: UserUpdateOneRequiredWithoutComplaintNestedInput
+    Buildings?: BuildingsUpdateOneWithoutComplaintsNestedInput
   }
 
   export type ComplaintsUncheckedUpdateWithoutResolveInput = {
@@ -14158,6 +15603,8 @@ export namespace Prisma {
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
     uid?: StringFieldUpdateOperationsInput | string
+    building_id?: NullableIntFieldUpdateOperationsInput | number | null
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUpsertWithoutResolveInput = {
@@ -14212,6 +15659,8 @@ export namespace Prisma {
     status?: $Enums.STATUS
     emergancy?: boolean
     complaint_cat_id?: number | null
+    building_id?: number | null
+    room_no?: string | null
   }
 
   export type ResolvedComplaintsCreateManyUserInput = {
@@ -14230,8 +15679,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
     ComplaintCataegory?: ComplaintCataegoryUpdateOneWithoutComplaintsNestedInput
     resolve?: ResolvedComplaintsUpdateManyWithoutComplaintsNestedInput
+    Buildings?: BuildingsUpdateOneWithoutComplaintsNestedInput
   }
 
   export type ComplaintsUncheckedUpdateWithoutUserInput = {
@@ -14243,6 +15694,8 @@ export namespace Prisma {
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
+    building_id?: NullableIntFieldUpdateOperationsInput | number | null
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
     resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsNestedInput
   }
 
@@ -14255,6 +15708,8 @@ export namespace Prisma {
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
+    building_id?: NullableIntFieldUpdateOperationsInput | number | null
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ResolvedComplaintsUpdateWithoutUserInput = {
@@ -14476,6 +15931,59 @@ export namespace Prisma {
     resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type ComplaintsCreateManyBuildingsInput = {
+    complaint_id?: number
+    complaint_title: string
+    complaint_description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.STATUS
+    emergancy?: boolean
+    complaint_cat_id?: number | null
+    uid: string
+    room_no?: string | null
+  }
+
+  export type ComplaintsUpdateWithoutBuildingsInput = {
+    complaint_title?: StringFieldUpdateOperationsInput | string
+    complaint_description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    emergancy?: BoolFieldUpdateOperationsInput | boolean
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
+    ComplaintCataegory?: ComplaintCataegoryUpdateOneWithoutComplaintsNestedInput
+    User?: UserUpdateOneRequiredWithoutComplaintNestedInput
+    resolve?: ResolvedComplaintsUpdateManyWithoutComplaintsNestedInput
+  }
+
+  export type ComplaintsUncheckedUpdateWithoutBuildingsInput = {
+    complaint_id?: IntFieldUpdateOperationsInput | number
+    complaint_title?: StringFieldUpdateOperationsInput | string
+    complaint_description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    emergancy?: BoolFieldUpdateOperationsInput | boolean
+    complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
+    uid?: StringFieldUpdateOperationsInput | string
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
+    resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsNestedInput
+  }
+
+  export type ComplaintsUncheckedUpdateManyWithoutBuildingsInput = {
+    complaint_id?: IntFieldUpdateOperationsInput | number
+    complaint_title?: StringFieldUpdateOperationsInput | string
+    complaint_description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
+    emergancy?: BoolFieldUpdateOperationsInput | boolean
+    complaint_cat_id?: NullableIntFieldUpdateOperationsInput | number | null
+    uid?: StringFieldUpdateOperationsInput | string
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type ComplaintsCreateManyComplaintCataegoryInput = {
     complaint_id?: number
     complaint_title: string
@@ -14485,6 +15993,8 @@ export namespace Prisma {
     status?: $Enums.STATUS
     emergancy?: boolean
     uid: string
+    building_id?: number | null
+    room_no?: string | null
   }
 
   export type EmployeeCreateManyComplaintCataegoryInput = {
@@ -14500,8 +16010,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
     User?: UserUpdateOneRequiredWithoutComplaintNestedInput
     resolve?: ResolvedComplaintsUpdateManyWithoutComplaintsNestedInput
+    Buildings?: BuildingsUpdateOneWithoutComplaintsNestedInput
   }
 
   export type ComplaintsUncheckedUpdateWithoutComplaintCataegoryInput = {
@@ -14513,6 +16025,8 @@ export namespace Prisma {
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     uid?: StringFieldUpdateOperationsInput | string
+    building_id?: NullableIntFieldUpdateOperationsInput | number | null
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
     resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsNestedInput
   }
 
@@ -14525,6 +16039,8 @@ export namespace Prisma {
     status?: EnumSTATUSFieldUpdateOperationsInput | $Enums.STATUS
     emergancy?: BoolFieldUpdateOperationsInput | boolean
     uid?: StringFieldUpdateOperationsInput | string
+    building_id?: NullableIntFieldUpdateOperationsInput | number | null
+    room_no?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EmployeeUpdateWithoutComplaintCataegoryInput = {

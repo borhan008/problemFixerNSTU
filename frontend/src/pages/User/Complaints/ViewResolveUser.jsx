@@ -170,6 +170,17 @@ export const ViewResolveUser = () => {
               <p className="text-sm text-blue-600 underline">
                 {complaints?.User?.email}
               </p>
+              <p>
+                {complaints?.Buildings?.building_name && (
+                  <span>
+                    {" "}
+                    Building : {complaints?.Buildings?.building_name},
+                  </span>
+                )}
+                {complaints?.room_no && (
+                  <span> Room : {complaints?.room_no}</span>
+                )}
+              </p>
             </div>
 
             <div className="prose prose-sm max-w-none text-gray-700">

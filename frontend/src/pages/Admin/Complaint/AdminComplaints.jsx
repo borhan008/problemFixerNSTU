@@ -250,6 +250,17 @@ export const AdminComplaints = () => {
                     <Badge variant="outline" className="text-gray-700">
                       {row.ComplaintCataegory.complaint_cat_name}
                     </Badge>
+                    {row?.Buildings?.building_name && (
+                      <Badge variant="outline" className="text-gray-700">
+                        {row?.Buildings?.building_name}
+                      </Badge>
+                    )}{" "}
+                    <br />
+                    {row?.room_no && (
+                      <Badge variant="outline" className="text-gray-700 mt-1">
+                        Room : {row?.room_no}
+                      </Badge>
+                    )}
                   </TableCell>
                   <TableCell className="whitespace-normal break-words">
                     {row.status === "COMPLETED" ? (
@@ -279,8 +290,10 @@ export const AdminComplaints = () => {
                     {row.User.name} <br />
                     <span className="capitalize">
                       {row.User.Profession.profession_name},{" "}
-                      {row.User.Department.dept_shortform}
+                      {row.User.Department.dept_shortform},
                     </span>
+                    <br />
+                    <span>{row.User.email}</span> <br />
                   </TableCell>
 
                   <TableCell className="text-gray-700 whitespace-normal break-words">

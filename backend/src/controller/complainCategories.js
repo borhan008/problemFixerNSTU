@@ -101,6 +101,7 @@ exports.deleteComplaintCategory = async (req, res) => {
       message: "Categoriy has been deleted.",
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: "Something went wrong while deleteing categories",
       error,

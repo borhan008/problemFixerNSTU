@@ -9,6 +9,7 @@ import {
   Folder,
   Bell,
   BellIcon,
+  BookAIcon,
 } from "lucide-react";
 import clsx from "clsx";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -27,11 +28,11 @@ export default function UserLayout({ children }) {
 
   const location = useLocation();
   const routeTitle = {
-    "/home": "Home",
-    "/complaint": "Complaints",
-    "/profile": "Profile",
-    "/notifications": "Notifications",
-    "/logout": "Logout",
+    "/home": "নির্দেশিকা",
+    "/complaint": "অভিযোগ",
+    "/profile": "প্রোফাইল",
+    "/notifications": "নোটিফিকেশনস",
+    "/logout": "লগ আউট",
   };
   const active = routeTitle[location.pathname] || "Dashboard";
 
@@ -129,23 +130,24 @@ export default function UserLayout({ children }) {
 function Sidebar({ active }) {
   const navigate = useNavigate();
   const links = [
-    { label: "Home", href: "/home", icon: <Home className="w-5 h-5" /> },
+    { label: "নির্দেশিকা", href: "/home", icon: <Home className="w-5 h-5" /> },
     {
-      label: "Complaints",
+      label: "অভিযোগ",
       href: "/complaint",
       icon: <Folder className="w-5 h-5" />,
     },
     {
-      label: "Profile",
+      label: "প্রোফাইল",
       href: "/profile",
       icon: <Settings className="w-5 h-5" />,
     },
     {
-      label: "Notifications",
+      label: "নোটিফিকেশনস",
       href: "/notifications",
       icon: <BellIcon className="w-5 h-5" />,
     },
-    { label: "Logout", href: "/logout", icon: <LogOut className="w-5 h-5" /> },
+
+    { label: "লগ আউট", href: "/logout", icon: <LogOut className="w-5 h-5" /> },
   ];
 
   return (

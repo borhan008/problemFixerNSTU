@@ -21,6 +21,9 @@ export default function MakeComplaint() {
   const [categories, setCategories] = useState([]);
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const [disable, setDisable] = useState(false);
+  const [buildingId, setBuildingId] = useState("");
+  const [room, setRoom] = useState("");
+  const [buildings, setBuildings] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -31,16 +34,29 @@ export default function MakeComplaint() {
             authorization: `Bearer ${token}`,
           },
         });
-        console.log(response.data.categories);
         setCategories(response.data.categories);
       } catch (error) {
         console.log(error);
         toast.error("Failed to reloading categories.");
       }
     };
-
+    fetchBuildings();
     fetchCategories();
   }, []);
+
+  const fetchBuildings = async () => {
+    try {
+      const token = await auth?.currentUser?.getIdToken();
+      const res = await axios.get(`${backendURL}/building`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setBuildings(res.data.buildings);
+    } catch (error) {
+      toast.error("Error fetching buildings");
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setDisable(true);
@@ -53,6 +69,8 @@ export default function MakeComplaint() {
           title,
           description,
           complaint_cat_id: category,
+          building_id: buildingId,
+          room,
         },
         {
           headers: {
@@ -110,6 +128,40 @@ export default function MakeComplaint() {
                 ))}
             </SelectContent>
           </Select>
+        </div>
+        <div className="flex justify-between">
+          <div className="mb-4 space-y-1 w-full mr-2">
+            <Label htmlFor="category">Building</Label>
+            <Select
+              value={buildingId}
+              onValueChange={(val) => setBuildingId(val)}
+              required
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a Category" />
+              </SelectTrigger>
+              <SelectContent>
+                {buildings &&
+                  buildings?.map((cat) => (
+                    <SelectItem
+                      key={cat.building_id}
+                      value={cat.building_id.toString()}
+                    >
+                      {cat.building_name}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="mb-4 space-y-1">
+            <Label htmlFor="title">Room No.</Label>
+            <Input
+              id="title"
+              placeholder="Enter a short title"
+              value={room}
+              onChange={(e) => setRoom(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className="mb-4 space-y-1">

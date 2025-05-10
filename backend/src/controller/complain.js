@@ -5,7 +5,8 @@ const { askGPT } = require("../utilities/openai");
 // User
 exports.makeComplain = async (req, res) => {
   try {
-    const { title, description, complaint_cat_id } = req.body;
+    const { title, description, complaint_cat_id, building_id, room } =
+      req.body;
     const { user_id } = req.user;
 
     await prisma.complaints.create({
@@ -14,6 +15,8 @@ exports.makeComplain = async (req, res) => {
         complaint_description: description,
         complaint_cat_id: parseInt(complaint_cat_id),
         uid: user_id,
+        building_id: parseInt(building_id),
+        room_no: room,
       },
     });
     return res.status(201).json({
@@ -56,6 +59,7 @@ exports.getUserComplaints = async (req, res) => {
       take: parseInt(take),
       include: {
         ComplaintCataegory: true,
+        Buildings: true,
       },
       orderBy: [
         {
@@ -149,6 +153,8 @@ exports.editComplaint = async (req, res) => {
       complaint_title,
       complaint_description,
       complaint_cat_id,
+      building_id,
+      room,
     } = req.body;
     const checkComplaint = await prisma.complaints.findUnique({
       where: {
@@ -163,6 +169,8 @@ exports.editComplaint = async (req, res) => {
           complaint_title,
           complaint_description,
           complaint_cat_id: parseInt(complaint_cat_id),
+          building_id: parseInt(building_id),
+          room_no: room,
         },
         where: {
           complaint_id: parseInt(complaint_id),
@@ -196,6 +204,11 @@ exports.getSingleComplaint = async (req, res) => {
       where: {
         complaint_id: parseInt(complaint_id),
         uid: user_id,
+      },
+      include: {
+        ComplaintCataegory: true,
+        User: true,
+        Buildings: true,
       },
     });
     if (complaint) {
@@ -301,6 +314,7 @@ exports.getUserComplaintsForAdmin = async (req, res) => {
         },
       ],
       include: {
+        Buildings: true,
         User: {
           include: {
             Department: {

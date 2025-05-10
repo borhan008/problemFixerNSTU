@@ -10,6 +10,9 @@ import {
   Briefcase,
   LogOut,
   Bell,
+  UserCog,
+  Folders,
+  BuildingIcon,
 } from "lucide-react";
 import clsx from "clsx";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -30,6 +33,7 @@ export default function AdminLayout({ children }) {
     "/admin/employee": "Employee",
     "/admin/department": "Department",
     "/admin/professions": "Profession",
+    "/admin/buildings": "Buildings",
   };
 
   const active = routeTitle[location.pathname] || "Dashboard";
@@ -102,6 +106,16 @@ function Sidebar({ active }) {
       icon: <Folder className="w-5 h-5" />,
     },
     {
+      label: "Department",
+      href: "/admin/department",
+      icon: <Folders className="w-5 h-5" />,
+    },
+    {
+      label: "Profession",
+      href: "/admin/professions",
+      icon: <UserCog className="w-5 h-5" />,
+    },
+    {
       label: "Users",
       href: "/admin/users",
       icon: <Users className="w-5 h-5" />,
@@ -117,15 +131,11 @@ function Sidebar({ active }) {
       icon: <Briefcase className="w-5 h-5" />,
     },
     {
-      label: "Department",
-      href: "/admin/department",
-      icon: <Briefcase className="w-5 h-5" />,
+      label: "Buildings",
+      href: "/admin/buildings",
+      icon: <BuildingIcon className="w-5 h-5" />,
     },
-    {
-      label: "Profession",
-      href: "/admin/professions",
-      icon: <Briefcase className="w-5 h-5" />,
-    },
+
     { label: "Logout", href: "/logout", icon: <LogOut className="w-5 h-5" /> },
   ];
 

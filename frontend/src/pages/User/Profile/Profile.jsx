@@ -134,7 +134,7 @@ export default function Profile() {
   return (
     <div className=" mx-auto p-6 md:p-8 bg-white/80 rounded-2xl shadow-lg backdrop-blur-xl border">
       <h2 className="text-2xl font-bold text-gray-800">Your Profile</h2>
-      <p className="text-sm mb-6">
+      <p className="text-sm mb-6 font-bold">
         You have to complete your profile to submit your complaint.
       </p>
 

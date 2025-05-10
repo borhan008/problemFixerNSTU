@@ -170,7 +170,7 @@ export default function ViewComplaints() {
     <div className=" mx-auto">
       <div className="flex items-center justify-between mb-4">
         <Input
-          placeholder="Search departments..."
+          placeholder="Search ..."
           className="w-full max-w-sm"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -178,7 +178,7 @@ export default function ViewComplaints() {
         <Button className="ml-4" asChild>
           <Link to="/complaint/new">
             <Plus className="w-4 h-4 mr-2" />
-            Add New
+            অভিযোগ করুন
           </Link>
         </Button>
       </div>

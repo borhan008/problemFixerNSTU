@@ -46,7 +46,7 @@ export default function Home() {
             <img
               src="images/nstu_logo.gif"
               alt="NSTU Logo"
-              className="max-w-[80px]"
+              className="max-w-[60px]"
             />
           </div>
           <img
@@ -56,30 +56,49 @@ export default function Home() {
           />
         </div>
         <h2
-          className={`text-4xl font-extrabold tracking-tight ${styles.home_heading}`}
+          className={`text-4xl py-2 max-w-lg font-extrabold tracking-tight ${styles.home_heading}`}
         >
-          Complain. Anytime. Anywhere.
+          সহজ ও দ্রুত অভিযোগ সমাধান
         </h2>
-        <p className="text-body text-gray-900 max-w-lg mt-2">
-          A Convenient and Streamlined Platform to Submit, Track, and{" "}
-          <strong>Resolve Complaints Anytime, Anywhere</strong>, Empowering
-          Users with Real-Time Updates and Efficient Solution
+        <p className="text-body text-gray-900 max-w-2xl mt-2">
+          নোয়াখালী বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়ের জন্য একটি সহজ এবং
+          সুনির্দিষ্ট প্ল্যাটফর্ম যা আপনাকে যেকোনো সময়, যেকোনো স্থানে অভিযোগ
+          জমা দিতে, ট্র্যাক করতে এবং সমাধান করতে সক্ষম করে। ব্যবহারকারীদের জন্য
+          বাস্তব-সময় আপডেট এবং কার্যকরী সমাধান প্রদান করে তাদের ক্ষমতায়ন করে।
         </p>
+
         {!user ? (
-          <Button
-            onClick={handleSignIn}
-            className="bg-white text-black mt-4 cursor-pointer hover:bg-gray-100"
-          >
-            <Mail />
-            Login with institutional mail
-          </Button>
+          <>
+            {" "}
+            <Button
+              onClick={handleSignIn}
+              className="bg-white text-black mt-4 cursor-pointer hover:bg-gray-100"
+            >
+              <Mail />
+              আপনার ইনস্টিটিউশনাল মেইল দিয়ে লগইন করুন
+            </Button>
+            <p className="font-bold  text-sm mt-1">
+              বাটনে ক্লিক করে আপনার nstu.edu.bd ডোমেইন যুক্ত ইমেইলটি নির্বাচন
+              করুন।
+            </p>
+          </>
         ) : (
-          <Button
-            asChild
-            className="bg-white text-black mt-4 cursor-pointer hover:bg-gray-100"
-          >
-            <Link to="/home">Go to user panel</Link>
-          </Button>
+          <>
+            <Button
+              asChild
+              className="bg-white text-black mt-4 cursor-pointer hover:bg-gray-100"
+            >
+              <Link to="/home">ইউজার প্যানেল</Link>
+            </Button>
+            {user?.role === "ADMIN" && (
+              <Button
+                asChild
+                className="bg-white text-black mt-4 cursor-pointer hover:bg-gray-100 ml-2"
+              >
+                <Link to="/admin">অ্যাডমিন প্যানেল</Link>
+              </Button>
+            )}
+          </>
         )}
       </div>
     </div>

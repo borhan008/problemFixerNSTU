@@ -50,6 +50,13 @@ const {
   makeUserRoleChange,
 } = require("../controller/user");
 
+const {
+  getBuildings,
+  createBuilding,
+  editBuilding,
+  deleteBuilding,
+} = require("../controller/buildings");
+
 const router = require("express").Router();
 
 // user create
@@ -117,5 +124,11 @@ router.put("/admin/user/block/:uid", makeUserBlockUnblock);
 router.put("/admin/user/role/:uid", makeUserRoleChange);
 
 router.get("/admin/stats", getDashboardStats);
+
+// Buildings
+router.get("/building", getBuildings);
+router.post("/building", createBuilding);
+router.put("/building/:building_id", editBuilding);
+router.delete("/building/:building_id", deleteBuilding);
 
 module.exports = router;

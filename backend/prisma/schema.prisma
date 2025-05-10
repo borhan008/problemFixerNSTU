@@ -80,12 +80,22 @@ model Complaints {
   User               User                 @relation(fields: [uid], references: [uid])
   uid                String
   resolve            ResolvedComplaints[]
+
+  Buildings   Buildings? @relation(fields: [building_id], references: [building_id])
+  building_id Int?
+  room_no     String?
 }
 
 enum STATUS {
   DUE
   PROCESSING
   COMPLETED
+}
+
+model Buildings {
+  building_id   Int          @id @default(autoincrement())
+  building_name String
+  complaints    Complaints[]
 }
 
 model ComplaintCataegory {
