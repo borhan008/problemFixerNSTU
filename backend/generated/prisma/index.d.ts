@@ -29,11 +29,6 @@ export type Profession = $Result.DefaultSelection<Prisma.$ProfessionPayload>
  */
 export type Employee = $Result.DefaultSelection<Prisma.$EmployeePayload>
 /**
- * Model EmployeeCategory
- * 
- */
-export type EmployeeCategory = $Result.DefaultSelection<Prisma.$EmployeeCategoryPayload>
-/**
  * Model Department
  * 
  */
@@ -248,16 +243,6 @@ export class PrismaClient<
     * ```
     */
   get employee(): Prisma.EmployeeDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.employeeCategory`: Exposes CRUD operations for the **EmployeeCategory** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more EmployeeCategories
-    * const employeeCategories = await prisma.employeeCategory.findMany()
-    * ```
-    */
-  get employeeCategory(): Prisma.EmployeeCategoryDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.department`: Exposes CRUD operations for the **Department** model.
@@ -761,7 +746,6 @@ export namespace Prisma {
     User: 'User',
     Profession: 'Profession',
     Employee: 'Employee',
-    EmployeeCategory: 'EmployeeCategory',
     Department: 'Department',
     Complaints: 'Complaints',
     Buildings: 'Buildings',
@@ -786,7 +770,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "profession" | "employee" | "employeeCategory" | "department" | "complaints" | "buildings" | "complaintCataegory" | "resolvedComplaints" | "notifications"
+      modelProps: "user" | "profession" | "employee" | "department" | "complaints" | "buildings" | "complaintCataegory" | "resolvedComplaints" | "notifications"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -985,72 +969,6 @@ export namespace Prisma {
           count: {
             args: Prisma.EmployeeCountArgs<ExtArgs>
             result: $Utils.Optional<EmployeeCountAggregateOutputType> | number
-          }
-        }
-      }
-      EmployeeCategory: {
-        payload: Prisma.$EmployeeCategoryPayload<ExtArgs>
-        fields: Prisma.EmployeeCategoryFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.EmployeeCategoryFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeeCategoryPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.EmployeeCategoryFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeeCategoryPayload>
-          }
-          findFirst: {
-            args: Prisma.EmployeeCategoryFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeeCategoryPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.EmployeeCategoryFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeeCategoryPayload>
-          }
-          findMany: {
-            args: Prisma.EmployeeCategoryFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeeCategoryPayload>[]
-          }
-          create: {
-            args: Prisma.EmployeeCategoryCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeeCategoryPayload>
-          }
-          createMany: {
-            args: Prisma.EmployeeCategoryCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          delete: {
-            args: Prisma.EmployeeCategoryDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeeCategoryPayload>
-          }
-          update: {
-            args: Prisma.EmployeeCategoryUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeeCategoryPayload>
-          }
-          deleteMany: {
-            args: Prisma.EmployeeCategoryDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.EmployeeCategoryUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          upsert: {
-            args: Prisma.EmployeeCategoryUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EmployeeCategoryPayload>
-          }
-          aggregate: {
-            args: Prisma.EmployeeCategoryAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateEmployeeCategory>
-          }
-          groupBy: {
-            args: Prisma.EmployeeCategoryGroupByArgs<ExtArgs>
-            result: $Utils.Optional<EmployeeCategoryGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.EmployeeCategoryCountArgs<ExtArgs>
-            result: $Utils.Optional<EmployeeCategoryCountAggregateOutputType> | number
           }
         }
       }
@@ -1537,7 +1455,6 @@ export namespace Prisma {
     user?: UserOmit
     profession?: ProfessionOmit
     employee?: EmployeeOmit
-    employeeCategory?: EmployeeCategoryOmit
     department?: DepartmentOmit
     complaints?: ComplaintsOmit
     buildings?: BuildingsOmit
@@ -1640,11 +1557,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     complaint: number
     resolve: number
+    notifications: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     complaint?: boolean | UserCountOutputTypeCountComplaintArgs
     resolve?: boolean | UserCountOutputTypeCountResolveArgs
+    notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -1670,6 +1589,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountResolveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResolvedComplaintsWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationsWhereInput
   }
 
 
@@ -2130,6 +2056,7 @@ export namespace Prisma {
     Profession?: boolean | ProfessionDefaultArgs<ExtArgs>
     complaint?: boolean | User$complaintArgs<ExtArgs>
     resolve?: boolean | User$resolveArgs<ExtArgs>
+    notifications?: boolean | User$notificationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2156,6 +2083,7 @@ export namespace Prisma {
     Profession?: boolean | ProfessionDefaultArgs<ExtArgs>
     complaint?: boolean | User$complaintArgs<ExtArgs>
     resolve?: boolean | User$resolveArgs<ExtArgs>
+    notifications?: boolean | User$notificationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -2166,6 +2094,7 @@ export namespace Prisma {
       Profession: Prisma.$ProfessionPayload<ExtArgs>
       complaint: Prisma.$ComplaintsPayload<ExtArgs>[]
       resolve: Prisma.$ResolvedComplaintsPayload<ExtArgs>[]
+      notifications: Prisma.$NotificationsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       uid: string
@@ -2524,6 +2453,7 @@ export namespace Prisma {
     Profession<T extends ProfessionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProfessionDefaultArgs<ExtArgs>>): Prisma__ProfessionClient<$Result.GetResult<Prisma.$ProfessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     complaint<T extends User$complaintArgs<ExtArgs> = {}>(args?: Subset<T, User$complaintArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ComplaintsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     resolve<T extends User$resolveArgs<ExtArgs> = {}>(args?: Subset<T, User$resolveArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResolvedComplaintsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2953,6 +2883,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ResolvedComplaintsScalarFieldEnum | ResolvedComplaintsScalarFieldEnum[]
+  }
+
+  /**
+   * User.notifications
+   */
+  export type User$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notifications
+     */
+    select?: NotificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notifications
+     */
+    omit?: NotificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
+    where?: NotificationsWhereInput
+    orderBy?: NotificationsOrderByWithRelationInput | NotificationsOrderByWithRelationInput[]
+    cursor?: NotificationsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationsScalarFieldEnum | NotificationsScalarFieldEnum[]
   }
 
   /**
@@ -4913,889 +4867,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: EmployeeInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model EmployeeCategory
-   */
-
-  export type AggregateEmployeeCategory = {
-    _count: EmployeeCategoryCountAggregateOutputType | null
-    _avg: EmployeeCategoryAvgAggregateOutputType | null
-    _sum: EmployeeCategorySumAggregateOutputType | null
-    _min: EmployeeCategoryMinAggregateOutputType | null
-    _max: EmployeeCategoryMaxAggregateOutputType | null
-  }
-
-  export type EmployeeCategoryAvgAggregateOutputType = {
-    emp_category_id: number | null
-  }
-
-  export type EmployeeCategorySumAggregateOutputType = {
-    emp_category_id: number | null
-  }
-
-  export type EmployeeCategoryMinAggregateOutputType = {
-    emp_category_id: number | null
-    category_name: string | null
-  }
-
-  export type EmployeeCategoryMaxAggregateOutputType = {
-    emp_category_id: number | null
-    category_name: string | null
-  }
-
-  export type EmployeeCategoryCountAggregateOutputType = {
-    emp_category_id: number
-    category_name: number
-    _all: number
-  }
-
-
-  export type EmployeeCategoryAvgAggregateInputType = {
-    emp_category_id?: true
-  }
-
-  export type EmployeeCategorySumAggregateInputType = {
-    emp_category_id?: true
-  }
-
-  export type EmployeeCategoryMinAggregateInputType = {
-    emp_category_id?: true
-    category_name?: true
-  }
-
-  export type EmployeeCategoryMaxAggregateInputType = {
-    emp_category_id?: true
-    category_name?: true
-  }
-
-  export type EmployeeCategoryCountAggregateInputType = {
-    emp_category_id?: true
-    category_name?: true
-    _all?: true
-  }
-
-  export type EmployeeCategoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which EmployeeCategory to aggregate.
-     */
-    where?: EmployeeCategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of EmployeeCategories to fetch.
-     */
-    orderBy?: EmployeeCategoryOrderByWithRelationInput | EmployeeCategoryOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: EmployeeCategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` EmployeeCategories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` EmployeeCategories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned EmployeeCategories
-    **/
-    _count?: true | EmployeeCategoryCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: EmployeeCategoryAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: EmployeeCategorySumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: EmployeeCategoryMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: EmployeeCategoryMaxAggregateInputType
-  }
-
-  export type GetEmployeeCategoryAggregateType<T extends EmployeeCategoryAggregateArgs> = {
-        [P in keyof T & keyof AggregateEmployeeCategory]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateEmployeeCategory[P]>
-      : GetScalarType<T[P], AggregateEmployeeCategory[P]>
-  }
-
-
-
-
-  export type EmployeeCategoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EmployeeCategoryWhereInput
-    orderBy?: EmployeeCategoryOrderByWithAggregationInput | EmployeeCategoryOrderByWithAggregationInput[]
-    by: EmployeeCategoryScalarFieldEnum[] | EmployeeCategoryScalarFieldEnum
-    having?: EmployeeCategoryScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: EmployeeCategoryCountAggregateInputType | true
-    _avg?: EmployeeCategoryAvgAggregateInputType
-    _sum?: EmployeeCategorySumAggregateInputType
-    _min?: EmployeeCategoryMinAggregateInputType
-    _max?: EmployeeCategoryMaxAggregateInputType
-  }
-
-  export type EmployeeCategoryGroupByOutputType = {
-    emp_category_id: number
-    category_name: string
-    _count: EmployeeCategoryCountAggregateOutputType | null
-    _avg: EmployeeCategoryAvgAggregateOutputType | null
-    _sum: EmployeeCategorySumAggregateOutputType | null
-    _min: EmployeeCategoryMinAggregateOutputType | null
-    _max: EmployeeCategoryMaxAggregateOutputType | null
-  }
-
-  type GetEmployeeCategoryGroupByPayload<T extends EmployeeCategoryGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<EmployeeCategoryGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof EmployeeCategoryGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], EmployeeCategoryGroupByOutputType[P]>
-            : GetScalarType<T[P], EmployeeCategoryGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type EmployeeCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    emp_category_id?: boolean
-    category_name?: boolean
-  }, ExtArgs["result"]["employeeCategory"]>
-
-
-
-  export type EmployeeCategorySelectScalar = {
-    emp_category_id?: boolean
-    category_name?: boolean
-  }
-
-  export type EmployeeCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"emp_category_id" | "category_name", ExtArgs["result"]["employeeCategory"]>
-
-  export type $EmployeeCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "EmployeeCategory"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      emp_category_id: number
-      category_name: string
-    }, ExtArgs["result"]["employeeCategory"]>
-    composites: {}
-  }
-
-  type EmployeeCategoryGetPayload<S extends boolean | null | undefined | EmployeeCategoryDefaultArgs> = $Result.GetResult<Prisma.$EmployeeCategoryPayload, S>
-
-  type EmployeeCategoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<EmployeeCategoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: EmployeeCategoryCountAggregateInputType | true
-    }
-
-  export interface EmployeeCategoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EmployeeCategory'], meta: { name: 'EmployeeCategory' } }
-    /**
-     * Find zero or one EmployeeCategory that matches the filter.
-     * @param {EmployeeCategoryFindUniqueArgs} args - Arguments to find a EmployeeCategory
-     * @example
-     * // Get one EmployeeCategory
-     * const employeeCategory = await prisma.employeeCategory.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends EmployeeCategoryFindUniqueArgs>(args: SelectSubset<T, EmployeeCategoryFindUniqueArgs<ExtArgs>>): Prisma__EmployeeCategoryClient<$Result.GetResult<Prisma.$EmployeeCategoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one EmployeeCategory that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {EmployeeCategoryFindUniqueOrThrowArgs} args - Arguments to find a EmployeeCategory
-     * @example
-     * // Get one EmployeeCategory
-     * const employeeCategory = await prisma.employeeCategory.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends EmployeeCategoryFindUniqueOrThrowArgs>(args: SelectSubset<T, EmployeeCategoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EmployeeCategoryClient<$Result.GetResult<Prisma.$EmployeeCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first EmployeeCategory that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeCategoryFindFirstArgs} args - Arguments to find a EmployeeCategory
-     * @example
-     * // Get one EmployeeCategory
-     * const employeeCategory = await prisma.employeeCategory.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends EmployeeCategoryFindFirstArgs>(args?: SelectSubset<T, EmployeeCategoryFindFirstArgs<ExtArgs>>): Prisma__EmployeeCategoryClient<$Result.GetResult<Prisma.$EmployeeCategoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first EmployeeCategory that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeCategoryFindFirstOrThrowArgs} args - Arguments to find a EmployeeCategory
-     * @example
-     * // Get one EmployeeCategory
-     * const employeeCategory = await prisma.employeeCategory.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends EmployeeCategoryFindFirstOrThrowArgs>(args?: SelectSubset<T, EmployeeCategoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__EmployeeCategoryClient<$Result.GetResult<Prisma.$EmployeeCategoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more EmployeeCategories that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeCategoryFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all EmployeeCategories
-     * const employeeCategories = await prisma.employeeCategory.findMany()
-     * 
-     * // Get first 10 EmployeeCategories
-     * const employeeCategories = await prisma.employeeCategory.findMany({ take: 10 })
-     * 
-     * // Only select the `emp_category_id`
-     * const employeeCategoryWithEmp_category_idOnly = await prisma.employeeCategory.findMany({ select: { emp_category_id: true } })
-     * 
-     */
-    findMany<T extends EmployeeCategoryFindManyArgs>(args?: SelectSubset<T, EmployeeCategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EmployeeCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a EmployeeCategory.
-     * @param {EmployeeCategoryCreateArgs} args - Arguments to create a EmployeeCategory.
-     * @example
-     * // Create one EmployeeCategory
-     * const EmployeeCategory = await prisma.employeeCategory.create({
-     *   data: {
-     *     // ... data to create a EmployeeCategory
-     *   }
-     * })
-     * 
-     */
-    create<T extends EmployeeCategoryCreateArgs>(args: SelectSubset<T, EmployeeCategoryCreateArgs<ExtArgs>>): Prisma__EmployeeCategoryClient<$Result.GetResult<Prisma.$EmployeeCategoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many EmployeeCategories.
-     * @param {EmployeeCategoryCreateManyArgs} args - Arguments to create many EmployeeCategories.
-     * @example
-     * // Create many EmployeeCategories
-     * const employeeCategory = await prisma.employeeCategory.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends EmployeeCategoryCreateManyArgs>(args?: SelectSubset<T, EmployeeCategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a EmployeeCategory.
-     * @param {EmployeeCategoryDeleteArgs} args - Arguments to delete one EmployeeCategory.
-     * @example
-     * // Delete one EmployeeCategory
-     * const EmployeeCategory = await prisma.employeeCategory.delete({
-     *   where: {
-     *     // ... filter to delete one EmployeeCategory
-     *   }
-     * })
-     * 
-     */
-    delete<T extends EmployeeCategoryDeleteArgs>(args: SelectSubset<T, EmployeeCategoryDeleteArgs<ExtArgs>>): Prisma__EmployeeCategoryClient<$Result.GetResult<Prisma.$EmployeeCategoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one EmployeeCategory.
-     * @param {EmployeeCategoryUpdateArgs} args - Arguments to update one EmployeeCategory.
-     * @example
-     * // Update one EmployeeCategory
-     * const employeeCategory = await prisma.employeeCategory.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends EmployeeCategoryUpdateArgs>(args: SelectSubset<T, EmployeeCategoryUpdateArgs<ExtArgs>>): Prisma__EmployeeCategoryClient<$Result.GetResult<Prisma.$EmployeeCategoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more EmployeeCategories.
-     * @param {EmployeeCategoryDeleteManyArgs} args - Arguments to filter EmployeeCategories to delete.
-     * @example
-     * // Delete a few EmployeeCategories
-     * const { count } = await prisma.employeeCategory.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends EmployeeCategoryDeleteManyArgs>(args?: SelectSubset<T, EmployeeCategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more EmployeeCategories.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeCategoryUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many EmployeeCategories
-     * const employeeCategory = await prisma.employeeCategory.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends EmployeeCategoryUpdateManyArgs>(args: SelectSubset<T, EmployeeCategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one EmployeeCategory.
-     * @param {EmployeeCategoryUpsertArgs} args - Arguments to update or create a EmployeeCategory.
-     * @example
-     * // Update or create a EmployeeCategory
-     * const employeeCategory = await prisma.employeeCategory.upsert({
-     *   create: {
-     *     // ... data to create a EmployeeCategory
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the EmployeeCategory we want to update
-     *   }
-     * })
-     */
-    upsert<T extends EmployeeCategoryUpsertArgs>(args: SelectSubset<T, EmployeeCategoryUpsertArgs<ExtArgs>>): Prisma__EmployeeCategoryClient<$Result.GetResult<Prisma.$EmployeeCategoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of EmployeeCategories.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeCategoryCountArgs} args - Arguments to filter EmployeeCategories to count.
-     * @example
-     * // Count the number of EmployeeCategories
-     * const count = await prisma.employeeCategory.count({
-     *   where: {
-     *     // ... the filter for the EmployeeCategories we want to count
-     *   }
-     * })
-    **/
-    count<T extends EmployeeCategoryCountArgs>(
-      args?: Subset<T, EmployeeCategoryCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], EmployeeCategoryCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a EmployeeCategory.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends EmployeeCategoryAggregateArgs>(args: Subset<T, EmployeeCategoryAggregateArgs>): Prisma.PrismaPromise<GetEmployeeCategoryAggregateType<T>>
-
-    /**
-     * Group by EmployeeCategory.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EmployeeCategoryGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends EmployeeCategoryGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: EmployeeCategoryGroupByArgs['orderBy'] }
-        : { orderBy?: EmployeeCategoryGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, EmployeeCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEmployeeCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the EmployeeCategory model
-   */
-  readonly fields: EmployeeCategoryFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for EmployeeCategory.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__EmployeeCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the EmployeeCategory model
-   */
-  interface EmployeeCategoryFieldRefs {
-    readonly emp_category_id: FieldRef<"EmployeeCategory", 'Int'>
-    readonly category_name: FieldRef<"EmployeeCategory", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * EmployeeCategory findUnique
-   */
-  export type EmployeeCategoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCategory
-     */
-    select?: EmployeeCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EmployeeCategory
-     */
-    omit?: EmployeeCategoryOmit<ExtArgs> | null
-    /**
-     * Filter, which EmployeeCategory to fetch.
-     */
-    where: EmployeeCategoryWhereUniqueInput
-  }
-
-  /**
-   * EmployeeCategory findUniqueOrThrow
-   */
-  export type EmployeeCategoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCategory
-     */
-    select?: EmployeeCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EmployeeCategory
-     */
-    omit?: EmployeeCategoryOmit<ExtArgs> | null
-    /**
-     * Filter, which EmployeeCategory to fetch.
-     */
-    where: EmployeeCategoryWhereUniqueInput
-  }
-
-  /**
-   * EmployeeCategory findFirst
-   */
-  export type EmployeeCategoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCategory
-     */
-    select?: EmployeeCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EmployeeCategory
-     */
-    omit?: EmployeeCategoryOmit<ExtArgs> | null
-    /**
-     * Filter, which EmployeeCategory to fetch.
-     */
-    where?: EmployeeCategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of EmployeeCategories to fetch.
-     */
-    orderBy?: EmployeeCategoryOrderByWithRelationInput | EmployeeCategoryOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for EmployeeCategories.
-     */
-    cursor?: EmployeeCategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` EmployeeCategories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` EmployeeCategories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of EmployeeCategories.
-     */
-    distinct?: EmployeeCategoryScalarFieldEnum | EmployeeCategoryScalarFieldEnum[]
-  }
-
-  /**
-   * EmployeeCategory findFirstOrThrow
-   */
-  export type EmployeeCategoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCategory
-     */
-    select?: EmployeeCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EmployeeCategory
-     */
-    omit?: EmployeeCategoryOmit<ExtArgs> | null
-    /**
-     * Filter, which EmployeeCategory to fetch.
-     */
-    where?: EmployeeCategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of EmployeeCategories to fetch.
-     */
-    orderBy?: EmployeeCategoryOrderByWithRelationInput | EmployeeCategoryOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for EmployeeCategories.
-     */
-    cursor?: EmployeeCategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` EmployeeCategories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` EmployeeCategories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of EmployeeCategories.
-     */
-    distinct?: EmployeeCategoryScalarFieldEnum | EmployeeCategoryScalarFieldEnum[]
-  }
-
-  /**
-   * EmployeeCategory findMany
-   */
-  export type EmployeeCategoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCategory
-     */
-    select?: EmployeeCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EmployeeCategory
-     */
-    omit?: EmployeeCategoryOmit<ExtArgs> | null
-    /**
-     * Filter, which EmployeeCategories to fetch.
-     */
-    where?: EmployeeCategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of EmployeeCategories to fetch.
-     */
-    orderBy?: EmployeeCategoryOrderByWithRelationInput | EmployeeCategoryOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing EmployeeCategories.
-     */
-    cursor?: EmployeeCategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` EmployeeCategories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` EmployeeCategories.
-     */
-    skip?: number
-    distinct?: EmployeeCategoryScalarFieldEnum | EmployeeCategoryScalarFieldEnum[]
-  }
-
-  /**
-   * EmployeeCategory create
-   */
-  export type EmployeeCategoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCategory
-     */
-    select?: EmployeeCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EmployeeCategory
-     */
-    omit?: EmployeeCategoryOmit<ExtArgs> | null
-    /**
-     * The data needed to create a EmployeeCategory.
-     */
-    data: XOR<EmployeeCategoryCreateInput, EmployeeCategoryUncheckedCreateInput>
-  }
-
-  /**
-   * EmployeeCategory createMany
-   */
-  export type EmployeeCategoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many EmployeeCategories.
-     */
-    data: EmployeeCategoryCreateManyInput | EmployeeCategoryCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * EmployeeCategory update
-   */
-  export type EmployeeCategoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCategory
-     */
-    select?: EmployeeCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EmployeeCategory
-     */
-    omit?: EmployeeCategoryOmit<ExtArgs> | null
-    /**
-     * The data needed to update a EmployeeCategory.
-     */
-    data: XOR<EmployeeCategoryUpdateInput, EmployeeCategoryUncheckedUpdateInput>
-    /**
-     * Choose, which EmployeeCategory to update.
-     */
-    where: EmployeeCategoryWhereUniqueInput
-  }
-
-  /**
-   * EmployeeCategory updateMany
-   */
-  export type EmployeeCategoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update EmployeeCategories.
-     */
-    data: XOR<EmployeeCategoryUpdateManyMutationInput, EmployeeCategoryUncheckedUpdateManyInput>
-    /**
-     * Filter which EmployeeCategories to update
-     */
-    where?: EmployeeCategoryWhereInput
-    /**
-     * Limit how many EmployeeCategories to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * EmployeeCategory upsert
-   */
-  export type EmployeeCategoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCategory
-     */
-    select?: EmployeeCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EmployeeCategory
-     */
-    omit?: EmployeeCategoryOmit<ExtArgs> | null
-    /**
-     * The filter to search for the EmployeeCategory to update in case it exists.
-     */
-    where: EmployeeCategoryWhereUniqueInput
-    /**
-     * In case the EmployeeCategory found by the `where` argument doesn't exist, create a new EmployeeCategory with this data.
-     */
-    create: XOR<EmployeeCategoryCreateInput, EmployeeCategoryUncheckedCreateInput>
-    /**
-     * In case the EmployeeCategory was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<EmployeeCategoryUpdateInput, EmployeeCategoryUncheckedUpdateInput>
-  }
-
-  /**
-   * EmployeeCategory delete
-   */
-  export type EmployeeCategoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCategory
-     */
-    select?: EmployeeCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EmployeeCategory
-     */
-    omit?: EmployeeCategoryOmit<ExtArgs> | null
-    /**
-     * Filter which EmployeeCategory to delete.
-     */
-    where: EmployeeCategoryWhereUniqueInput
-  }
-
-  /**
-   * EmployeeCategory deleteMany
-   */
-  export type EmployeeCategoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which EmployeeCategories to delete
-     */
-    where?: EmployeeCategoryWhereInput
-    /**
-     * Limit how many EmployeeCategories to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * EmployeeCategory without action
-   */
-  export type EmployeeCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmployeeCategory
-     */
-    select?: EmployeeCategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the EmployeeCategory
-     */
-    omit?: EmployeeCategoryOmit<ExtArgs> | null
   }
 
 
@@ -10006,6 +9077,7 @@ export namespace Prisma {
     Employee?: boolean | ResolvedComplaints$EmployeeArgs<ExtArgs>
     Complaints?: boolean | ResolvedComplaints$ComplaintsArgs<ExtArgs>
     User?: boolean | ResolvedComplaints$UserArgs<ExtArgs>
+    Notifications?: boolean | ResolvedComplaints$NotificationsArgs<ExtArgs>
   }, ExtArgs["result"]["resolvedComplaints"]>
 
 
@@ -10025,6 +9097,7 @@ export namespace Prisma {
     Employee?: boolean | ResolvedComplaints$EmployeeArgs<ExtArgs>
     Complaints?: boolean | ResolvedComplaints$ComplaintsArgs<ExtArgs>
     User?: boolean | ResolvedComplaints$UserArgs<ExtArgs>
+    Notifications?: boolean | ResolvedComplaints$NotificationsArgs<ExtArgs>
   }
 
   export type $ResolvedComplaintsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10033,6 +9106,7 @@ export namespace Prisma {
       Employee: Prisma.$EmployeePayload<ExtArgs> | null
       Complaints: Prisma.$ComplaintsPayload<ExtArgs> | null
       User: Prisma.$UserPayload<ExtArgs> | null
+      Notifications: Prisma.$NotificationsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       resolved_details: string
@@ -10385,6 +9459,7 @@ export namespace Prisma {
     Employee<T extends ResolvedComplaints$EmployeeArgs<ExtArgs> = {}>(args?: Subset<T, ResolvedComplaints$EmployeeArgs<ExtArgs>>): Prisma__EmployeeClient<$Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     Complaints<T extends ResolvedComplaints$ComplaintsArgs<ExtArgs> = {}>(args?: Subset<T, ResolvedComplaints$ComplaintsArgs<ExtArgs>>): Prisma__ComplaintsClient<$Result.GetResult<Prisma.$ComplaintsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     User<T extends ResolvedComplaints$UserArgs<ExtArgs> = {}>(args?: Subset<T, ResolvedComplaints$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    Notifications<T extends ResolvedComplaints$NotificationsArgs<ExtArgs> = {}>(args?: Subset<T, ResolvedComplaints$NotificationsArgs<ExtArgs>>): Prisma__NotificationsClient<$Result.GetResult<Prisma.$NotificationsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10821,6 +9896,25 @@ export namespace Prisma {
   }
 
   /**
+   * ResolvedComplaints.Notifications
+   */
+  export type ResolvedComplaints$NotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notifications
+     */
+    select?: NotificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notifications
+     */
+    omit?: NotificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
+    where?: NotificationsWhereInput
+  }
+
+  /**
    * ResolvedComplaints without action
    */
   export type ResolvedComplaintsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10863,24 +9957,24 @@ export namespace Prisma {
     complaint_id: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    uid: string | null
     seen: boolean | null
+    uid: string | null
   }
 
   export type NotificationsMaxAggregateOutputType = {
     complaint_id: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    uid: string | null
     seen: boolean | null
+    uid: string | null
   }
 
   export type NotificationsCountAggregateOutputType = {
     complaint_id: number
     createdAt: number
     updatedAt: number
-    uid: number
     seen: number
+    uid: number
     _all: number
   }
 
@@ -10897,24 +9991,24 @@ export namespace Prisma {
     complaint_id?: true
     createdAt?: true
     updatedAt?: true
-    uid?: true
     seen?: true
+    uid?: true
   }
 
   export type NotificationsMaxAggregateInputType = {
     complaint_id?: true
     createdAt?: true
     updatedAt?: true
-    uid?: true
     seen?: true
+    uid?: true
   }
 
   export type NotificationsCountAggregateInputType = {
     complaint_id?: true
     createdAt?: true
     updatedAt?: true
-    uid?: true
     seen?: true
+    uid?: true
     _all?: true
   }
 
@@ -11008,8 +10102,8 @@ export namespace Prisma {
     complaint_id: number
     createdAt: Date
     updatedAt: Date
-    uid: string
     seen: boolean
+    uid: string
     _count: NotificationsCountAggregateOutputType | null
     _avg: NotificationsAvgAggregateOutputType | null
     _sum: NotificationsSumAggregateOutputType | null
@@ -11035,8 +10129,10 @@ export namespace Prisma {
     complaint_id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    uid?: boolean
     seen?: boolean
+    uid?: boolean
+    ResolveComplaint?: boolean | ResolvedComplaintsDefaultArgs<ExtArgs>
+    User?: boolean | Notifications$UserArgs<ExtArgs>
   }, ExtArgs["result"]["notifications"]>
 
 
@@ -11045,21 +10141,28 @@ export namespace Prisma {
     complaint_id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    uid?: boolean
     seen?: boolean
+    uid?: boolean
   }
 
-  export type NotificationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"complaint_id" | "createdAt" | "updatedAt" | "uid" | "seen", ExtArgs["result"]["notifications"]>
+  export type NotificationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"complaint_id" | "createdAt" | "updatedAt" | "seen" | "uid", ExtArgs["result"]["notifications"]>
+  export type NotificationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ResolveComplaint?: boolean | ResolvedComplaintsDefaultArgs<ExtArgs>
+    User?: boolean | Notifications$UserArgs<ExtArgs>
+  }
 
   export type $NotificationsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Notifications"
-    objects: {}
+    objects: {
+      ResolveComplaint: Prisma.$ResolvedComplaintsPayload<ExtArgs>
+      User: Prisma.$UserPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       complaint_id: number
       createdAt: Date
       updatedAt: Date
-      uid: string
       seen: boolean
+      uid: string
     }, ExtArgs["result"]["notifications"]>
     composites: {}
   }
@@ -11400,6 +10503,8 @@ export namespace Prisma {
    */
   export interface Prisma__NotificationsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    ResolveComplaint<T extends ResolvedComplaintsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ResolvedComplaintsDefaultArgs<ExtArgs>>): Prisma__ResolvedComplaintsClient<$Result.GetResult<Prisma.$ResolvedComplaintsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    User<T extends Notifications$UserArgs<ExtArgs> = {}>(args?: Subset<T, Notifications$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11432,8 +10537,8 @@ export namespace Prisma {
     readonly complaint_id: FieldRef<"Notifications", 'Int'>
     readonly createdAt: FieldRef<"Notifications", 'DateTime'>
     readonly updatedAt: FieldRef<"Notifications", 'DateTime'>
-    readonly uid: FieldRef<"Notifications", 'String'>
     readonly seen: FieldRef<"Notifications", 'Boolean'>
+    readonly uid: FieldRef<"Notifications", 'String'>
   }
     
 
@@ -11450,6 +10555,10 @@ export namespace Prisma {
      * Omit specific fields from the Notifications
      */
     omit?: NotificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
     /**
      * Filter, which Notifications to fetch.
      */
@@ -11469,6 +10578,10 @@ export namespace Prisma {
      */
     omit?: NotificationsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
+    /**
      * Filter, which Notifications to fetch.
      */
     where: NotificationsWhereUniqueInput
@@ -11486,6 +10599,10 @@ export namespace Prisma {
      * Omit specific fields from the Notifications
      */
     omit?: NotificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
     /**
      * Filter, which Notifications to fetch.
      */
@@ -11535,6 +10652,10 @@ export namespace Prisma {
      */
     omit?: NotificationsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
+    /**
      * Filter, which Notifications to fetch.
      */
     where?: NotificationsWhereInput
@@ -11583,6 +10704,10 @@ export namespace Prisma {
      */
     omit?: NotificationsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
+    /**
      * Filter, which Notifications to fetch.
      */
     where?: NotificationsWhereInput
@@ -11626,6 +10751,10 @@ export namespace Prisma {
      */
     omit?: NotificationsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
+    /**
      * The data needed to create a Notifications.
      */
     data: XOR<NotificationsCreateInput, NotificationsUncheckedCreateInput>
@@ -11654,6 +10783,10 @@ export namespace Prisma {
      * Omit specific fields from the Notifications
      */
     omit?: NotificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
     /**
      * The data needed to update a Notifications.
      */
@@ -11695,6 +10828,10 @@ export namespace Prisma {
      */
     omit?: NotificationsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
+    /**
      * The filter to search for the Notifications to update in case it exists.
      */
     where: NotificationsWhereUniqueInput
@@ -11721,6 +10858,10 @@ export namespace Prisma {
      */
     omit?: NotificationsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
+    /**
      * Filter which Notifications to delete.
      */
     where: NotificationsWhereUniqueInput
@@ -11741,6 +10882,25 @@ export namespace Prisma {
   }
 
   /**
+   * Notifications.User
+   */
+  export type Notifications$UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Notifications without action
    */
   export type NotificationsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11752,6 +10912,10 @@ export namespace Prisma {
      * Omit specific fields from the Notifications
      */
     omit?: NotificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationsInclude<ExtArgs> | null
   }
 
 
@@ -11803,14 +10967,6 @@ export namespace Prisma {
   };
 
   export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
-
-
-  export const EmployeeCategoryScalarFieldEnum: {
-    emp_category_id: 'emp_category_id',
-    category_name: 'category_name'
-  };
-
-  export type EmployeeCategoryScalarFieldEnum = (typeof EmployeeCategoryScalarFieldEnum)[keyof typeof EmployeeCategoryScalarFieldEnum]
 
 
   export const DepartmentScalarFieldEnum: {
@@ -11872,8 +11028,8 @@ export namespace Prisma {
     complaint_id: 'complaint_id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    uid: 'uid',
-    seen: 'seen'
+    seen: 'seen',
+    uid: 'uid'
   };
 
   export type NotificationsScalarFieldEnum = (typeof NotificationsScalarFieldEnum)[keyof typeof NotificationsScalarFieldEnum]
@@ -11921,13 +11077,6 @@ export namespace Prisma {
   };
 
   export type EmployeeOrderByRelevanceFieldEnum = (typeof EmployeeOrderByRelevanceFieldEnum)[keyof typeof EmployeeOrderByRelevanceFieldEnum]
-
-
-  export const EmployeeCategoryOrderByRelevanceFieldEnum: {
-    category_name: 'category_name'
-  };
-
-  export type EmployeeCategoryOrderByRelevanceFieldEnum = (typeof EmployeeCategoryOrderByRelevanceFieldEnum)[keyof typeof EmployeeCategoryOrderByRelevanceFieldEnum]
 
 
   export const DepartmentOrderByRelevanceFieldEnum: {
@@ -12055,6 +11204,7 @@ export namespace Prisma {
     Profession?: XOR<ProfessionScalarRelationFilter, ProfessionWhereInput>
     complaint?: ComplaintsListRelationFilter
     resolve?: ResolvedComplaintsListRelationFilter
+    notifications?: NotificationsListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -12074,6 +11224,7 @@ export namespace Prisma {
     Profession?: ProfessionOrderByWithRelationInput
     complaint?: ComplaintsOrderByRelationAggregateInput
     resolve?: ResolvedComplaintsOrderByRelationAggregateInput
+    notifications?: NotificationsOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -12097,6 +11248,7 @@ export namespace Prisma {
     Profession?: XOR<ProfessionScalarRelationFilter, ProfessionWhereInput>
     complaint?: ComplaintsListRelationFilter
     resolve?: ResolvedComplaintsListRelationFilter
+    notifications?: NotificationsListRelationFilter
   }, "uid" | "email" | "roll">
 
   export type UserOrderByWithAggregationInput = {
@@ -12234,46 +11386,6 @@ export namespace Prisma {
     employee_name?: StringWithAggregatesFilter<"Employee"> | string
     employee_mobile?: StringWithAggregatesFilter<"Employee"> | string
     complaint_cat_id?: IntWithAggregatesFilter<"Employee"> | number
-  }
-
-  export type EmployeeCategoryWhereInput = {
-    AND?: EmployeeCategoryWhereInput | EmployeeCategoryWhereInput[]
-    OR?: EmployeeCategoryWhereInput[]
-    NOT?: EmployeeCategoryWhereInput | EmployeeCategoryWhereInput[]
-    emp_category_id?: IntFilter<"EmployeeCategory"> | number
-    category_name?: StringFilter<"EmployeeCategory"> | string
-  }
-
-  export type EmployeeCategoryOrderByWithRelationInput = {
-    emp_category_id?: SortOrder
-    category_name?: SortOrder
-    _relevance?: EmployeeCategoryOrderByRelevanceInput
-  }
-
-  export type EmployeeCategoryWhereUniqueInput = Prisma.AtLeast<{
-    emp_category_id?: number
-    AND?: EmployeeCategoryWhereInput | EmployeeCategoryWhereInput[]
-    OR?: EmployeeCategoryWhereInput[]
-    NOT?: EmployeeCategoryWhereInput | EmployeeCategoryWhereInput[]
-    category_name?: StringFilter<"EmployeeCategory"> | string
-  }, "emp_category_id">
-
-  export type EmployeeCategoryOrderByWithAggregationInput = {
-    emp_category_id?: SortOrder
-    category_name?: SortOrder
-    _count?: EmployeeCategoryCountOrderByAggregateInput
-    _avg?: EmployeeCategoryAvgOrderByAggregateInput
-    _max?: EmployeeCategoryMaxOrderByAggregateInput
-    _min?: EmployeeCategoryMinOrderByAggregateInput
-    _sum?: EmployeeCategorySumOrderByAggregateInput
-  }
-
-  export type EmployeeCategoryScalarWhereWithAggregatesInput = {
-    AND?: EmployeeCategoryScalarWhereWithAggregatesInput | EmployeeCategoryScalarWhereWithAggregatesInput[]
-    OR?: EmployeeCategoryScalarWhereWithAggregatesInput[]
-    NOT?: EmployeeCategoryScalarWhereWithAggregatesInput | EmployeeCategoryScalarWhereWithAggregatesInput[]
-    emp_category_id?: IntWithAggregatesFilter<"EmployeeCategory"> | number
-    category_name?: StringWithAggregatesFilter<"EmployeeCategory"> | string
   }
 
   export type DepartmentWhereInput = {
@@ -12522,6 +11634,7 @@ export namespace Prisma {
     Employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
     Complaints?: XOR<ComplaintsNullableScalarRelationFilter, ComplaintsWhereInput> | null
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    Notifications?: XOR<NotificationsNullableScalarRelationFilter, NotificationsWhereInput> | null
   }
 
   export type ResolvedComplaintsOrderByWithRelationInput = {
@@ -12535,6 +11648,7 @@ export namespace Prisma {
     Employee?: EmployeeOrderByWithRelationInput
     Complaints?: ComplaintsOrderByWithRelationInput
     User?: UserOrderByWithRelationInput
+    Notifications?: NotificationsOrderByWithRelationInput
     _relevance?: ResolvedComplaintsOrderByRelevanceInput
   }
 
@@ -12552,6 +11666,7 @@ export namespace Prisma {
     Employee?: XOR<EmployeeNullableScalarRelationFilter, EmployeeWhereInput> | null
     Complaints?: XOR<ComplaintsNullableScalarRelationFilter, ComplaintsWhereInput> | null
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    Notifications?: XOR<NotificationsNullableScalarRelationFilter, NotificationsWhereInput> | null
   }, "complaint_id">
 
   export type ResolvedComplaintsOrderByWithAggregationInput = {
@@ -12589,16 +11704,20 @@ export namespace Prisma {
     complaint_id?: IntFilter<"Notifications"> | number
     createdAt?: DateTimeFilter<"Notifications"> | Date | string
     updatedAt?: DateTimeFilter<"Notifications"> | Date | string
-    uid?: StringFilter<"Notifications"> | string
     seen?: BoolFilter<"Notifications"> | boolean
+    uid?: StringFilter<"Notifications"> | string
+    ResolveComplaint?: XOR<ResolvedComplaintsScalarRelationFilter, ResolvedComplaintsWhereInput>
+    User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type NotificationsOrderByWithRelationInput = {
     complaint_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    uid?: SortOrder
     seen?: SortOrder
+    uid?: SortOrder
+    ResolveComplaint?: ResolvedComplaintsOrderByWithRelationInput
+    User?: UserOrderByWithRelationInput
     _relevance?: NotificationsOrderByRelevanceInput
   }
 
@@ -12609,16 +11728,18 @@ export namespace Prisma {
     NOT?: NotificationsWhereInput | NotificationsWhereInput[]
     createdAt?: DateTimeFilter<"Notifications"> | Date | string
     updatedAt?: DateTimeFilter<"Notifications"> | Date | string
-    uid?: StringFilter<"Notifications"> | string
     seen?: BoolFilter<"Notifications"> | boolean
+    uid?: StringFilter<"Notifications"> | string
+    ResolveComplaint?: XOR<ResolvedComplaintsScalarRelationFilter, ResolvedComplaintsWhereInput>
+    User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "complaint_id">
 
   export type NotificationsOrderByWithAggregationInput = {
     complaint_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    uid?: SortOrder
     seen?: SortOrder
+    uid?: SortOrder
     _count?: NotificationsCountOrderByAggregateInput
     _avg?: NotificationsAvgOrderByAggregateInput
     _max?: NotificationsMaxOrderByAggregateInput
@@ -12633,8 +11754,8 @@ export namespace Prisma {
     complaint_id?: IntWithAggregatesFilter<"Notifications"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Notifications"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Notifications"> | Date | string
-    uid?: StringWithAggregatesFilter<"Notifications"> | string
     seen?: BoolWithAggregatesFilter<"Notifications"> | boolean
+    uid?: StringWithAggregatesFilter<"Notifications"> | string
   }
 
   export type UserCreateInput = {
@@ -12652,6 +11773,7 @@ export namespace Prisma {
     Profession: ProfessionCreateNestedOneWithoutUserInput
     complaint?: ComplaintsCreateNestedManyWithoutUserInput
     resolve?: ResolvedComplaintsCreateNestedManyWithoutUserInput
+    notifications?: NotificationsCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -12669,6 +11791,7 @@ export namespace Prisma {
     profession_id: number
     complaint?: ComplaintsUncheckedCreateNestedManyWithoutUserInput
     resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -12686,6 +11809,7 @@ export namespace Prisma {
     Profession?: ProfessionUpdateOneRequiredWithoutUserNestedInput
     complaint?: ComplaintsUpdateManyWithoutUserNestedInput
     resolve?: ResolvedComplaintsUpdateManyWithoutUserNestedInput
+    notifications?: NotificationsUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -12703,6 +11827,7 @@ export namespace Prisma {
     profession_id?: IntFieldUpdateOperationsInput | number
     complaint?: ComplaintsUncheckedUpdateManyWithoutUserNestedInput
     resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -12831,38 +11956,6 @@ export namespace Prisma {
     employee_name?: StringFieldUpdateOperationsInput | string
     employee_mobile?: StringFieldUpdateOperationsInput | string
     complaint_cat_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type EmployeeCategoryCreateInput = {
-    category_name: string
-  }
-
-  export type EmployeeCategoryUncheckedCreateInput = {
-    emp_category_id?: number
-    category_name: string
-  }
-
-  export type EmployeeCategoryUpdateInput = {
-    category_name?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type EmployeeCategoryUncheckedUpdateInput = {
-    emp_category_id?: IntFieldUpdateOperationsInput | number
-    category_name?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type EmployeeCategoryCreateManyInput = {
-    emp_category_id?: number
-    category_name: string
-  }
-
-  export type EmployeeCategoryUpdateManyMutationInput = {
-    category_name?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type EmployeeCategoryUncheckedUpdateManyInput = {
-    emp_category_id?: IntFieldUpdateOperationsInput | number
-    category_name?: StringFieldUpdateOperationsInput | string
   }
 
   export type DepartmentCreateInput = {
@@ -13091,6 +12184,7 @@ export namespace Prisma {
     Employee?: EmployeeCreateNestedOneWithoutResolveInput
     Complaints?: ComplaintsCreateNestedOneWithoutResolveInput
     User?: UserCreateNestedOneWithoutResolveInput
+    Notifications?: NotificationsCreateNestedOneWithoutResolveComplaintInput
   }
 
   export type ResolvedComplaintsUncheckedCreateInput = {
@@ -13101,6 +12195,7 @@ export namespace Prisma {
     estimated_date?: Date | string | null
     complaint_id: number
     resolved_by?: string | null
+    Notifications?: NotificationsUncheckedCreateNestedOneWithoutResolveComplaintInput
   }
 
   export type ResolvedComplaintsUpdateInput = {
@@ -13111,6 +12206,7 @@ export namespace Prisma {
     Employee?: EmployeeUpdateOneWithoutResolveNestedInput
     Complaints?: ComplaintsUpdateOneWithoutResolveNestedInput
     User?: UserUpdateOneWithoutResolveNestedInput
+    Notifications?: NotificationsUpdateOneWithoutResolveComplaintNestedInput
   }
 
   export type ResolvedComplaintsUncheckedUpdateInput = {
@@ -13121,6 +12217,7 @@ export namespace Prisma {
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     complaint_id?: IntFieldUpdateOperationsInput | number
     resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
+    Notifications?: NotificationsUncheckedUpdateOneWithoutResolveComplaintNestedInput
   }
 
   export type ResolvedComplaintsCreateManyInput = {
@@ -13151,50 +12248,48 @@ export namespace Prisma {
   }
 
   export type NotificationsCreateInput = {
-    complaint_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    uid: string
     seen?: boolean
+    ResolveComplaint: ResolvedComplaintsCreateNestedOneWithoutNotificationsInput
+    User?: UserCreateNestedOneWithoutNotificationsInput
   }
 
   export type NotificationsUncheckedCreateInput = {
     complaint_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    uid: string
     seen?: boolean
+    uid: string
   }
 
   export type NotificationsUpdateInput = {
-    complaint_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    uid?: StringFieldUpdateOperationsInput | string
     seen?: BoolFieldUpdateOperationsInput | boolean
+    ResolveComplaint?: ResolvedComplaintsUpdateOneRequiredWithoutNotificationsNestedInput
+    User?: UserUpdateOneWithoutNotificationsNestedInput
   }
 
   export type NotificationsUncheckedUpdateInput = {
     complaint_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    uid?: StringFieldUpdateOperationsInput | string
     seen?: BoolFieldUpdateOperationsInput | boolean
+    uid?: StringFieldUpdateOperationsInput | string
   }
 
   export type NotificationsCreateManyInput = {
     complaint_id: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    uid: string
     seen?: boolean
+    uid: string
   }
 
   export type NotificationsUpdateManyMutationInput = {
-    complaint_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    uid?: StringFieldUpdateOperationsInput | string
     seen?: BoolFieldUpdateOperationsInput | boolean
   }
 
@@ -13202,8 +12297,8 @@ export namespace Prisma {
     complaint_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    uid?: StringFieldUpdateOperationsInput | string
     seen?: BoolFieldUpdateOperationsInput | boolean
+    uid?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -13292,6 +12387,12 @@ export namespace Prisma {
     none?: ResolvedComplaintsWhereInput
   }
 
+  export type NotificationsListRelationFilter = {
+    every?: NotificationsWhereInput
+    some?: NotificationsWhereInput
+    none?: NotificationsWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -13302,6 +12403,10 @@ export namespace Prisma {
   }
 
   export type ResolvedComplaintsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type NotificationsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13527,35 +12632,6 @@ export namespace Prisma {
   export type EmployeeSumOrderByAggregateInput = {
     employee_id?: SortOrder
     complaint_cat_id?: SortOrder
-  }
-
-  export type EmployeeCategoryOrderByRelevanceInput = {
-    fields: EmployeeCategoryOrderByRelevanceFieldEnum | EmployeeCategoryOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
-  }
-
-  export type EmployeeCategoryCountOrderByAggregateInput = {
-    emp_category_id?: SortOrder
-    category_name?: SortOrder
-  }
-
-  export type EmployeeCategoryAvgOrderByAggregateInput = {
-    emp_category_id?: SortOrder
-  }
-
-  export type EmployeeCategoryMaxOrderByAggregateInput = {
-    emp_category_id?: SortOrder
-    category_name?: SortOrder
-  }
-
-  export type EmployeeCategoryMinOrderByAggregateInput = {
-    emp_category_id?: SortOrder
-    category_name?: SortOrder
-  }
-
-  export type EmployeeCategorySumOrderByAggregateInput = {
-    emp_category_id?: SortOrder
   }
 
   export type DepartmentOrderByRelevanceInput = {
@@ -13795,6 +12871,11 @@ export namespace Prisma {
     isNot?: UserWhereInput | null
   }
 
+  export type NotificationsNullableScalarRelationFilter = {
+    is?: NotificationsWhereInput | null
+    isNot?: NotificationsWhereInput | null
+  }
+
   export type ResolvedComplaintsOrderByRelevanceInput = {
     fields: ResolvedComplaintsOrderByRelevanceFieldEnum | ResolvedComplaintsOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -13855,6 +12936,11 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type ResolvedComplaintsScalarRelationFilter = {
+    is?: ResolvedComplaintsWhereInput
+    isNot?: ResolvedComplaintsWhereInput
+  }
+
   export type NotificationsOrderByRelevanceInput = {
     fields: NotificationsOrderByRelevanceFieldEnum | NotificationsOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -13865,8 +12951,8 @@ export namespace Prisma {
     complaint_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    uid?: SortOrder
     seen?: SortOrder
+    uid?: SortOrder
   }
 
   export type NotificationsAvgOrderByAggregateInput = {
@@ -13877,16 +12963,16 @@ export namespace Prisma {
     complaint_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    uid?: SortOrder
     seen?: SortOrder
+    uid?: SortOrder
   }
 
   export type NotificationsMinOrderByAggregateInput = {
     complaint_id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    uid?: SortOrder
     seen?: SortOrder
+    uid?: SortOrder
   }
 
   export type NotificationsSumOrderByAggregateInput = {
@@ -13919,6 +13005,13 @@ export namespace Prisma {
     connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
   }
 
+  export type NotificationsCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationsCreateWithoutUserInput, NotificationsUncheckedCreateWithoutUserInput> | NotificationsCreateWithoutUserInput[] | NotificationsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationsCreateOrConnectWithoutUserInput | NotificationsCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationsCreateManyUserInputEnvelope
+    connect?: NotificationsWhereUniqueInput | NotificationsWhereUniqueInput[]
+  }
+
   export type ComplaintsUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ComplaintsCreateWithoutUserInput, ComplaintsUncheckedCreateWithoutUserInput> | ComplaintsCreateWithoutUserInput[] | ComplaintsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ComplaintsCreateOrConnectWithoutUserInput | ComplaintsCreateOrConnectWithoutUserInput[]
@@ -13931,6 +13024,13 @@ export namespace Prisma {
     connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutUserInput | ResolvedComplaintsCreateOrConnectWithoutUserInput[]
     createMany?: ResolvedComplaintsCreateManyUserInputEnvelope
     connect?: ResolvedComplaintsWhereUniqueInput | ResolvedComplaintsWhereUniqueInput[]
+  }
+
+  export type NotificationsUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationsCreateWithoutUserInput, NotificationsUncheckedCreateWithoutUserInput> | NotificationsCreateWithoutUserInput[] | NotificationsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationsCreateOrConnectWithoutUserInput | NotificationsCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationsCreateManyUserInputEnvelope
+    connect?: NotificationsWhereUniqueInput | NotificationsWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -13997,6 +13097,20 @@ export namespace Prisma {
     deleteMany?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
   }
 
+  export type NotificationsUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationsCreateWithoutUserInput, NotificationsUncheckedCreateWithoutUserInput> | NotificationsCreateWithoutUserInput[] | NotificationsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationsCreateOrConnectWithoutUserInput | NotificationsCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationsUpsertWithWhereUniqueWithoutUserInput | NotificationsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationsCreateManyUserInputEnvelope
+    set?: NotificationsWhereUniqueInput | NotificationsWhereUniqueInput[]
+    disconnect?: NotificationsWhereUniqueInput | NotificationsWhereUniqueInput[]
+    delete?: NotificationsWhereUniqueInput | NotificationsWhereUniqueInput[]
+    connect?: NotificationsWhereUniqueInput | NotificationsWhereUniqueInput[]
+    update?: NotificationsUpdateWithWhereUniqueWithoutUserInput | NotificationsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationsUpdateManyWithWhereWithoutUserInput | NotificationsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationsScalarWhereInput | NotificationsScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -14031,6 +13145,20 @@ export namespace Prisma {
     update?: ResolvedComplaintsUpdateWithWhereUniqueWithoutUserInput | ResolvedComplaintsUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ResolvedComplaintsUpdateManyWithWhereWithoutUserInput | ResolvedComplaintsUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ResolvedComplaintsScalarWhereInput | ResolvedComplaintsScalarWhereInput[]
+  }
+
+  export type NotificationsUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationsCreateWithoutUserInput, NotificationsUncheckedCreateWithoutUserInput> | NotificationsCreateWithoutUserInput[] | NotificationsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationsCreateOrConnectWithoutUserInput | NotificationsCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationsUpsertWithWhereUniqueWithoutUserInput | NotificationsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationsCreateManyUserInputEnvelope
+    set?: NotificationsWhereUniqueInput | NotificationsWhereUniqueInput[]
+    disconnect?: NotificationsWhereUniqueInput | NotificationsWhereUniqueInput[]
+    delete?: NotificationsWhereUniqueInput | NotificationsWhereUniqueInput[]
+    connect?: NotificationsWhereUniqueInput | NotificationsWhereUniqueInput[]
+    update?: NotificationsUpdateWithWhereUniqueWithoutUserInput | NotificationsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationsUpdateManyWithWhereWithoutUserInput | NotificationsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationsScalarWhereInput | NotificationsScalarWhereInput[]
   }
 
   export type UserCreateNestedManyWithoutProfessionInput = {
@@ -14417,6 +13545,18 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type NotificationsCreateNestedOneWithoutResolveComplaintInput = {
+    create?: XOR<NotificationsCreateWithoutResolveComplaintInput, NotificationsUncheckedCreateWithoutResolveComplaintInput>
+    connectOrCreate?: NotificationsCreateOrConnectWithoutResolveComplaintInput
+    connect?: NotificationsWhereUniqueInput
+  }
+
+  export type NotificationsUncheckedCreateNestedOneWithoutResolveComplaintInput = {
+    create?: XOR<NotificationsCreateWithoutResolveComplaintInput, NotificationsUncheckedCreateWithoutResolveComplaintInput>
+    connectOrCreate?: NotificationsCreateOrConnectWithoutResolveComplaintInput
+    connect?: NotificationsWhereUniqueInput
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -14449,6 +13589,56 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResolveInput, UserUpdateWithoutResolveInput>, UserUncheckedUpdateWithoutResolveInput>
+  }
+
+  export type NotificationsUpdateOneWithoutResolveComplaintNestedInput = {
+    create?: XOR<NotificationsCreateWithoutResolveComplaintInput, NotificationsUncheckedCreateWithoutResolveComplaintInput>
+    connectOrCreate?: NotificationsCreateOrConnectWithoutResolveComplaintInput
+    upsert?: NotificationsUpsertWithoutResolveComplaintInput
+    disconnect?: NotificationsWhereInput | boolean
+    delete?: NotificationsWhereInput | boolean
+    connect?: NotificationsWhereUniqueInput
+    update?: XOR<XOR<NotificationsUpdateToOneWithWhereWithoutResolveComplaintInput, NotificationsUpdateWithoutResolveComplaintInput>, NotificationsUncheckedUpdateWithoutResolveComplaintInput>
+  }
+
+  export type NotificationsUncheckedUpdateOneWithoutResolveComplaintNestedInput = {
+    create?: XOR<NotificationsCreateWithoutResolveComplaintInput, NotificationsUncheckedCreateWithoutResolveComplaintInput>
+    connectOrCreate?: NotificationsCreateOrConnectWithoutResolveComplaintInput
+    upsert?: NotificationsUpsertWithoutResolveComplaintInput
+    disconnect?: NotificationsWhereInput | boolean
+    delete?: NotificationsWhereInput | boolean
+    connect?: NotificationsWhereUniqueInput
+    update?: XOR<XOR<NotificationsUpdateToOneWithWhereWithoutResolveComplaintInput, NotificationsUpdateWithoutResolveComplaintInput>, NotificationsUncheckedUpdateWithoutResolveComplaintInput>
+  }
+
+  export type ResolvedComplaintsCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<ResolvedComplaintsCreateWithoutNotificationsInput, ResolvedComplaintsUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutNotificationsInput
+    connect?: ResolvedComplaintsWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNotificationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ResolvedComplaintsUpdateOneRequiredWithoutNotificationsNestedInput = {
+    create?: XOR<ResolvedComplaintsCreateWithoutNotificationsInput, ResolvedComplaintsUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: ResolvedComplaintsCreateOrConnectWithoutNotificationsInput
+    upsert?: ResolvedComplaintsUpsertWithoutNotificationsInput
+    connect?: ResolvedComplaintsWhereUniqueInput
+    update?: XOR<XOR<ResolvedComplaintsUpdateToOneWithWhereWithoutNotificationsInput, ResolvedComplaintsUpdateWithoutNotificationsInput>, ResolvedComplaintsUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type UserUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNotificationsInput
+    upsert?: UserUpsertWithoutNotificationsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotificationsInput, UserUpdateWithoutNotificationsInput>, UserUncheckedUpdateWithoutNotificationsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -14765,6 +13955,7 @@ export namespace Prisma {
     estimated_date?: Date | string | null
     Employee?: EmployeeCreateNestedOneWithoutResolveInput
     Complaints?: ComplaintsCreateNestedOneWithoutResolveInput
+    Notifications?: NotificationsCreateNestedOneWithoutResolveComplaintInput
   }
 
   export type ResolvedComplaintsUncheckedCreateWithoutUserInput = {
@@ -14774,6 +13965,7 @@ export namespace Prisma {
     employee_id?: number | null
     estimated_date?: Date | string | null
     complaint_id: number
+    Notifications?: NotificationsUncheckedCreateNestedOneWithoutResolveComplaintInput
   }
 
   export type ResolvedComplaintsCreateOrConnectWithoutUserInput = {
@@ -14783,6 +13975,30 @@ export namespace Prisma {
 
   export type ResolvedComplaintsCreateManyUserInputEnvelope = {
     data: ResolvedComplaintsCreateManyUserInput | ResolvedComplaintsCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationsCreateWithoutUserInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    seen?: boolean
+    ResolveComplaint: ResolvedComplaintsCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationsUncheckedCreateWithoutUserInput = {
+    complaint_id: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    seen?: boolean
+  }
+
+  export type NotificationsCreateOrConnectWithoutUserInput = {
+    where: NotificationsWhereUniqueInput
+    create: XOR<NotificationsCreateWithoutUserInput, NotificationsUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationsCreateManyUserInputEnvelope = {
+    data: NotificationsCreateManyUserInput | NotificationsCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -14891,6 +14107,33 @@ export namespace Prisma {
     resolved_by?: StringNullableFilter<"ResolvedComplaints"> | string | null
   }
 
+  export type NotificationsUpsertWithWhereUniqueWithoutUserInput = {
+    where: NotificationsWhereUniqueInput
+    update: XOR<NotificationsUpdateWithoutUserInput, NotificationsUncheckedUpdateWithoutUserInput>
+    create: XOR<NotificationsCreateWithoutUserInput, NotificationsUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationsUpdateWithWhereUniqueWithoutUserInput = {
+    where: NotificationsWhereUniqueInput
+    data: XOR<NotificationsUpdateWithoutUserInput, NotificationsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type NotificationsUpdateManyWithWhereWithoutUserInput = {
+    where: NotificationsScalarWhereInput
+    data: XOR<NotificationsUpdateManyMutationInput, NotificationsUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type NotificationsScalarWhereInput = {
+    AND?: NotificationsScalarWhereInput | NotificationsScalarWhereInput[]
+    OR?: NotificationsScalarWhereInput[]
+    NOT?: NotificationsScalarWhereInput | NotificationsScalarWhereInput[]
+    complaint_id?: IntFilter<"Notifications"> | number
+    createdAt?: DateTimeFilter<"Notifications"> | Date | string
+    updatedAt?: DateTimeFilter<"Notifications"> | Date | string
+    seen?: BoolFilter<"Notifications"> | boolean
+    uid?: StringFilter<"Notifications"> | string
+  }
+
   export type UserCreateWithoutProfessionInput = {
     uid: string
     email: string
@@ -14905,6 +14148,7 @@ export namespace Prisma {
     Department: DepartmentCreateNestedOneWithoutUsersInput
     complaint?: ComplaintsCreateNestedManyWithoutUserInput
     resolve?: ResolvedComplaintsCreateNestedManyWithoutUserInput
+    notifications?: NotificationsCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProfessionInput = {
@@ -14921,6 +14165,7 @@ export namespace Prisma {
     department_id: string
     complaint?: ComplaintsUncheckedCreateNestedManyWithoutUserInput
     resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProfessionInput = {
@@ -14990,6 +14235,7 @@ export namespace Prisma {
     estimated_date?: Date | string | null
     Complaints?: ComplaintsCreateNestedOneWithoutResolveInput
     User?: UserCreateNestedOneWithoutResolveInput
+    Notifications?: NotificationsCreateNestedOneWithoutResolveComplaintInput
   }
 
   export type ResolvedComplaintsUncheckedCreateWithoutEmployeeInput = {
@@ -14999,6 +14245,7 @@ export namespace Prisma {
     estimated_date?: Date | string | null
     complaint_id: number
     resolved_by?: string | null
+    Notifications?: NotificationsUncheckedCreateNestedOneWithoutResolveComplaintInput
   }
 
   export type ResolvedComplaintsCreateOrConnectWithoutEmployeeInput = {
@@ -15063,6 +14310,7 @@ export namespace Prisma {
     Profession: ProfessionCreateNestedOneWithoutUserInput
     complaint?: ComplaintsCreateNestedManyWithoutUserInput
     resolve?: ResolvedComplaintsCreateNestedManyWithoutUserInput
+    notifications?: NotificationsCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDepartmentInput = {
@@ -15079,6 +14327,7 @@ export namespace Prisma {
     profession_id: number
     complaint?: ComplaintsUncheckedCreateNestedManyWithoutUserInput
     resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDepartmentInput = {
@@ -15137,6 +14386,7 @@ export namespace Prisma {
     Department: DepartmentCreateNestedOneWithoutUsersInput
     Profession: ProfessionCreateNestedOneWithoutUserInput
     resolve?: ResolvedComplaintsCreateNestedManyWithoutUserInput
+    notifications?: NotificationsCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutComplaintInput = {
@@ -15153,6 +14403,7 @@ export namespace Prisma {
     department_id: string
     profession_id: number
     resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutComplaintInput = {
@@ -15167,6 +14418,7 @@ export namespace Prisma {
     estimated_date?: Date | string | null
     Employee?: EmployeeCreateNestedOneWithoutResolveInput
     User?: UserCreateNestedOneWithoutResolveInput
+    Notifications?: NotificationsCreateNestedOneWithoutResolveComplaintInput
   }
 
   export type ResolvedComplaintsUncheckedCreateWithoutComplaintsInput = {
@@ -15176,6 +14428,7 @@ export namespace Prisma {
     employee_id?: number | null
     estimated_date?: Date | string | null
     resolved_by?: string | null
+    Notifications?: NotificationsUncheckedCreateNestedOneWithoutResolveComplaintInput
   }
 
   export type ResolvedComplaintsCreateOrConnectWithoutComplaintsInput = {
@@ -15249,6 +14502,7 @@ export namespace Prisma {
     Department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     Profession?: ProfessionUpdateOneRequiredWithoutUserNestedInput
     resolve?: ResolvedComplaintsUpdateManyWithoutUserNestedInput
+    notifications?: NotificationsUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutComplaintInput = {
@@ -15265,6 +14519,7 @@ export namespace Prisma {
     department_id?: StringFieldUpdateOperationsInput | string
     profession_id?: IntFieldUpdateOperationsInput | number
     resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ResolvedComplaintsUpsertWithWhereUniqueWithoutComplaintsInput = {
@@ -15522,6 +14777,7 @@ export namespace Prisma {
     Department: DepartmentCreateNestedOneWithoutUsersInput
     Profession: ProfessionCreateNestedOneWithoutUserInput
     complaint?: ComplaintsCreateNestedManyWithoutUserInput
+    notifications?: NotificationsCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutResolveInput = {
@@ -15538,11 +14794,31 @@ export namespace Prisma {
     department_id: string
     profession_id: number
     complaint?: ComplaintsUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationsUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutResolveInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutResolveInput, UserUncheckedCreateWithoutResolveInput>
+  }
+
+  export type NotificationsCreateWithoutResolveComplaintInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    seen?: boolean
+    User?: UserCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationsUncheckedCreateWithoutResolveComplaintInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    seen?: boolean
+    uid: string
+  }
+
+  export type NotificationsCreateOrConnectWithoutResolveComplaintInput = {
+    where: NotificationsWhereUniqueInput
+    create: XOR<NotificationsCreateWithoutResolveComplaintInput, NotificationsUncheckedCreateWithoutResolveComplaintInput>
   }
 
   export type EmployeeUpsertWithoutResolveInput = {
@@ -15632,6 +14908,7 @@ export namespace Prisma {
     Department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     Profession?: ProfessionUpdateOneRequiredWithoutUserNestedInput
     complaint?: ComplaintsUpdateManyWithoutUserNestedInput
+    notifications?: NotificationsUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutResolveInput = {
@@ -15648,6 +14925,172 @@ export namespace Prisma {
     department_id?: StringFieldUpdateOperationsInput | string
     profession_id?: IntFieldUpdateOperationsInput | number
     complaint?: ComplaintsUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type NotificationsUpsertWithoutResolveComplaintInput = {
+    update: XOR<NotificationsUpdateWithoutResolveComplaintInput, NotificationsUncheckedUpdateWithoutResolveComplaintInput>
+    create: XOR<NotificationsCreateWithoutResolveComplaintInput, NotificationsUncheckedCreateWithoutResolveComplaintInput>
+    where?: NotificationsWhereInput
+  }
+
+  export type NotificationsUpdateToOneWithWhereWithoutResolveComplaintInput = {
+    where?: NotificationsWhereInput
+    data: XOR<NotificationsUpdateWithoutResolveComplaintInput, NotificationsUncheckedUpdateWithoutResolveComplaintInput>
+  }
+
+  export type NotificationsUpdateWithoutResolveComplaintInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seen?: BoolFieldUpdateOperationsInput | boolean
+    User?: UserUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationsUncheckedUpdateWithoutResolveComplaintInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seen?: BoolFieldUpdateOperationsInput | boolean
+    uid?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ResolvedComplaintsCreateWithoutNotificationsInput = {
+    resolved_details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    estimated_date?: Date | string | null
+    Employee?: EmployeeCreateNestedOneWithoutResolveInput
+    Complaints?: ComplaintsCreateNestedOneWithoutResolveInput
+    User?: UserCreateNestedOneWithoutResolveInput
+  }
+
+  export type ResolvedComplaintsUncheckedCreateWithoutNotificationsInput = {
+    resolved_details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    employee_id?: number | null
+    estimated_date?: Date | string | null
+    complaint_id: number
+    resolved_by?: string | null
+  }
+
+  export type ResolvedComplaintsCreateOrConnectWithoutNotificationsInput = {
+    where: ResolvedComplaintsWhereUniqueInput
+    create: XOR<ResolvedComplaintsCreateWithoutNotificationsInput, ResolvedComplaintsUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type UserCreateWithoutNotificationsInput = {
+    uid: string
+    email: string
+    name: string
+    roll?: string | null
+    mobile: string
+    session?: string | null
+    role?: $Enums.UserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    block?: boolean
+    Department: DepartmentCreateNestedOneWithoutUsersInput
+    Profession: ProfessionCreateNestedOneWithoutUserInput
+    complaint?: ComplaintsCreateNestedManyWithoutUserInput
+    resolve?: ResolvedComplaintsCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutNotificationsInput = {
+    uid: string
+    email: string
+    name: string
+    roll?: string | null
+    mobile: string
+    session?: string | null
+    role?: $Enums.UserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    block?: boolean
+    department_id: string
+    profession_id: number
+    complaint?: ComplaintsUncheckedCreateNestedManyWithoutUserInput
+    resolve?: ResolvedComplaintsUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutNotificationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type ResolvedComplaintsUpsertWithoutNotificationsInput = {
+    update: XOR<ResolvedComplaintsUpdateWithoutNotificationsInput, ResolvedComplaintsUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<ResolvedComplaintsCreateWithoutNotificationsInput, ResolvedComplaintsUncheckedCreateWithoutNotificationsInput>
+    where?: ResolvedComplaintsWhereInput
+  }
+
+  export type ResolvedComplaintsUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: ResolvedComplaintsWhereInput
+    data: XOR<ResolvedComplaintsUpdateWithoutNotificationsInput, ResolvedComplaintsUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type ResolvedComplaintsUpdateWithoutNotificationsInput = {
+    resolved_details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Employee?: EmployeeUpdateOneWithoutResolveNestedInput
+    Complaints?: ComplaintsUpdateOneWithoutResolveNestedInput
+    User?: UserUpdateOneWithoutResolveNestedInput
+  }
+
+  export type ResolvedComplaintsUncheckedUpdateWithoutNotificationsInput = {
+    resolved_details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    employee_id?: NullableIntFieldUpdateOperationsInput | number | null
+    estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    complaint_id?: IntFieldUpdateOperationsInput | number
+    resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserUpsertWithoutNotificationsInput = {
+    update: XOR<UserUpdateWithoutNotificationsInput, UserUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutNotificationsInput, UserUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type UserUpdateWithoutNotificationsInput = {
+    uid?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    roll?: NullableStringFieldUpdateOperationsInput | string | null
+    mobile?: StringFieldUpdateOperationsInput | string
+    session?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    block?: BoolFieldUpdateOperationsInput | boolean
+    Department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
+    Profession?: ProfessionUpdateOneRequiredWithoutUserNestedInput
+    complaint?: ComplaintsUpdateManyWithoutUserNestedInput
+    resolve?: ResolvedComplaintsUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutNotificationsInput = {
+    uid?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    roll?: NullableStringFieldUpdateOperationsInput | string | null
+    mobile?: StringFieldUpdateOperationsInput | string
+    session?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    block?: BoolFieldUpdateOperationsInput | boolean
+    department_id?: StringFieldUpdateOperationsInput | string
+    profession_id?: IntFieldUpdateOperationsInput | number
+    complaint?: ComplaintsUncheckedUpdateManyWithoutUserNestedInput
+    resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ComplaintsCreateManyUserInput = {
@@ -15670,6 +15113,13 @@ export namespace Prisma {
     employee_id?: number | null
     estimated_date?: Date | string | null
     complaint_id: number
+  }
+
+  export type NotificationsCreateManyUserInput = {
+    complaint_id: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    seen?: boolean
   }
 
   export type ComplaintsUpdateWithoutUserInput = {
@@ -15719,6 +15169,7 @@ export namespace Prisma {
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Employee?: EmployeeUpdateOneWithoutResolveNestedInput
     Complaints?: ComplaintsUpdateOneWithoutResolveNestedInput
+    Notifications?: NotificationsUpdateOneWithoutResolveComplaintNestedInput
   }
 
   export type ResolvedComplaintsUncheckedUpdateWithoutUserInput = {
@@ -15728,6 +15179,7 @@ export namespace Prisma {
     employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     complaint_id?: IntFieldUpdateOperationsInput | number
+    Notifications?: NotificationsUncheckedUpdateOneWithoutResolveComplaintNestedInput
   }
 
   export type ResolvedComplaintsUncheckedUpdateManyWithoutUserInput = {
@@ -15737,6 +15189,27 @@ export namespace Prisma {
     employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     complaint_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type NotificationsUpdateWithoutUserInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seen?: BoolFieldUpdateOperationsInput | boolean
+    ResolveComplaint?: ResolvedComplaintsUpdateOneRequiredWithoutNotificationsNestedInput
+  }
+
+  export type NotificationsUncheckedUpdateWithoutUserInput = {
+    complaint_id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seen?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationsUncheckedUpdateManyWithoutUserInput = {
+    complaint_id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seen?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserCreateManyProfessionInput = {
@@ -15767,6 +15240,7 @@ export namespace Prisma {
     Department?: DepartmentUpdateOneRequiredWithoutUsersNestedInput
     complaint?: ComplaintsUpdateManyWithoutUserNestedInput
     resolve?: ResolvedComplaintsUpdateManyWithoutUserNestedInput
+    notifications?: NotificationsUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfessionInput = {
@@ -15783,6 +15257,7 @@ export namespace Prisma {
     department_id?: StringFieldUpdateOperationsInput | string
     complaint?: ComplaintsUncheckedUpdateManyWithoutUserNestedInput
     resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutProfessionInput = {
@@ -15815,6 +15290,7 @@ export namespace Prisma {
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Complaints?: ComplaintsUpdateOneWithoutResolveNestedInput
     User?: UserUpdateOneWithoutResolveNestedInput
+    Notifications?: NotificationsUpdateOneWithoutResolveComplaintNestedInput
   }
 
   export type ResolvedComplaintsUncheckedUpdateWithoutEmployeeInput = {
@@ -15824,6 +15300,7 @@ export namespace Prisma {
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     complaint_id?: IntFieldUpdateOperationsInput | number
     resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
+    Notifications?: NotificationsUncheckedUpdateOneWithoutResolveComplaintNestedInput
   }
 
   export type ResolvedComplaintsUncheckedUpdateManyWithoutEmployeeInput = {
@@ -15863,6 +15340,7 @@ export namespace Prisma {
     Profession?: ProfessionUpdateOneRequiredWithoutUserNestedInput
     complaint?: ComplaintsUpdateManyWithoutUserNestedInput
     resolve?: ResolvedComplaintsUpdateManyWithoutUserNestedInput
+    notifications?: NotificationsUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDepartmentInput = {
@@ -15879,6 +15357,7 @@ export namespace Prisma {
     profession_id?: IntFieldUpdateOperationsInput | number
     complaint?: ComplaintsUncheckedUpdateManyWithoutUserNestedInput
     resolve?: ResolvedComplaintsUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationsUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutDepartmentInput = {
@@ -15911,6 +15390,7 @@ export namespace Prisma {
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Employee?: EmployeeUpdateOneWithoutResolveNestedInput
     User?: UserUpdateOneWithoutResolveNestedInput
+    Notifications?: NotificationsUpdateOneWithoutResolveComplaintNestedInput
   }
 
   export type ResolvedComplaintsUncheckedUpdateWithoutComplaintsInput = {
@@ -15920,6 +15400,7 @@ export namespace Prisma {
     employee_id?: NullableIntFieldUpdateOperationsInput | number | null
     estimated_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     resolved_by?: NullableStringFieldUpdateOperationsInput | string | null
+    Notifications?: NotificationsUncheckedUpdateOneWithoutResolveComplaintNestedInput
   }
 
   export type ResolvedComplaintsUncheckedUpdateManyWithoutComplaintsInput = {
